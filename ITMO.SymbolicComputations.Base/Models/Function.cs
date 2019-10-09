@@ -1,7 +1,7 @@
 using System.Collections.Immutable;
 
 namespace ITMO.SymbolicComputations.Base.Models {
-    public class Function {
+    public sealed class Function {
         public string Name { get; }
         public ImmutableList<Expression> Arguments { get; }
 
