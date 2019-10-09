@@ -1,5 +1,5 @@
 namespace ITMO.SymbolicComputations.Base.Models {
-    public class UnaryOperation {
+    public sealed class UnaryOperation : Expression {
         public Expression Expression { get; }
         public string Name { get; }
 
