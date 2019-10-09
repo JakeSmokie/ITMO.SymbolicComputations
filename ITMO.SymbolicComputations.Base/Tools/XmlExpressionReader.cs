@@ -4,7 +4,7 @@ using ITMO.SymbolicComputations.Base.Models;
 
 namespace ITMO.SymbolicComputations.Base.Tools {
     public static class XmlExpressionReader {
-        public static ExpressionInfo ReadXml(XmlDocument doc) {
+        public static ExpressionInfo AsExpressionInfo(this XmlDocument doc) {
             var root = doc.DocumentElement;
 
             if (root.Name != nameof(ExpressionInfo)) {

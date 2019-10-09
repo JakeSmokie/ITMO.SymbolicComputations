@@ -19,7 +19,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
             var document = new XmlDocument();
             document.Load("Samples/First.xml");
 
-            var expressionInfo = XmlExpressionReader.ReadXml(document);
+            var expressionInfo = document.AsExpressionInfo();
             
             var a = (BinaryOperation) expressionInfo.Expression;
             var b = (BinaryOperation) a.First;
