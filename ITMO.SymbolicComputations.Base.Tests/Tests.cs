@@ -20,6 +20,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
             document.Load("Samples/First.xml");
 
             var expressionInfo = document.AsExpressionInfo();
+            _testOutputHelper.WriteLine(expressionInfo.AsJson());
             
             var a = (BinaryOperation) expressionInfo.Expression;
             var b = (BinaryOperation) a.First;
