@@ -1,4 +1,4 @@
 namespace ITMO.SymbolicComputations.Base.Models {
-    public abstract class Expression {
+    public abstract class BaseSymbol {
     }
 }

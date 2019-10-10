@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-16"?>
+<ExpressionInfo>
+  <Function Name="Sum">
+    <Function Name="Mul">
+      <Symbol Name="x"/>
+      <Const Value="3"/>
+      <Symbol Name="x"/>
+      <Symbol Name="y"/>
+      <Symbol Name="x"/>
+    </Function>
+    <Function Name="Mul">
+      <Const Value="-6"/>
+      <BinaryOperation Name="Pow">
+        <Symbol Name="x"/>
+        <Const Value="2"/>
+      </BinaryOperation>
+      <Symbol Name="x"/>
+      <Symbol Name="y"/>
+    </Function>
+    <Function Name="Mul">
+      <Const Value="5"/>
+      <Symbol Name="x"/>
+      <Symbol Name="x"/>
+      <Symbol Name="y"/>
+      <Symbol Name="y"/>
+    </Function>
+    <Function Name="Mul">
+      <Const Value="10"/>
+      <Symbol Name="x"/>
+      <Symbol Name="y"/>
+      <Symbol Name="x"/>
+      <Symbol Name="y"/>
+    </Function>
+  </Function>
+</ExpressionInfo>

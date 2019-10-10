@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ExpressionInfo>
+  <Function Name="Sum">
+    <Const Value="1"/>
+    <Const Value="45"/>
+
+    <Function Name="Sum">
+      <Function Name="Sum">
+        <Symbol Name="y"/>
+        <Function Name="Sum">
+          <Function Name="Sum">
+            <BinaryOperation Name="Pow">
+              <Symbol Name="y"/>
+              <Const Value="2"/>
+            </BinaryOperation>
+          </Function>
+        </Function>
+      </Function>
+      <Const Value="10"/>
+      <Symbol Name="x"/>
+    </Function>
+  </Function>
+</ExpressionInfo>  

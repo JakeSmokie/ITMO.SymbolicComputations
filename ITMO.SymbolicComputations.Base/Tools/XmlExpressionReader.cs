@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Immutable;
+using System.Linq;
 using System.Xml;
 using ITMO.SymbolicComputations.Base.Models;
 
@@ -17,8 +19,9 @@ namespace ITMO.SymbolicComputations.Base.Tools {
 
             return new ExpressionInfo(ParseExpression(root.FirstChild));
 
-            Expression ParseExpression(XmlNode xmlElement) =>
+            BaseSymbol ParseExpression(XmlNode xmlElement) =>
                 xmlElement.Name switch {
+                    "Function" => ParseFunction(xmlElement),
                     "BinaryOperation" => ParseBinaryOperation(xmlElement),
                     "UnaryOperation" => ParseUnaryOperation(xmlElement),
                     "Const" => ParseConstant(xmlElement),
@@ -26,23 +29,32 @@ namespace ITMO.SymbolicComputations.Base.Tools {
                     _ => throw new ArgumentException($"Wrong tag: {xmlElement.Name}")
                 };
 
-            Expression ParseBinaryOperation(XmlNode xmlElement) =>
+            BaseSymbol ParseFunction(XmlNode xmlElement) =>
+                new Function(
+                    xmlElement.Attributes["Name"].Value,
+                    xmlElement.ChildNodes
+                        .OfType<XmlNode>()
+                        .Select(ParseExpression)
+                        .ToImmutableList()
+                );
+
+            BaseSymbol ParseBinaryOperation(XmlNode xmlElement) =>
                 new BinaryOperation(
                     ParseExpression(xmlElement.ChildNodes[0]),
                     ParseExpression(xmlElement.ChildNodes[1]),
                     xmlElement.Attributes["Name"].Value
                 );
 
-            Expression ParseUnaryOperation(XmlNode xmlElement) =>
+            BaseSymbol ParseUnaryOperation(XmlNode xmlElement) =>
                 new UnaryOperation(
                     ParseExpression(xmlElement.FirstChild),
                     xmlElement.Attributes["Name"].Value
                 );
 
-            Expression ParseConstant(XmlNode xmlElement) => 
+            BaseSymbol ParseConstant(XmlNode xmlElement) =>
                 new Constant(decimal.Parse(xmlElement.Attributes["Value"].Value));
 
-            Expression ParseSymbol(XmlNode xmlElement) => 
+            BaseSymbol ParseSymbol(XmlNode xmlElement) =>
                 new Symbol(xmlElement.Attributes["Name"].Value);
         }
     }

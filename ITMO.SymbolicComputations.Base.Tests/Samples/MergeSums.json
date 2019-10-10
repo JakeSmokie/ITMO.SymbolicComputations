@@ -1,0 +1,25 @@
+﻿{
+  "BaseSymbol": {
+    "Name": "Sum",
+    "Arguments": [
+      {
+        "Name": "Pow",
+        "First": {
+          "Name": "y"
+        },
+        "Second": {
+          "Value": 2.0
+        }
+      },
+      {
+        "Name": "x"
+      },
+      {
+        "Name": "y"
+      },
+      {
+        "Value": 56.0
+      }
+    ]
+  }
+}

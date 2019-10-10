@@ -1,9 +1,14 @@
+using ITMO.SymbolicComputations.Base.Tools;
+
 namespace ITMO.SymbolicComputations.Base.Models {
     public sealed class ExpressionInfo {
-        public Expression Expression { get; }
+        public BaseSymbol BaseSymbol { get; }
 
-        public ExpressionInfo(Expression expression) {
-            Expression = expression;
+        public ExpressionInfo(BaseSymbol baseSymbol) {
+            BaseSymbol = baseSymbol;
         }
+
+        public ExpressionInfo Simplify() => 
+            new ExpressionInfo(BaseSymbol.Simplify());
     }
 }

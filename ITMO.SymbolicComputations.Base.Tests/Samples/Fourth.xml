@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-16"?>
+<ExpressionInfo>
+  <Function Name="Mul">
+    <Const Value="-6"/>
+    <BinaryOperation Name="Pow">
+      <Symbol Name="x"/>
+      <Const Value="2"/>
+    </BinaryOperation>
+    <BinaryOperation Name="Pow">
+      <Symbol Name="x"/>
+      <Symbol Name="y"/>
+    </BinaryOperation>
+    <Symbol Name="x"/>
+    <Symbol Name="y"/>
+
+    <BinaryOperation Name="Pow">
+      <Symbol Name="y"/>
+      <Function Name="Sum">
+        <Symbol Name="x"/>
+        <Symbol Name="z"/>
+      </Function>
+    </BinaryOperation>
+  </Function>
+</ExpressionInfo>

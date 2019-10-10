@@ -8,10 +8,10 @@ using Xunit.Abstractions;
 
 namespace ITMO.SymbolicComputations.Base.Tests {
     public sealed class Tests {
-        private readonly ITestOutputHelper _testOutputHelper;
+        private readonly ITestOutputHelper _out;
 
-        public Tests(ITestOutputHelper testOutputHelper) {
-            _testOutputHelper = testOutputHelper;
+        public Tests(ITestOutputHelper output) {
+            _out = output;
         }
 
         [Fact]
@@ -20,17 +20,17 @@ namespace ITMO.SymbolicComputations.Base.Tests {
             document.Load("Samples/First.xml");
 
             var expressionInfo = document.AsExpressionInfo();
-            _testOutputHelper.WriteLine(expressionInfo.AsJson());
-            
-            var a = (BinaryOperation) expressionInfo.Expression;
-            var b = (BinaryOperation) a.First;
-            var c = (Symbol) a.Second;
-            var d = (BinaryOperation) b.First;
-            var e = (Constant) b.Second;
-            var f = (BinaryOperation) d.First;
-            var g = (Symbol) d.Second;
-            var h = (Constant) f.First;
-            var j = (Constant) f.Second;
+            _out.WriteLine(expressionInfo.AsJson());
+
+            var a = (Function) expressionInfo.BaseSymbol;
+            var b = (Function) a.Arguments[0];
+            var c = (Symbol) a.Arguments[1];
+            var d = (Function) b.Arguments[0];
+            var e = (Constant) b.Arguments[1];
+            var f = (Function) d.Arguments[0];
+            var g = (Symbol) d.Arguments[1];
+            var h = (Constant) f.Arguments[0];
+            var j = (Constant) f.Arguments[1];
 
             Assert.Equal("Mul", a.Name);
             Assert.Equal("Sum", b.Name);
@@ -42,5 +42,27 @@ namespace ITMO.SymbolicComputations.Base.Tests {
             Assert.Equal(3, h.Value);
             Assert.Equal(5, j.Value);
         }
+
+        [Fact]
+        public void SimplifiesConstSum() {
+            var document = new XmlDocument();
+            document.Load("Samples/Second.xml");
+
+            var symbol = document.AsExpressionInfo().Simplify();
+            _out.WriteLine(symbol.AsJson());
+
+            Assert.Equal(8, ((Constant) symbol.BaseSymbol).Value);
+        }
+        [Fact]
+        public void SumsMergeAndEntriesSort() {
+            var document = new XmlDocument();
+            document.Load("Samples/MergeSums.xml");
+
+            var symbol = document.AsExpressionInfo().Simplify();
+            _out.WriteLine(symbol.AsJson());
+
+            Assert.Equal(File.ReadAllText("Samples/MergeSums.json"), symbol.AsJson());
+        }
+
     }
 }
