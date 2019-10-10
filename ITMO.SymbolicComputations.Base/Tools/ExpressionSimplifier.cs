@@ -7,14 +7,12 @@ namespace ITMO.SymbolicComputations.Base.Tools {
     public static class ExpressionSimplifier {
         public static BaseSymbol Simplify(this BaseSymbol symbol) {
             return symbol switch {
-                Function function =>
-                function.Name switch {
+                Function function => function.Name switch {
                     "Sum" => SimplifySum(function),
                     "Mul" => SimplifyProduct(function),
                     _ => symbol
                 },
-                BinaryOperation binaryOperation =>
-                binaryOperation.Name switch {
+                BinaryOperation binaryOperation => binaryOperation.Name switch {
                     "Sub" => symbol,
                     _ => symbol
                 },
@@ -30,16 +28,13 @@ namespace ITMO.SymbolicComputations.Base.Tools {
                 arguments = ReduceConstants(arguments);
                 arguments = SortEntries(arguments);
 
-                if (arguments.Count == 1) {
-                    return arguments[0];
-                }
-
-                return new Function(function.Name, arguments);
+                return arguments.Count == 1
+                    ? arguments[0]
+                    : new Function(function.Name, arguments);
 
                 ImmutableList<BaseSymbol> ReduceConstants(ImmutableList<BaseSymbol> arguments) {
                     var summed = new Constant(
-                        arguments
-                            .OfType<Constant>()
+                        arguments.OfType<Constant>()
                             .Select(x => x.Value)
                             .Sum()
                     );
