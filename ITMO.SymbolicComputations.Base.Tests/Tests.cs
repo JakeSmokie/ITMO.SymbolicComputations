@@ -14,7 +14,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
         private readonly ITestOutputHelper _out;
 
         [Fact]
-        public void LoadsWell() {
+        public void XmlParsesWell() {
             var document = new XmlDocument();
             document.Load("Samples/First.xml");
 
