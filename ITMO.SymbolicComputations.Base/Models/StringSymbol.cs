@@ -1,6 +1,6 @@
 namespace ITMO.SymbolicComputations.Base.Models {
-    public sealed class Symbol : IBaseSymbol {
-        public Symbol(string name) {
+    public sealed class StringSymbol : IBaseSymbol {
+        public StringSymbol(string name) {
             Name = name;
         }
 

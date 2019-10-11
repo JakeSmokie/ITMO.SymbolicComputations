@@ -30,11 +30,11 @@ namespace ITMO.SymbolicComputations.Base.Tools {
                 new Constant(decimal.Parse(xmlElement.Attributes["Value"].Value));
 
             IBaseSymbol ParseSymbol(XmlNode xmlElement) =>
-                new Symbol(xmlElement.Attributes["Name"].Value);
+                new StringSymbol(xmlElement.Attributes["Name"].Value);
 
             IBaseSymbol ParseFunction(XmlNode xmlElement) =>
                 new Function(
-                    new Symbol(xmlElement.Name),
+                    new StringSymbol(xmlElement.Name),
                     xmlElement.ChildNodes
                         .OfType<XmlNode>()
                         .Select(ParseExpression)

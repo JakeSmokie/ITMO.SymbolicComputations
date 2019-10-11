@@ -10,7 +10,7 @@ namespace ITMO.SymbolicComputations.Base.Tools {
 
         private static string AsMathematica(this IBaseSymbol symbol) =>
             symbol switch {
-                Symbol s => s.Name,
+                StringSymbol s => s.Name,
                 Constant c => c.Value.ToString(CultureInfo.InvariantCulture),
                 Function f => f.Symbol.AsMathematica() +
                               $"[{string.Join(", ", f.Arguments.Select(AsMathematica))}]",
