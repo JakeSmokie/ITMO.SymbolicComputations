@@ -23,5 +23,16 @@ namespace ITMO.SymbolicComputations.Base.Tests {
 
             Assert.Equal(File.ReadAllText("Samples/First.json"), json);
         }
+
+        [Fact]
+        public void MathematicaOutputIsOkay() {
+            var document = new XmlDocument();
+            document.Load("Samples/First.xml");
+
+            var mathematica = document.AsExpressionInfo().AsMathematica();
+            _out.WriteLine(mathematica);
+
+            Assert.Equal("Times[Plus[Times[Plus[3, 5], x], 10], x]", mathematica);
+        }
     }
 }
