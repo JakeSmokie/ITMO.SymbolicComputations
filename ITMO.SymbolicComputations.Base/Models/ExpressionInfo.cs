@@ -1,9 +1,9 @@
 namespace ITMO.SymbolicComputations.Base.Models {
     public sealed class ExpressionInfo {
-        public ExpressionInfo(BaseSymbol baseSymbol) {
+        public ExpressionInfo(IBaseSymbol baseSymbol) {
             BaseSymbol = baseSymbol;
         }
 
-        public BaseSymbol BaseSymbol { get; }
+        public IBaseSymbol BaseSymbol { get; }
     }
 }

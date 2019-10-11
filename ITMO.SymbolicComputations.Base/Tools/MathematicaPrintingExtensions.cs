@@ -8,7 +8,7 @@ namespace ITMO.SymbolicComputations.Base.Tools {
         public static string AsMathematica(this ExpressionInfo expressionInfo) =>
             expressionInfo.BaseSymbol.AsMathematica();
 
-        private static string AsMathematica(this BaseSymbol symbol) =>
+        private static string AsMathematica(this IBaseSymbol symbol) =>
             symbol switch {
                 Symbol s => s.Name,
                 Constant c => c.Value.ToString(CultureInfo.InvariantCulture),
