@@ -6,7 +6,7 @@ namespace ITMO.SymbolicComputations.Base.Tools {
     public static class ExpressionSimplifier {
         public static BaseSymbol Simplify(this BaseSymbol symbol) {
             return symbol switch {
-                Function function => function.Name switch {
+                Function function => function.Symbol switch {
                     "Sum" => SimplifySum(function),
                     "Mul" => SimplifyProduct(function),
                     _ => symbol
@@ -29,7 +29,7 @@ namespace ITMO.SymbolicComputations.Base.Tools {
 
                 return arguments.Count == 1
                     ? arguments[0]
-                    : new Function(function.Name, arguments);
+                    : new Function(function.Symbol, arguments);
 
                 ImmutableList<BaseSymbol> ReduceConstants(ImmutableList<BaseSymbol> arguments) {
                     var summed = new Constant(
@@ -50,7 +50,7 @@ namespace ITMO.SymbolicComputations.Base.Tools {
                 ImmutableList<BaseSymbol> MergeSums(ImmutableList<BaseSymbol> arguments) {
                     var sums = arguments
                         .OfType<Function>()
-                        .Where(x => x.Name == "Sum")
+                        .Where(x => x.Symbol == "Sum")
                         .ToImmutableList();
 
                     return sums.SelectMany(x => x.Arguments)

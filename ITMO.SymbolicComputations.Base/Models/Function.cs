@@ -1,19 +1,13 @@
-using System;
 using System.Collections.Immutable;
-using System.Linq;
 
 namespace ITMO.SymbolicComputations.Base.Models {
     public sealed class Function : BaseSymbol {
-        public Function(string name, ImmutableList<BaseSymbol> arguments) {
-            Name = name;
+        public Function(BaseSymbol symbol, ImmutableList<BaseSymbol> arguments) {
+            Symbol = symbol;
             Arguments = arguments;
         }
 
-        public string Name { get; }
+        public BaseSymbol Symbol { get; }
         public ImmutableList<BaseSymbol> Arguments { get; }
-
-        public Function MapArguments(Func<BaseSymbol, BaseSymbol> selector) {
-            return new Function(Name, Arguments.Select(selector).ToImmutableList());
-        }
     }
 }
