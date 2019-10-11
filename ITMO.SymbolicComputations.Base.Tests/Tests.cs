@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Xml;
 using ITMO.SymbolicComputations.Base.Models;
@@ -8,11 +7,11 @@ using Xunit.Abstractions;
 
 namespace ITMO.SymbolicComputations.Base.Tests {
     public sealed class Tests {
-        private readonly ITestOutputHelper _out;
-
         public Tests(ITestOutputHelper output) {
             _out = output;
         }
+
+        private readonly ITestOutputHelper _out;
 
         [Fact]
         public void LoadsWell() {
@@ -53,6 +52,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
 
             Assert.Equal(8, ((Constant) symbol.BaseSymbol).Value);
         }
+
         [Fact]
         public void SumsMergeAndEntriesSort() {
             var document = new XmlDocument();
@@ -63,6 +63,5 @@ namespace ITMO.SymbolicComputations.Base.Tests {
 
             Assert.Equal(File.ReadAllText("Samples/MergeSums.json"), symbol.AsJson());
         }
-
     }
 }
