@@ -1,22 +1,22 @@
 ﻿{
   "BaseSymbol": {
     "Symbol": {
-      "Name": "Mul"
+      "Name": "Times"
     },
     "Arguments": [
       {
         "Symbol": {
-          "Name": "Sum"
+          "Name": "Plus"
         },
         "Arguments": [
           {
             "Symbol": {
-              "Name": "Mul"
+              "Name": "Times"
             },
             "Arguments": [
               {
                 "Symbol": {
-                  "Name": "Sum"
+                  "Name": "Plus"
                 },
                 "Arguments": [
                   {
