@@ -19,20 +19,20 @@ namespace ITMO.SymbolicComputations.Base.Tools {
 
             return new ExpressionInfo(ParseExpression(root.FirstChild));
 
-            IBaseSymbol ParseExpression(XmlNode xmlElement) =>
+            ISymbol ParseExpression(XmlNode xmlElement) =>
                 xmlElement.Name switch {
                     "Const" => ParseConstant(xmlElement),
                     "Symbol" => ParseSymbol(xmlElement),
                     _ => ParseFunction(xmlElement)
                 };
 
-            IBaseSymbol ParseConstant(XmlNode xmlElement) =>
+            ISymbol ParseConstant(XmlNode xmlElement) =>
                 new Constant(decimal.Parse(xmlElement.Attributes["Value"].Value));
 
-            IBaseSymbol ParseSymbol(XmlNode xmlElement) =>
+            ISymbol ParseSymbol(XmlNode xmlElement) =>
                 new StringSymbol(xmlElement.Attributes["Name"].Value);
 
-            IBaseSymbol ParseFunction(XmlNode xmlElement) =>
+            ISymbol ParseFunction(XmlNode xmlElement) =>
                 new Function(
                     new StringSymbol(xmlElement.Name),
                     xmlElement.ChildNodes

@@ -2,17 +2,17 @@ using System.Collections.Immutable;
 using Newtonsoft.Json;
 
 namespace ITMO.SymbolicComputations.Base.Models {
-    public sealed class Function : IBaseSymbol {
-        public Function(IBaseSymbol symbol, ImmutableList<IBaseSymbol> arguments, ImmutableHashSet<IBaseSymbol> attributes = null) {
+    public sealed class Function : ISymbol {
+        public Function(ISymbol symbol, ImmutableList<ISymbol> arguments, ImmutableHashSet<ISymbol> attributes = null) {
             Symbol = symbol;
             Arguments = arguments;
-            Attributes = attributes ?? ImmutableHashSet<IBaseSymbol>.Empty;
+            Attributes = attributes ?? ImmutableHashSet<ISymbol>.Empty;
         }
 
-        public IBaseSymbol Symbol { get; }
-        public ImmutableList<IBaseSymbol> Arguments { get; }
+        public ISymbol Symbol { get; }
+        public ImmutableList<ISymbol> Arguments { get; }
         
         [JsonIgnore]
-        public ImmutableHashSet<IBaseSymbol> Attributes { get; }
+        public ImmutableHashSet<ISymbol> Attributes { get; }
     }
 }

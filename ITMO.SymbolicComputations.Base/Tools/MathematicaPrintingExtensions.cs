@@ -6,9 +6,9 @@ using ITMO.SymbolicComputations.Base.Models;
 namespace ITMO.SymbolicComputations.Base.Tools {
     public static class MathematicaPrintingExtensions {
         public static string AsMathematica(this ExpressionInfo expressionInfo) =>
-            expressionInfo.BaseSymbol.AsMathematica();
+            expressionInfo.Symbol.AsMathematica();
 
-        private static string AsMathematica(this IBaseSymbol symbol) =>
+        private static string AsMathematica(this ISymbol symbol) =>
             symbol switch {
                 StringSymbol s => s.Name,
                 Constant c => c.Value.ToString(CultureInfo.InvariantCulture),
