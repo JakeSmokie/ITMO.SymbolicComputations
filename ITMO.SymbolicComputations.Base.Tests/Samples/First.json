@@ -1,21 +1,21 @@
 ﻿{
   "Symbol": {
-    "Symbol": {
+    "Head": {
       "Name": "Times"
     },
     "Arguments": [
       {
-        "Symbol": {
+        "Head": {
           "Name": "Plus"
         },
         "Arguments": [
           {
-            "Symbol": {
+            "Head": {
               "Name": "Times"
             },
             "Arguments": [
               {
-                "Symbol": {
+                "Head": {
                   "Name": "Plus"
                 },
                 "Arguments": [
