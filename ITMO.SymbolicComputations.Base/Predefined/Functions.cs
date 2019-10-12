@@ -10,7 +10,7 @@ namespace ITMO.SymbolicComputations.Base.Predefined {
         );
 
         public static readonly StringSymbol HoldComplete = new StringSymbol(nameof(HoldComplete),
-            ImmutableSortedSet<StringSymbol>.Empty.Add(Attributes.HoldAll)
+            ImmutableSortedSet<StringSymbol>.Empty.Add(Attributes.HoldAllComplete)
         );
 
         public static readonly StringSymbol HoldForm = new StringSymbol(nameof(HoldForm),
