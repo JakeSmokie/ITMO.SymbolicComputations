@@ -11,8 +11,8 @@ namespace ITMO.SymbolicComputations.Base.Visitors {
             new OneIdentityShrinker();
 
         public Symbol VisitFunction(Function function) {
-            if (function.Symbol.Visit(HoldAllChecker)) {
-                return function.Symbol == Functions.HoldForm 
+            if (function.Head.Visit(HoldAllChecker)) {
+                return function.Head == Functions.HoldForm 
                     ? function.Arguments[0] 
                     : function;
             }
