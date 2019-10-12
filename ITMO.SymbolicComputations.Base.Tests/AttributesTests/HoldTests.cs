@@ -28,16 +28,31 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
 
         [Fact]
         public void HoldFirstSuppressionWorks() {
-            var holdFirst = new StringSymbol("", Attributes.HoldFirst);
-
-            var source = holdFirst[Evaluate[Plus[2]], Plus[3]];
+            var source = HoldFirst[Evaluate[Plus[2]], Plus[3]];
             var expression = source.Visit(new FullEvaluator());
 
             _out.WriteLine(expression.Visit(new MathematicaPrinter()));
-            Assert.Equal(holdFirst[2, 3], expression);
+            Assert.Equal(HoldFirst[2, 3], expression);
         }
 
+        [Fact]
+        public void HoldRestWorks() {
+            var source = HoldRest[Plus[2], Plus[3], Plus[4]];
+            var expression = source.Visit(new FullEvaluator());
 
+            _out.WriteLine(expression.Visit(new MathematicaPrinter()));
+            Assert.Equal(HoldRest[2, Plus[3], Plus[4]], expression);
+        }
+
+        [Fact]
+        public void HoldRestSuppressionWorks() {
+            var source = HoldRest[Plus[2], Plus[3], Evaluate[Plus[4]]];
+            var expression = source.Visit(new FullEvaluator());
+
+            _out.WriteLine(expression.Visit(new MathematicaPrinter()));
+            Assert.Equal(HoldRest[2, Plus[3], 4], expression);
+        }
+        
         [Fact]
         public void HoldFormSuppressingWithEvaluateFunctionWorks() {
             var source = HoldForm[Evaluate[Plus[2]]];
