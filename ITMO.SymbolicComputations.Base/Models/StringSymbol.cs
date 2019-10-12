@@ -6,9 +6,9 @@ using Newtonsoft.Json;
 
 namespace ITMO.SymbolicComputations.Base.Models {
     public sealed class StringSymbol : Symbol, IEquatable<StringSymbol>, IComparable<StringSymbol>, IComparable {
-        public StringSymbol(string name, ImmutableSortedSet<StringSymbol>? attributes = null) {
+        public StringSymbol(string name, params StringSymbol[] attributes) {
             Name = name;
-            Attributes = attributes ?? ImmutableSortedSet<StringSymbol>.Empty;
+            Attributes = attributes.ToImmutableSortedSet();
         }
 
         public string Name { get; }

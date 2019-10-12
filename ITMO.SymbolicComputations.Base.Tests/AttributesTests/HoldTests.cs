@@ -11,7 +11,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
             _out = output;
 
         private readonly ITestOutputHelper _out;
-        
+
         [Fact]
         public void HoldWorks() {
             var source = Hold[Plus[2]];
@@ -29,7 +29,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
             _out.WriteLine(expression.Visit(new MathematicaPrinter()));
             Assert.Equal(source, expression);
         }
-        
+
         [Fact]
         public void NestedHoldWorks() {
             var insides = Hold[Plus[2]];
@@ -60,6 +60,15 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
 
         [Fact]
         public void HoldIsNotSuppressedWhenItIsComplete() {
+            var source = HoldComplete[Evaluate[Plus[2]]];
+            var expression = source.Visit(new FullEvaluator());
+
+            _out.WriteLine(expression.Visit(new MathematicaPrinter()));
+            Assert.Equal(source, expression);
+        }
+
+        [Fact]
+        public void HoldFirstWorks() {
             var source = HoldComplete[Evaluate[Plus[2]]];
             var expression = source.Visit(new FullEvaluator());
 
