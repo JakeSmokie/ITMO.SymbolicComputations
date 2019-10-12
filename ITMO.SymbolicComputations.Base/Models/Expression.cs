@@ -4,8 +4,8 @@ using System.Linq;
 using ITMO.SymbolicComputations.Base.Visitors;
 
 namespace ITMO.SymbolicComputations.Base.Models {
-    public sealed class Function : Symbol, IEquatable<Function> {
-        public Function(Symbol head, ImmutableList<Symbol> arguments) {
+    public sealed class Expression : Symbol, IEquatable<Expression> {
+        public Expression(Symbol head, ImmutableList<Symbol> arguments) {
             Head = head;
             Arguments = arguments;
         }
@@ -16,7 +16,7 @@ namespace ITMO.SymbolicComputations.Base.Models {
         protected override T VisitImplementation<T>(ISymbolVisitor<T> visitor) =>
             visitor.VisitFunction(this);
 
-        public bool Equals(Function other) {
+        public bool Equals(Expression other) {
             if (ReferenceEquals(null, other)) {
                 return false;
             }
@@ -28,7 +28,7 @@ namespace ITMO.SymbolicComputations.Base.Models {
             return Head.Equals(other.Head) && Arguments.SequenceEqual(other.Arguments);
         }
 
-        public override bool Equals(object obj) => ReferenceEquals(this, obj) || obj is Function other && Equals(other);
+        public override bool Equals(object obj) => ReferenceEquals(this, obj) || obj is Expression other && Equals(other);
 
         public override int GetHashCode() {
             unchecked {
@@ -36,8 +36,8 @@ namespace ITMO.SymbolicComputations.Base.Models {
             }
         }
 
-        public static bool operator ==(Function left, Function right) => Equals(left, right);
+        public static bool operator ==(Expression left, Expression right) => Equals(left, right);
 
-        public static bool operator !=(Function left, Function right) => !Equals(left, right);
+        public static bool operator !=(Expression left, Expression right) => !Equals(left, right);
     }
 }

@@ -5,11 +5,11 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Attributes {
         private static readonly HasAttributeChecker IsOneIdentityVisitor =
             new HasAttributeChecker(Predefined.Attributes.OneIdentity);
 
-        public Symbol VisitFunction(Function function) =>
-            function.Head.Visit(IsOneIdentityVisitor)
-            && function.Arguments.Count == 1
-                ? function.Arguments[0].Visit(this)
-                : function;
+        public Symbol VisitFunction(Expression expression) =>
+            expression.Head.Visit(IsOneIdentityVisitor)
+            && expression.Arguments.Count == 1
+                ? expression.Arguments[0].Visit(this)
+                : expression;
 
         public Symbol VisitSymbol(StringSymbol symbol) => symbol;
         public Symbol VisitConstant(Constant constant) => constant;

@@ -10,14 +10,14 @@ namespace ITMO.SymbolicComputations.Base.Visitors {
         private static readonly OneIdentityShrinker OneIdentityShrinker =
             new OneIdentityShrinker();
 
-        public Symbol VisitFunction(Function function) {
-            if (function.Head.Visit(HoldAllChecker)) {
-                return function.Head == Functions.HoldForm 
-                    ? function.Arguments[0] 
-                    : function;
+        public Symbol VisitFunction(Expression expression) {
+            if (expression.Head.Visit(HoldAllChecker)) {
+                return expression.Head == Functions.HoldForm 
+                    ? expression.Arguments[0] 
+                    : expression;
             }
 
-            return function
+            return expression
                 .Visit(OneIdentityShrinker);
         }
 

@@ -10,7 +10,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Attributes {
         public bool VisitSymbol(StringSymbol symbol) =>
             symbol.Attributes.Contains(Attribute);
 
-        public bool VisitFunction(Function function) => false;
+        public bool VisitFunction(Expression expression) => false;
         public bool VisitConstant(Constant constant) => false;
     }
 }

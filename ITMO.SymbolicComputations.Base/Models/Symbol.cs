@@ -3,8 +3,8 @@ using ITMO.SymbolicComputations.Base.Visitors;
 
 namespace ITMO.SymbolicComputations.Base.Models {
     public abstract class Symbol {
-        public Function this[params Symbol[] arguments] =>
-            new Function(this, arguments.ToImmutableList());
+        public Expression this[params Symbol[] arguments] =>
+            new Expression(this, arguments.ToImmutableList());
 
         protected abstract T VisitImplementation<T>(ISymbolVisitor<T> visitor);
 

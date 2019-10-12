@@ -33,7 +33,7 @@ namespace ITMO.SymbolicComputations.Base.Tools {
                 new StringSymbol(xmlElement.Attributes["Name"].Value);
 
             Symbol ParseFunction(XmlNode xmlElement) =>
-                new Function(
+                new Expression(
                     new StringSymbol(xmlElement.Name),
                     xmlElement.ChildNodes
                         .OfType<XmlNode>()

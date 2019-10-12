@@ -2,7 +2,7 @@
 
 namespace ITMO.SymbolicComputations.Base.Visitors {
     public interface ISymbolVisitor<out T> {
-        T VisitFunction(Function function);
+        T VisitFunction(Expression expression);
         T VisitSymbol(StringSymbol symbol);
         T VisitConstant(Constant constant);
     }
