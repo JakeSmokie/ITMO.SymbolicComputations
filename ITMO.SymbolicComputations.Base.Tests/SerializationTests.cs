@@ -17,7 +17,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
             var document = new XmlDocument();
             document.Load("Samples/First.xml");
 
-            var mathematica = document.AsExpressionInfo().Symbol.Visit(new MathematicaPrintingVisitor());
+            var mathematica = document.AsExpressionInfo().Symbol.Visit(new MathematicaPrinter());
             _out.WriteLine(mathematica);
 
             Assert.Equal("Times[Plus[Times[Plus[3, 5], x], 10], x]", mathematica);

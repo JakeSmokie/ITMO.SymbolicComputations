@@ -3,7 +3,7 @@ using System.Linq;
 using ITMO.SymbolicComputations.Base.Models;
 
 namespace ITMO.SymbolicComputations.Base.Visitors {
-    public sealed class MathematicaPrintingVisitor : ISymbolVisitor<string> {
+    public sealed class MathematicaPrinter : ISymbolVisitor<string> {
         public string VisitFunction(Expression expression) =>
             expression.Head.Visit(this) +
             $"[{string.Join(", ", expression.Arguments.Select(a => a.Visit(this)))}]";

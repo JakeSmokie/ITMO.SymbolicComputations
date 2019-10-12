@@ -1,5 +1,6 @@
-﻿using ITMO.SymbolicComputations.Base.Models;
-using ITMO.SymbolicComputations.Base.Predefined;
+﻿using System.Collections.Immutable;
+using System.Linq;
+using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Visitors.Attributes;
 
 namespace ITMO.SymbolicComputations.Base.Visitors {
@@ -7,18 +8,43 @@ namespace ITMO.SymbolicComputations.Base.Visitors {
         private static readonly HasAttributeChecker HoldAllChecker =
             new HasAttributeChecker(Predefined.Attributes.HoldAll);
 
+        private static readonly HasAttributeChecker HoldRestChecker =
+            new HasAttributeChecker(Predefined.Attributes.HoldRest);
+
+        private static readonly HasAttributeChecker HoldFirstChecker =
+            new HasAttributeChecker(Predefined.Attributes.HoldFirst);
+
         private static readonly OneIdentityShrinker OneIdentityShrinker =
             new OneIdentityShrinker();
 
         public Symbol VisitFunction(Expression expression) {
-            if (expression.Head.Visit(HoldAllChecker)) {
-                return expression.Head == Functions.HoldForm 
-                    ? expression.Arguments[0] 
-                    : expression;
+            var head = expression.Head.Visit(this);
+            var arguments = EvaluateArguments(head, expression.Arguments);
+
+            return new Expression(head, arguments)
+                .Visit(OneIdentityShrinker);
+        }
+
+        private ImmutableList<Symbol> EvaluateArguments(Symbol head, ImmutableList<Symbol> arguments) {
+            if (head.Visit(HoldAllChecker)) {
+                return arguments;
             }
 
-            return expression
-                .Visit(OneIdentityShrinker);
+            if (head.Visit(HoldRestChecker)) {
+                return ImmutableList<Symbol>.Empty
+                    .Add(arguments.First().Visit(this))
+                    .AddRange(arguments.Skip(1));
+            }
+
+            if (head.Visit(HoldFirstChecker)) {
+                return ImmutableList<Symbol>.Empty
+                    .Add(arguments.First())
+                    .AddRange(arguments.Skip(1).Select(a => a.Visit(this)));
+            }
+
+            return arguments
+                .Select(a => a.Visit(this))
+                .ToImmutableList();
         }
 
         public Symbol VisitSymbol(StringSymbol symbol) => symbol;

@@ -15,16 +15,18 @@ namespace ITMO.SymbolicComputations.Base.Tests {
         [Fact]
         public void ConstInsidePlusIsReducedToConst() {
             var expression = Plus[Plus[Plus[Plus[2]]]]
-                .Visit(new OneIdentityShrinker());
-
+                .Visit(new Evaluator());
+            
+            _out.WriteLine(expression.Visit(new MathematicaPrinter()));
             Assert.Equal(2, expression);
         }
         
         [Fact]
         public void PlusInsidePlusIsReducedToOnePlus() {
             var expression = Plus[Plus[Plus[Plus[2, 3]]]]
-                .Visit(new OneIdentityShrinker());
+                .Visit(new Evaluator());
             
+            _out.WriteLine(expression.Visit(new MathematicaPrinter()));
             Assert.Equal(Plus[2, 3], expression);
         }
         
@@ -33,6 +35,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
             var source = Hold[Plus[Plus[Plus[Plus[2]]]]];
             var expression = source.Visit(new Evaluator());
 
+            _out.WriteLine(expression.Visit(new MathematicaPrinter()));
             Assert.Equal(source, expression);
         }
 
@@ -41,7 +44,18 @@ namespace ITMO.SymbolicComputations.Base.Tests {
             var source = Plus[Plus[Plus[Plus[2]]]];
             var expression = HoldForm[source].Visit(new Evaluator());
 
+            _out.WriteLine(expression.Visit(new MathematicaPrinter()));
             Assert.Equal(source, expression);
+        }
+        
+        [Fact]
+        public void NestedHoldWorks() {
+            var insides = Hold[Plus[Plus[2]]];
+            var source = Plus[Plus[insides]];
+            var expression = source.Visit(new Evaluator());
+
+            _out.WriteLine(expression.Visit(new MathematicaPrinter()));
+            Assert.Equal(insides, expression);
         }
     }
 }

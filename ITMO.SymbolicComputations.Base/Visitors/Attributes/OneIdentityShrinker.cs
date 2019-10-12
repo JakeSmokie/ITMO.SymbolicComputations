@@ -8,7 +8,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Attributes {
         public Symbol VisitFunction(Expression expression) =>
             expression.Head.Visit(IsOneIdentityVisitor)
             && expression.Arguments.Count == 1
-                ? expression.Arguments[0].Visit(this)
+                ? expression.Arguments[0]
                 : expression;
 
         public Symbol VisitSymbol(StringSymbol symbol) => symbol;
