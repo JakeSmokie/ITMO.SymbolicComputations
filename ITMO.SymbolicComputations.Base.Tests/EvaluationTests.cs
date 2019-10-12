@@ -1,5 +1,4 @@
-﻿using ITMO.SymbolicComputations.Base.Models;
-using Xunit;
+﻿using Xunit;
 using Xunit.Abstractions;
 using static ITMO.SymbolicComputations.Base.Predefined.ArithmeticFunctions;
 using static ITMO.SymbolicComputations.Base.Predefined.Functions;
