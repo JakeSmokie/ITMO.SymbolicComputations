@@ -6,8 +6,8 @@ using Xunit;
 using Xunit.Abstractions;
 
 namespace ITMO.SymbolicComputations.Base.Tests {
-    public sealed class Tests {
-        public Tests(ITestOutputHelper output) {
+    public sealed class SerializationTests {
+        public SerializationTests(ITestOutputHelper output) {
             _out = output;
         }
 
