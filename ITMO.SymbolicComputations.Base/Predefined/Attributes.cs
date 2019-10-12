@@ -6,7 +6,7 @@ namespace ITMO.SymbolicComputations.Base.Predefined {
         public static readonly StringSymbol HoldRest = new StringSymbol(nameof(HoldRest));
         public static readonly StringSymbol HoldFirst = new StringSymbol(nameof(HoldFirst));
         public static readonly StringSymbol HoldAllComplete = new StringSymbol(nameof(HoldAllComplete));
-        
+
         public static readonly StringSymbol Flat = new StringSymbol(nameof(Flat));
         public static readonly StringSymbol OneIdentity = new StringSymbol(nameof(OneIdentity));
     }

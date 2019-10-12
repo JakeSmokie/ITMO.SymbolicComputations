@@ -8,9 +8,6 @@ namespace ITMO.SymbolicComputations.Base.Models {
 
         public decimal Value { get; }
 
-        protected override T VisitImplementation<T>(ISymbolVisitor<T> visitor) =>
-            visitor.VisitConstant(this);
-
         public bool Equals(Constant other) {
             if (ReferenceEquals(null, other)) {
                 return false;
@@ -22,6 +19,9 @@ namespace ITMO.SymbolicComputations.Base.Models {
 
             return Value == other.Value;
         }
+
+        protected override T VisitImplementation<T>(ISymbolVisitor<T> visitor) =>
+            visitor.VisitConstant(this);
 
         public override bool Equals(object obj) => ReferenceEquals(this, obj) || obj is Constant other && Equals(other);
 

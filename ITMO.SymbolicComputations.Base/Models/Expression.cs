@@ -13,9 +13,6 @@ namespace ITMO.SymbolicComputations.Base.Models {
         public Symbol Head { get; }
         public ImmutableList<Symbol> Arguments { get; }
 
-        protected override T VisitImplementation<T>(ISymbolVisitor<T> visitor) =>
-            visitor.VisitFunction(this);
-
         public bool Equals(Expression other) {
             if (ReferenceEquals(null, other)) {
                 return false;
@@ -24,9 +21,12 @@ namespace ITMO.SymbolicComputations.Base.Models {
             if (ReferenceEquals(this, other)) {
                 return true;
             }
-            
+
             return Head.Equals(other.Head) && Arguments.SequenceEqual(other.Arguments);
         }
+
+        protected override T VisitImplementation<T>(ISymbolVisitor<T> visitor) =>
+            visitor.VisitFunction(this);
 
         public override bool Equals(object obj) => ReferenceEquals(this, obj) || obj is Expression other && Equals(other);
 

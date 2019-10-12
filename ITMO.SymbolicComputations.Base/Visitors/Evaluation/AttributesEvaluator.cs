@@ -29,11 +29,14 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
             return new Expression(head, arguments);
         }
 
+        public Symbol VisitSymbol(StringSymbol symbol) => symbol;
+        public Symbol VisitConstant(Constant constant) => constant;
+
         private static ImmutableList<Symbol> EvaluateArguments(Symbol head, ImmutableList<Symbol> arguments) {
             if (head.Visit(HoldAllCompleteChecker)) {
                 return arguments;
             }
-            
+
             if (head.Visit(HoldAllChecker)) {
                 return EvaluateEagerly(arguments)
                     .ToImmutableList();
@@ -62,8 +65,5 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
                     ? e.Arguments.Select(a => a.Visit(FullEvaluator))
                     : new[] {e}
             );
-
-        public Symbol VisitSymbol(StringSymbol symbol) => symbol;
-        public Symbol VisitConstant(Constant constant) => constant;
     }
 }
