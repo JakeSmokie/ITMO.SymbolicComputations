@@ -2,7 +2,7 @@
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Attributes {
     public sealed class OneIdentityShrinker : ISymbolVisitor<Symbol> {
-        private static readonly ISymbolVisitor<bool> IsOneIdentityVisitor =
+        private static readonly HasAttributeChecker IsOneIdentityVisitor =
             new HasAttributeChecker(Predefined.Attributes.OneIdentity);
 
         public Symbol VisitFunction(Function function) =>

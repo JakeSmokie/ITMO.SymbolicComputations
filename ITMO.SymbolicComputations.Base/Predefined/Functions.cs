@@ -6,8 +6,11 @@ namespace ITMO.SymbolicComputations.Base.Predefined {
         public static readonly StringSymbol Evaluate = new StringSymbol("Evaluate");
 
         public static readonly StringSymbol Hold = new StringSymbol("Hold",
-            ImmutableSortedSet<StringSymbol>.Empty
-                .Add(Attributes.HoldAll)
+            ImmutableSortedSet<StringSymbol>.Empty.Add(Attributes.HoldAll)
+        );
+        
+        public static readonly StringSymbol HoldForm = new StringSymbol("HoldForm",
+            ImmutableSortedSet<StringSymbol>.Empty.Add(Attributes.HoldAll)
         );
     }
 }
