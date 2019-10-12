@@ -12,11 +12,21 @@ namespace ITMO.SymbolicComputations.Base.Models {
 
         public Symbol Symbol { get; }
         public ImmutableList<Symbol> Arguments { get; }
-        
+
         [JsonIgnore]
         public ImmutableHashSet<Symbol> Attributes { get; }
-        
-        protected override T VisitImplementation<T>(ISymbolVisitor<T> visitor) => 
+
+        protected override T VisitImplementation<T>(ISymbolVisitor<T> visitor) =>
             visitor.VisitFunction(this);
+
+        public static Function Declare(string name, ImmutableHashSet<Symbol>? attributes = null) {
+            attributes ??= ImmutableHashSet<Symbol>.Empty;
+
+            return new Function(
+                new StringSymbol(name),
+                ImmutableList<Symbol>.Empty,
+                attributes
+            );
+        }
     }
 }
