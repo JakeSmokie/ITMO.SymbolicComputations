@@ -1,5 +1,5 @@
 ﻿using ITMO.SymbolicComputations.Base.Visitors;
-using ITMO.SymbolicComputations.Base.Visitors.Attributes;
+using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using Xunit;
 using Xunit.Abstractions;
 using static ITMO.SymbolicComputations.Base.Predefined.ArithmeticFunctions;
@@ -15,7 +15,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
         [Fact]
         public void ConstInsidePlusIsReducedToConst() {
             var expression = Plus[Plus[Plus[Plus[2]]]]
-                .Visit(new Evaluator());
+                .Visit(new FullEvaluator());
             
             _out.WriteLine(expression.Visit(new MathematicaPrinter()));
             Assert.Equal(2, expression);
@@ -24,7 +24,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
         [Fact]
         public void PlusInsidePlusIsReducedToOnePlus() {
             var expression = Plus[Plus[Plus[Plus[2, 3]]]]
-                .Visit(new Evaluator());
+                .Visit(new FullEvaluator());
             
             _out.WriteLine(expression.Visit(new MathematicaPrinter()));
             Assert.Equal(Plus[2, 3], expression);
@@ -33,7 +33,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
         [Fact]
         public void HoldWorks() {
             var source = Hold[Plus[Plus[Plus[Plus[2]]]]];
-            var expression = source.Visit(new Evaluator());
+            var expression = source.Visit(new FullEvaluator());
 
             _out.WriteLine(expression.Visit(new MathematicaPrinter()));
             Assert.Equal(source, expression);
@@ -42,7 +42,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
         [Fact]
         public void HoldFormWorks() {
             var source = Plus[Plus[Plus[Plus[2]]]];
-            var expression = HoldForm[source].Visit(new Evaluator());
+            var expression = HoldForm[source].Visit(new FullEvaluator());
 
             _out.WriteLine(expression.Visit(new MathematicaPrinter()));
             Assert.Equal(source, expression);
@@ -52,7 +52,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
         public void NestedHoldWorks() {
             var insides = Hold[Plus[Plus[2]]];
             var source = Plus[Plus[insides]];
-            var expression = source.Visit(new Evaluator());
+            var expression = source.Visit(new FullEvaluator());
 
             _out.WriteLine(expression.Visit(new MathematicaPrinter()));
             Assert.Equal(insides, expression);
