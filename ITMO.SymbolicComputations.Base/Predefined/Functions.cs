@@ -3,9 +3,9 @@ using ITMO.SymbolicComputations.Base.Models;
 
 namespace ITMO.SymbolicComputations.Base.Predefined {
     public static class Functions {
-        public static readonly Function Evaluate = Function.Declare("Evaluate");
+        public static readonly StringSymbol Evaluate = new StringSymbol("Evaluate");
 
-        public static readonly Function Hold = Function.Declare("Hold",
+        public static readonly StringSymbol Hold = new StringSymbol("Hold",
             ImmutableHashSet<Symbol>.Empty
                 .Add(Attributes.HoldAll)
         );
