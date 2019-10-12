@@ -1,22 +1,44 @@
 using System;
 using System.Collections.Immutable;
+using System.Linq;
 using ITMO.SymbolicComputations.Base.Visitors;
 using Newtonsoft.Json;
 
 namespace ITMO.SymbolicComputations.Base.Models {
-    public sealed class StringSymbol : Symbol, IEquatable<StringSymbol> {
-        public StringSymbol(string name, ImmutableHashSet<StringSymbol>? attributes = null) {
+    public sealed class StringSymbol : Symbol, IEquatable<StringSymbol>, IComparable<StringSymbol>, IComparable {
+        public StringSymbol(string name, ImmutableSortedSet<StringSymbol>? attributes = null) {
             Name = name;
-            Attributes = attributes ?? ImmutableHashSet<StringSymbol>.Empty;
+            Attributes = attributes ?? ImmutableSortedSet<StringSymbol>.Empty;
         }
 
         public string Name { get; }
 
         [JsonIgnore]
-        public ImmutableHashSet<StringSymbol> Attributes { get; }
+        public ImmutableSortedSet<StringSymbol> Attributes { get; }
 
-        protected override T VisitImplementation<T>(ISymbolVisitor<T> visitor) =>
-            visitor.VisitSymbol(this);
+        public int CompareTo(object obj) {
+            if (ReferenceEquals(null, obj)) {
+                return 1;
+            }
+
+            if (ReferenceEquals(this, obj)) {
+                return 0;
+            }
+
+            return obj is StringSymbol other ? CompareTo(other) : throw new ArgumentException($"Object must be of type {nameof(StringSymbol)}");
+        }
+
+        public int CompareTo(StringSymbol other) {
+            if (ReferenceEquals(this, other)) {
+                return 0;
+            }
+
+            if (ReferenceEquals(null, other)) {
+                return 1;
+            }
+
+            return string.Compare(Name, other.Name, StringComparison.Ordinal);
+        }
 
         public bool Equals(StringSymbol other) {
             if (ReferenceEquals(null, other)) {
@@ -27,8 +49,12 @@ namespace ITMO.SymbolicComputations.Base.Models {
                 return true;
             }
 
-            return Name == other.Name && Equals(Attributes, other.Attributes);
+            return Name == other.Name &&
+                   Attributes.SequenceEqual(other.Attributes);
         }
+
+        protected override T VisitImplementation<T>(ISymbolVisitor<T> visitor) =>
+            visitor.VisitSymbol(this);
 
         public override bool Equals(object obj) => ReferenceEquals(this, obj) || obj is StringSymbol other && Equals(other);
 
