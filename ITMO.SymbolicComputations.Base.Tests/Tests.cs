@@ -1,7 +1,7 @@
 using System.IO;
 using System.Xml;
-using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Tools;
+using ITMO.SymbolicComputations.Base.Visitors;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -29,7 +29,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
             var document = new XmlDocument();
             document.Load("Samples/First.xml");
 
-            var mathematica = document.AsExpressionInfo().AsMathematica();
+            var mathematica = document.AsExpressionInfo().Symbol.Visit(new MathematicaPrintingVisitor());
             _out.WriteLine(mathematica);
 
             Assert.Equal("Times[Plus[Times[Plus[3, 5], x], 10], x]", mathematica);
