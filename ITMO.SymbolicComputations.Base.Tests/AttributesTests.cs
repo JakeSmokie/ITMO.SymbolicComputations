@@ -57,5 +57,14 @@ namespace ITMO.SymbolicComputations.Base.Tests {
             _out.WriteLine(expression.Visit(new MathematicaPrinter()));
             Assert.Equal(insides, expression);
         }
+
+        [Fact]
+        public void HoldSuppressingWithEvaluateFunctionWorks() {
+            var source = Hold[Evaluate[Plus[Plus[Plus[Plus[2]]]]]];
+            var expression = source.Visit(new FullEvaluator());
+
+            _out.WriteLine(expression.Visit(new MathematicaPrinter()));
+            Assert.Equal(Hold[2], expression);
+        }
     }
 }
