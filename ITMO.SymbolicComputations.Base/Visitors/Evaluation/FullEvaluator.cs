@@ -6,11 +6,12 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         private static readonly OneIdentityShrinker OneIdentityShrinker = new OneIdentityShrinker();
         private static readonly AttributesEvaluator AttributesEvaluator = new AttributesEvaluator();
         private static readonly HoldFormReleaser HoldFormReleaser = new HoldFormReleaser();
+        private static readonly FlatFlattener FlatFlattener = new FlatFlattener();
 
         public Symbol VisitFunction(Expression expression) =>
             expression
                 .Visit(AttributesEvaluator)
-//                .Visit(Flat)
+                .Visit(FlatFlattener)
 //                .Visit(Orderless)
                 .Visit(OneIdentityShrinker)
                 .Visit(HoldFormReleaser);
