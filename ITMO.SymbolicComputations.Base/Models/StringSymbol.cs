@@ -37,7 +37,7 @@ namespace ITMO.SymbolicComputations.Base.Models {
                 return 1;
             }
 
-            return string.Compare(Name, other.Name, StringComparison.Ordinal);
+            return string.Compare(Name, other.Name, StringComparison.InvariantCulture);
         }
 
         public bool Equals(StringSymbol other) {
@@ -49,8 +49,7 @@ namespace ITMO.SymbolicComputations.Base.Models {
                 return true;
             }
 
-            return Name == other.Name &&
-                   Attributes.SequenceEqual(other.Attributes);
+            return Name == other.Name;
         }
 
         protected override T VisitImplementation<T>(ISymbolVisitor<T> visitor) =>
@@ -59,9 +58,7 @@ namespace ITMO.SymbolicComputations.Base.Models {
         public override bool Equals(object obj) => ReferenceEquals(this, obj) || obj is StringSymbol other && Equals(other);
 
         public override int GetHashCode() {
-            unchecked {
-                return ((Name != null ? Name.GetHashCode() : 0) * 397) ^ (Attributes != null ? Attributes.GetHashCode() : 0);
-            }
+            return Name != null ? Name.GetHashCode() : 0;
         }
 
         public static bool operator ==(StringSymbol left, StringSymbol right) => Equals(left, right);

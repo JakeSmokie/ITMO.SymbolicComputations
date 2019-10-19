@@ -14,7 +14,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Attributes {
 
             return new Expression(expression.Head,
                 expression.Arguments.SelectMany(a =>
-                    a is Expression e && e.Head == expression.Head
+                    a is Expression e && Equals(e.Head, expression.Head)
                         ? e.Arguments.AsEnumerable()
                         : Enumerable.Repeat(a, 1)
                 ).ToImmutableList()

@@ -66,7 +66,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
 
         private static IEnumerable<(ImmutableList<Symbol>, Symbol)> EvaluateEagerly(IEnumerable<Symbol> symbols) =>
             symbols.OfType<Expression>().SelectMany(e =>
-                e.Head == Functions.Evaluate
+                Equals(e.Head, Functions.Evaluate)
                     ? e.Arguments.Select(a => a.Visit(FullEvaluator))
                     : (new[] {(ImmutableList<Symbol>.Empty, (Symbol) e)})
             );

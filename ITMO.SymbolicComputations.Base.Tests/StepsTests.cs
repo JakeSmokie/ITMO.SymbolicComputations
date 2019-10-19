@@ -1,9 +1,11 @@
 ﻿using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Predefined;
+using ITMO.SymbolicComputations.Base.Tools;
 using ITMO.SymbolicComputations.Base.Visitors;
 using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using Xunit;
 using Xunit.Abstractions;
+using static ITMO.SymbolicComputations.Base.Predefined.ArithmeticFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Tests {
     public sealed class StepsTests {
@@ -16,9 +18,31 @@ namespace ITMO.SymbolicComputations.Base.Tests {
 
         [Fact]
         public void NestedOrderingLoggingWorks() {
-            var source = Orderless["y", Orderless[1, "x", Orderless["y"]], "x", "z"];
-            var steps = source.Visit(new FullEvaluator()).Steps;
+            Symbol x = "x";
+            Symbol y = "y";
+            Symbol z = "z";
 
+            var source = Orderless[y, Orderless[1, x, Orderless[y]], x, z];
+            var steps = source.Visit(new FullEvaluator()).Steps.WithoutDuplicates();
+
+            steps.ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
+
+            var expected = new [] {
+                Orderless[y],
+                Orderless[1, x, Orderless[y]],
+                Orderless[Orderless[y], x, 1],
+                Orderless[y, Orderless[Orderless[y], x, 1], x, z],
+                Orderless[Orderless[Orderless[y], x, 1], x, y, z]
+            };
+            
+            Assert.Equal(expected, steps);
+        }
+        
+        [Fact]
+        public void MoreComplexFlatWorks() {
+            var source = Plus[Plus["a"], Plus["b", Plus["c", "d", Plus["e"]], "f"], "g", "h"];
+            var steps = source.Visit(new FullEvaluator()).Steps.WithoutDuplicates();
+            
             steps.ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
         }
     }

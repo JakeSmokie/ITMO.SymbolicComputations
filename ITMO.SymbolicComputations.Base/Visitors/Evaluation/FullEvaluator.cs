@@ -28,7 +28,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
                     var (steps, symbol) = state;
                     var visited = symbol.Visit(visitor);
 
-                    return (visited == symbol ? steps : steps.Add(visited), visited);
+                    return (steps.Add(visited), visited);
                 });
         }
 
