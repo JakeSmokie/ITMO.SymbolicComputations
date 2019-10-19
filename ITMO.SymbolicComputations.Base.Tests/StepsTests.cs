@@ -50,14 +50,10 @@ namespace ITMO.SymbolicComputations.Base.Tests {
             Symbol g = "g";
             Symbol h = "h";
             
-            var source = Plus[Plus[a], Plus[b, Plus[c, d, Plus[e]], f], g, h];
+            var source = Plus[a, Plus[b, Plus[c, d, e], f], g, h];
             var steps = source.Visit(new FullEvaluator()).Steps.WithoutDuplicates();
 
             var expected = new [] {
-                Plus[a],
-                a,
-                Plus[e],
-                e,
                 Plus[c, d, e],
                 Plus[b, Plus[c, d, e], f],
                 Plus[b, c, d, e, f],
