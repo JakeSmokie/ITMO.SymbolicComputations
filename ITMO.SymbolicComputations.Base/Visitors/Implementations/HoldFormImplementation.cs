@@ -2,8 +2,8 @@
 using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Predefined;
 
-namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
-    public sealed class HoldFormReleaser : ISymbolVisitor<Symbol> {
+namespace ITMO.SymbolicComputations.Base.Visitors.Implementations {
+    public sealed class HoldFormImplementation : ISymbolVisitor<Symbol> {
         public Symbol VisitFunction(Expression expression) =>
             expression.Head == Functions.HoldForm
                 ? expression.Arguments.First()

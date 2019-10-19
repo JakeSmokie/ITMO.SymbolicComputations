@@ -9,5 +9,6 @@ namespace ITMO.SymbolicComputations.Base.Predefined {
 
         public static readonly StringSymbol Flat = new StringSymbol(nameof(Flat));
         public static readonly StringSymbol OneIdentity = new StringSymbol(nameof(OneIdentity));
+        public static readonly StringSymbol Orderless = new StringSymbol(nameof(Orderless));
     }
 }
