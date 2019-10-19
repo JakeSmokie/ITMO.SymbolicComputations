@@ -17,7 +17,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
         [Fact]
         public void StringSymbolsOrderingWorks() {
             var source = Orderless["y", "x", "z"];
-            var expression = source.Visit(new FullEvaluator());
+            var expression = source.Visit(new FullEvaluator()).Symbol;
 
             _out.WriteLine(expression.Visit(new MathematicaPrinter()));
             Assert.Equal(Orderless["x", "y", "z"], expression);
@@ -26,7 +26,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
         [Fact]
         public void ConstantOrderingWorks() {
             var source = Orderless["y", 30, "x", 10, "z", 60];
-            var expression = source.Visit(new FullEvaluator());
+            var expression = source.Visit(new FullEvaluator()).Symbol;
 
             _out.WriteLine(expression.Visit(new MathematicaPrinter()));
             Assert.Equal(Orderless["x", "y", "z", 10, 30, 60], expression);
@@ -35,7 +35,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
         [Fact]
         public void NestedOrderingWorks() {
             var source = Orderless["y", Orderless[1, "x", Orderless["y"]], "x", "z"];
-            var expression = source.Visit(new FullEvaluator());
+            var expression = source.Visit(new FullEvaluator()).Symbol;
 
             _out.WriteLine(expression.Visit(new MathematicaPrinter()));
             Assert.Equal(Orderless[Orderless[Orderless["y"], "x", 1], "x", "y", "z"], expression);

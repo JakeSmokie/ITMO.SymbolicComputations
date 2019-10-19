@@ -14,7 +14,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
         [Fact]
         public void FlatWorks() {
             var source = Plus[Plus["x"], Plus["y"]];
-            var expression = source.Visit(new FullEvaluator());
+            var expression = source.Visit(new FullEvaluator()).Symbol;
 
             _out.WriteLine(expression.Visit(new MathematicaPrinter()));
             Assert.Equal(Plus["x", "y"], expression);
@@ -23,7 +23,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
         [Fact]
         public void MoreComplexFlatWorks() {
             var source = Plus[Plus["a"], Plus["b", Plus["c", "d", Plus["e"]], "f"], "g", "h"];
-            var expression = source.Visit(new FullEvaluator());
+            var expression = source.Visit(new FullEvaluator()).Symbol;
 
             _out.WriteLine(expression.Visit(new MathematicaPrinter()));
             Assert.Equal(Plus["a", "b", "c", "d", "e", "f", "g", "h"], expression);
