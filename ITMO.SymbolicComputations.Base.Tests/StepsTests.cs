@@ -7,6 +7,7 @@ using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using Xunit;
 using Xunit.Abstractions;
 using static ITMO.SymbolicComputations.Base.Predefined.ArithmeticFunctions;
+using static ITMO.SymbolicComputations.Base.Predefined.Functions;
 
 namespace ITMO.SymbolicComputations.Base.Tests {
     public sealed class StepsTests {
@@ -66,6 +67,21 @@ namespace ITMO.SymbolicComputations.Base.Tests {
             };
 
             steps.ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
+            Assert.Equal(expected, steps);
+        }
+        
+        [Fact]
+        public void HoldFormWorks() {
+            var source = Plus[2];
+            var steps = HoldForm[source].Visit(new FullEvaluator()).Steps.WithoutDuplicates();
+
+            steps.ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
+
+            var expected = new [] {
+                HoldForm[Plus[2]],
+                Plus[2]
+            };
+
             Assert.Equal(expected, steps);
         }
     }

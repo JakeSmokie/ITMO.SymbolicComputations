@@ -1,5 +1,6 @@
 ﻿using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Predefined;
+using ITMO.SymbolicComputations.Base.Tools;
 using ITMO.SymbolicComputations.Base.Visitors;
 using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using Xunit;
@@ -65,9 +66,9 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
         [Fact]
         public void HoldFormWorks() {
             var source = Plus[2];
-            var expression = HoldForm[source].Visit(new FullEvaluator()).Symbol;
+            var (steps, expression) = HoldForm[source].Visit(new FullEvaluator());
 
-            _out.WriteLine(expression.Visit(new MathematicaPrinter()));
+            steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
             Assert.Equal(source, expression);
         }
 
@@ -83,9 +84,9 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
         [Fact]
         public void HoldSuppressingWithEvaluateFunctionWorks() {
             var source = Hold[Evaluate[Plus[2]]];
-            var expression = source.Visit(new FullEvaluator()).Symbol;
+            var (steps, expression) = source.Visit(new FullEvaluator());
 
-            _out.WriteLine(expression.Visit(new MathematicaPrinter()));
+            steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
             Assert.Equal(Hold[2], expression);
         }
 
