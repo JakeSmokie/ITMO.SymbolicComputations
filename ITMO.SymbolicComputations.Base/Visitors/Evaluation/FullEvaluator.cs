@@ -19,15 +19,16 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
                 OneIdentityShrinker,
                 HoldFormImplementation
             };
-            
-            var (steps, symbol) = expression.Visit(ArgumentsEvaluator);
+
+            var (argSteps, argSymbol) = expression.Visit(ArgumentsEvaluator);
+
             return visitors.Aggregate(
-                (steps, symbol),
+                (argSteps.Add(argSymbol), argSymbol),
                 (state, visitor) => {
-                    var (steps1, symbol1) = state;
-                    var visited = symbol1.Visit(visitor);
-                    
-                    return (steps1.Add(visited), visited);
+                    var (steps, symbol) = state;
+                    var visited = symbol.Visit(visitor);
+
+                    return (visited == symbol ? steps : steps.Add(visited), visited);
                 });
         }
 
