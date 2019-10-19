@@ -31,5 +31,14 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
             _out.WriteLine(expression.Visit(new MathematicaPrinter()));
             Assert.Equal(Orderless["x", "y", "z", 10, 30, 60], expression);
         }
+
+        [Fact]
+        public void NestedOrderingWorks() {
+            var source = Orderless["y", Orderless[1, "x", Orderless["y"]], "x", "z"];
+            var expression = source.Visit(new FullEvaluator());
+
+            _out.WriteLine(expression.Visit(new MathematicaPrinter()));
+            Assert.Equal(Orderless[Orderless[Orderless["y"], "x", 1], "x", "y", "z"], expression);
+        }
     }
 }
