@@ -1,4 +1,5 @@
-﻿using ITMO.SymbolicComputations.Base.Models;
+﻿using System.Diagnostics;
+using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Predefined;
 using ITMO.SymbolicComputations.Base.Tools;
 using ITMO.SymbolicComputations.Base.Visitors;
@@ -40,10 +41,32 @@ namespace ITMO.SymbolicComputations.Base.Tests {
         
         [Fact]
         public void MoreComplexFlatWorks() {
-            var source = Plus[Plus["a"], Plus["b", Plus["c", "d", Plus["e"]], "f"], "g", "h"];
-            var steps = source.Visit(new FullEvaluator()).Steps.WithoutDuplicates();
+            Symbol a = "a";
+            Symbol b = "b";
+            Symbol c = "c";
+            Symbol d = "d";
+            Symbol e = "e";
+            Symbol f = "f";
+            Symbol g = "g";
+            Symbol h = "h";
             
+            var source = Plus[Plus[a], Plus[b, Plus[c, d, Plus[e]], f], g, h];
+            var steps = source.Visit(new FullEvaluator()).Steps.WithoutDuplicates();
+
+            var expected = new [] {
+                Plus[a],
+                a,
+                Plus[e],
+                e,
+                Plus[c, d, e],
+                Plus[b, Plus[c, d, e], f],
+                Plus[b, c, d, e, f],
+                Plus[a, Plus[b, c, d, e, f], g, h],
+                Plus[a, b, c, d, e, f, g, h]
+            };
+
             steps.ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
+            Assert.Equal(expected, steps);
         }
     }
 }
