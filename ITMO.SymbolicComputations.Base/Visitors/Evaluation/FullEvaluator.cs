@@ -19,9 +19,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
                 HoldFormImplementation
             };
 
-            return visitors.Fold((Symbol) expression, (symbol, visitor) =>
-                symbol.Visit(visitor)
-            );
+            return visitors.Fold((Symbol) expression, (symbol, visitor) => symbol.Visit(visitor));
         }
 
         public Symbol VisitSymbol(StringSymbol symbol) => symbol;
