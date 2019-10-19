@@ -10,14 +10,19 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         private static readonly FlatFlattener FlatFlattener = new FlatFlattener();
         private static readonly ArgumentsSorter ArgumentsSorter = new ArgumentsSorter();
 
-        public Symbol VisitFunction(Expression expression) =>
-            expression
-                .Visit(AttributesEvaluator)
-                .Visit(FlatFlattener)
-//                .Visit(Orderless)
-                .Visit(OneIdentityShrinker)
-                .Visit(ArgumentsSorter)
-                .Visit(HoldFormImplementation);
+        public Symbol VisitFunction(Expression expression) {
+            var visitors = new ISymbolVisitor<Symbol>[] {
+                AttributesEvaluator,
+                FlatFlattener,
+                ArgumentsSorter,
+                OneIdentityShrinker,
+                HoldFormImplementation
+            };
+
+            return visitors.Fold((Symbol) expression, (symbol, visitor) =>
+                symbol.Visit(visitor)
+            );
+        }
 
         public Symbol VisitSymbol(StringSymbol symbol) => symbol;
         public Symbol VisitConstant(Constant constant) => constant;
