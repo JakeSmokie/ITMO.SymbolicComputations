@@ -24,9 +24,9 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
             Assert.Equal(15, symbol);
         }
-      /*  
+      
         [Fact]
-        public void PlusForSameSymbolCreatesPower() {
+        public void PlusForSameSymbolCreatesTimes() {
             Symbol x = "x";
             Symbol y = "y";
 
@@ -34,8 +34,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests
             var (steps, symbol) = source.Visit(new FullEvaluator());
             
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
-            Assert.Equal(Times[Power[x, 2], y], symbol);
+            Assert.Equal(Plus[Times[x, 2], y], symbol);
         }
-        */
     }
 }
