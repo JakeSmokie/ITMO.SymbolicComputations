@@ -3,6 +3,7 @@ using System.Linq;
 using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Visitors.Attributes;
 using ITMO.SymbolicComputations.Base.Visitors.Implementations;
+using ITMO.SymbolicComputations.Base.Visitors.Implementations.PlusFunction;
 using ITMO.SymbolicComputations.Base.Visitors.Implementations.TimesFunction;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
@@ -14,12 +15,14 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         private static readonly ArgumentsSorter ArgumentsSorter = new ArgumentsSorter();
         private static readonly TimesConstantsReducer TimesConstantsReducer = new TimesConstantsReducer();
         private static readonly TimesSymbolsReducer TimesSymbolsReducer = new TimesSymbolsReducer();
+        private static readonly PlusConstantsReducer PlusConstantsReducer = new PlusConstantsReducer();
 
         public (ImmutableList<Symbol>, Symbol) VisitFunction(Expression expression) {
             var visitors = new ISymbolVisitor<Symbol>[] {
                 FlatFlattener,
                 TimesConstantsReducer,
                 TimesSymbolsReducer,
+                PlusConstantsReducer,
                 // Last
                 ArgumentsSorter,
                 OneIdentityShrinker,
