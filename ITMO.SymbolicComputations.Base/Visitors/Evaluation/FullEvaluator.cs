@@ -20,6 +20,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         private static readonly PlusSymbolsReducer PlusSymbolsReducer = new PlusSymbolsReducer();
         private static readonly TimesInPowerSplitter TimesInPowerSplitter = new TimesInPowerSplitter();
         private static readonly NestedPowerFlattener NestedPowerFlattener = new NestedPowerFlattener();
+        private static readonly TimesPowersReducer TimesPowersReducer = new TimesPowersReducer();
 
         public (ImmutableList<Symbol>, Symbol) VisitFunction(Expression expression) {
             var visitors = new ISymbolVisitor<Symbol>[] {
@@ -30,6 +31,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
                 PlusSymbolsReducer,
                 TimesInPowerSplitter,
                 NestedPowerFlattener,
+                TimesPowersReducer,
                 // Last
                 ArgumentsSorter,
                 OneIdentityShrinker,
