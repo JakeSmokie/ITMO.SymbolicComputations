@@ -3,6 +3,7 @@ using System.Linq;
 using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Visitors.Attributes;
 using ITMO.SymbolicComputations.Base.Visitors.Implementations;
+using ITMO.SymbolicComputations.Base.Visitors.Implementations.TimesFunction;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
     public sealed class FullEvaluator : ISymbolVisitor<(ImmutableList<Symbol> Steps, Symbol Symbol)> {
@@ -11,10 +12,15 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         private static readonly HoldFormImplementation HoldFormImplementation = new HoldFormImplementation();
         private static readonly FlatFlattener FlatFlattener = new FlatFlattener();
         private static readonly ArgumentsSorter ArgumentsSorter = new ArgumentsSorter();
+        private static readonly TimesConstantsReducer TimesConstantsReducer = new TimesConstantsReducer();
+        private static readonly TimesSymbolsReducer TimesSymbolsReducer = new TimesSymbolsReducer();
 
         public (ImmutableList<Symbol>, Symbol) VisitFunction(Expression expression) {
             var visitors = new ISymbolVisitor<Symbol>[] {
                 FlatFlattener,
+                TimesConstantsReducer,
+                TimesSymbolsReducer,
+                // Last
                 ArgumentsSorter,
                 OneIdentityShrinker,
                 HoldFormImplementation

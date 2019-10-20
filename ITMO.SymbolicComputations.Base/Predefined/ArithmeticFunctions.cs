@@ -7,5 +7,13 @@ namespace ITMO.SymbolicComputations.Base.Predefined {
             Attributes.OneIdentity,
             Attributes.Orderless
         );
+ 
+        public static readonly StringSymbol Times = new StringSymbol(nameof(Times),
+            Attributes.Flat,
+            Attributes.OneIdentity,
+            Attributes.Orderless
+        );
+        
+        public static readonly StringSymbol Power = new StringSymbol(nameof(Power));
     }
 }
