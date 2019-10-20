@@ -24,7 +24,16 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
             Assert.Equal(15, symbol);
         }
-      
+        
+        [Fact]
+        public void ConstantsReduced2() {
+            var source = Plus[1, 3, 4, 5, Plus[9, -7]];
+            var (steps, symbol) = source.Visit(new FullEvaluator());
+
+            steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
+            Assert.Equal(15, symbol);
+        }
+
         [Fact]
         public void PlusForSameSymbolCreatesTimes() {
             Symbol x = "x";
