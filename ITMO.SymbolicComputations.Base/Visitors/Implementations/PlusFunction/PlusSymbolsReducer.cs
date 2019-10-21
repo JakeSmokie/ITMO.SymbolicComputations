@@ -1,6 +1,7 @@
 ﻿using System.Collections.Immutable;
 using System.Linq;
 using ITMO.SymbolicComputations.Base.Models;
+using ITMO.SymbolicComputations.Base.Tools;
 using static ITMO.SymbolicComputations.Base.Predefined.ArithmeticFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.PlusFunction
@@ -11,26 +12,29 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.PlusFunction
                 return expression;
             }
 
-            var stringSymbols = expression.Arguments
-                .OfType<StringSymbol>()
+            var symbols = expression.Arguments
+                .Where(x => !IsConstant(x))
                 .ToList();
 
-            if (stringSymbols.Count == 0) {
+            if (symbols.Count == 0) {
                 return expression;
             }
 
-            var others = expression.Arguments
-                .Where(x => !(x is StringSymbol));
+            var constants = expression.Arguments
+                .Where(IsConstant)
+                .ToList();
 
-            var times = stringSymbols
-                .GroupBy(x => x.Name)
+            var powers = symbols
+                .CountUp()
                 .Select(group =>
-                    group.Count() == 1
-                        ? (Symbol) group.Key
-                        : Times[group.Key, group.Count()]
+                    group.Count == 1
+                        ? group.Item
+                        : Times[group.Item, group.Count]
                 );
 
-            return new Expression(expression.Head, others.Concat(times).ToImmutableList());
+            return new Expression(expression.Head, powers.Concat(constants).ToImmutableList());
+        
+            bool IsConstant(Symbol symbol) => symbol is Constant;
         }
 
         public Symbol VisitSymbol(StringSymbol symbol) => symbol;
