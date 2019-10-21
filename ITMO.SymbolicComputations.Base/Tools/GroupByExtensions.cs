@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ITMO.SymbolicComputations.Base.Tools {
     public static class GroupByExtensions {
-        public static ImmutableList<(T Item, int Count)> CountUp<T>(this IEnumerable<T> enumerable) {
+        public static ImmutableList<(T Item, int Count)> GroupWithCounting<T>(this IEnumerable<T> enumerable) {
             return enumerable.Aggregate(
                 ImmutableList<(T Item, int Count)>.Empty,
                 (list, t) => {

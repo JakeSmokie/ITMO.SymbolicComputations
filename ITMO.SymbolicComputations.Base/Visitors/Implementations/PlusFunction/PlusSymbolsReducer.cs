@@ -25,7 +25,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.PlusFunction
                 .ToList();
 
             var powers = symbols
-                .CountUp()
+                .GroupWithCounting()
                 .Select(group =>
                     group.Count == 1
                         ? group.Item

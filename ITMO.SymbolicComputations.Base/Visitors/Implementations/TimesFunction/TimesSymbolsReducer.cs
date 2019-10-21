@@ -24,7 +24,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.TimesFunction 
                 .ToList();
 
             var powers = symbols
-                .CountUp()
+                .GroupWithCounting()
                 .Select(group =>
                     group.Count == 1
                         ? group.Item
