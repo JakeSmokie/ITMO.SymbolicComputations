@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using System.Linq;
+﻿using System.Linq;
 using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using static ITMO.SymbolicComputations.Base.Predefined.ArithmeticFunctions;

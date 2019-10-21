@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Immutable;
 using System.Linq;
-using ITMO.SymbolicComputations.Base.Comparers;
 using ITMO.SymbolicComputations.Base.Visitors;
 
 namespace ITMO.SymbolicComputations.Base.Models {
