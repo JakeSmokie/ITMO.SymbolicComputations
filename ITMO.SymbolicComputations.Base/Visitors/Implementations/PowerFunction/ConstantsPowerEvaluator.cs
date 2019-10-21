@@ -9,6 +9,14 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.PowerFunction 
                 return power;
             }
 
+            if (Equals(power.Arguments[1], new Constant(1))) {
+                return power.Arguments[0];
+            }
+            
+            if (Equals(power.Arguments[1], new Constant(0))) {
+                return 1;
+            }
+
             if (!(power.Arguments[0] is Constant x) || !(power.Arguments[1] is Constant scale)) {
                 return power;
             }
