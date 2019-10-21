@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Immutable;
 using System.Linq;
+using ITMO.SymbolicComputations.Base.Comparers;
 using ITMO.SymbolicComputations.Base.Visitors;
 
 namespace ITMO.SymbolicComputations.Base.Models {
@@ -32,12 +33,14 @@ namespace ITMO.SymbolicComputations.Base.Models {
 
         public override int GetHashCode() {
             unchecked {
-                return ((Head != null ? Head.GetHashCode() : 0) * 397) ^ (Arguments != null ? Arguments.GetHashCode() : 0);
+                return ((Head != null ? Head.GetHashCode() : 0) * 397) ^ (Arguments != null ? Arguments.Sum(x => x.GetHashCode()) : 0);
             }
         }
 
         public static bool operator ==(Expression left, Expression right) => Equals(left, right);
 
         public static bool operator !=(Expression left, Expression right) => !Equals(left, right);
+
+        public override string ToString() => Visit(new MathematicaPrinter());
     }
 }

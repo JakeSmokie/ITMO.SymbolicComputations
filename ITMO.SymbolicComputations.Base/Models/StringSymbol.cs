@@ -11,6 +11,7 @@ namespace ITMO.SymbolicComputations.Base.Models {
         }
 
         public string Name { get; }
+        public override string ToString() => Name;
 
         [JsonIgnore]
         public ImmutableSortedSet<StringSymbol> Attributes { get; }

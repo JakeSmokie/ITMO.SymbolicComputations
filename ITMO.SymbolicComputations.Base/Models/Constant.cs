@@ -23,6 +23,8 @@ namespace ITMO.SymbolicComputations.Base.Models {
         protected override T VisitImplementation<T>(ISymbolVisitor<T> visitor) =>
             visitor.VisitConstant(this);
 
+        public override string ToString() => $"{nameof(Value)}: {Value}";
+
         public override bool Equals(object obj) => ReferenceEquals(this, obj) || obj is Constant other && Equals(other);
 
         public override int GetHashCode() => Value.GetHashCode();
