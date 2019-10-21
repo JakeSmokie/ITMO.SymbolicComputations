@@ -25,5 +25,16 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
             Assert.Equal(Power[Plus[x, y], 2], symbol);
         }
 
+        [Fact]
+        public void Example2() {
+            Symbol x = "x";
+            Symbol y = "y";
+
+            var source = Plus[Power[x, y], Power[x, y]];
+            var (steps, symbol) = source.Visit(new FullEvaluator());
+            
+            steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
+            Assert.Equal(Times[Power[x, y], 2], symbol);
+        }
     }
 }
