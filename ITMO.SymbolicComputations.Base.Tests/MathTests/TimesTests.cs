@@ -44,7 +44,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
             var (steps, symbol) = source.Visit(new FullEvaluator());
             
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
-//            Assert.Equal(Times[Power[x, 15], Power[y, Plus[6, y]], z], symbol);
+            Assert.Equal(Times[Power[x, 15], Power[y, Plus[y, 6]], z], symbol);
         }
     }
 }
