@@ -16,5 +16,9 @@ namespace ITMO.SymbolicComputations.Base.Predefined {
         public static readonly StringSymbol HoldForm = new StringSymbol(nameof(HoldForm),
             Attributes.HoldAll
         );
+
+        public static readonly StringSymbol Function = new StringSymbol(nameof(Function),
+            Attributes.HoldAll
+        );
     }
 }

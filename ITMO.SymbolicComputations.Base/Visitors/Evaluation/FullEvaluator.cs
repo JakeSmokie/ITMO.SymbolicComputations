@@ -17,13 +17,16 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         private static readonly TimesConstantsReducer TimesConstantsReducer = new TimesConstantsReducer();
         private static readonly TimesSymbolsReducer TimesSymbolsReducer = new TimesSymbolsReducer();
         private static readonly PlusConstantsReducer PlusConstantsReducer = new PlusConstantsReducer();
+        private static readonly ConstantsPowerEvaluator ConstantsPowerEvaluator = new ConstantsPowerEvaluator();
         private static readonly PlusSymbolsReducer PlusSymbolsReducer = new PlusSymbolsReducer();
         private static readonly TimesInPowerSplitter TimesInPowerSplitter = new TimesInPowerSplitter();
         private static readonly NestedPowerFlattener NestedPowerFlattener = new NestedPowerFlattener();
         private static readonly TimesPowersReducer TimesPowersReducer = new TimesPowersReducer();
+        private static readonly FunctionEvaluator FunctionEvaluator = new FunctionEvaluator();
 
         public (ImmutableList<Symbol>, Symbol) VisitFunction(Expression expression) {
             var visitors = new ISymbolVisitor<Symbol>[] {
+                FunctionEvaluator,
                 FlatFlattener,
                 // Implementations
                 TimesConstantsReducer,
@@ -33,6 +36,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
                 TimesInPowerSplitter,
                 NestedPowerFlattener,
                 TimesPowersReducer,
+                ConstantsPowerEvaluator,
                 // Last
                 ArgumentsSorter,
                 OneIdentityShrinker,
