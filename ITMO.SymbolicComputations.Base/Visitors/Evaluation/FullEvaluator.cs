@@ -25,6 +25,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         public (ImmutableList<Symbol>, Symbol) VisitFunction(Expression expression) {
             var visitors = new ISymbolVisitor<Symbol>[] {
                 FlatFlattener,
+                // Implementations
                 TimesConstantsReducer,
                 TimesSymbolsReducer,
                 PlusConstantsReducer,
