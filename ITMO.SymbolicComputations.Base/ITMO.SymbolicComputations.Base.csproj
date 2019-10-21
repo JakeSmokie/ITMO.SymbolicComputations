@@ -13,7 +13,6 @@
 
     <ItemGroup>
       <Compile Remove="Tools\ExpressionSimplifier.cs" />
-      <None Include="Tools\ExpressionSimplifier.cs" />
     </ItemGroup>
 
 </Project>
