@@ -32,7 +32,7 @@ namespace ITMO.SymbolicComputations.Base.Models {
 
         public override int GetHashCode() {
             unchecked {
-                return ((Head != null ? Head.GetHashCode() : 0) * 397) ^ (Arguments != null ? Arguments.Sum(x => x.GetHashCode()) : 0);
+                return ((Head != null ? Head.GetHashCode() : 0) * 397) ^ (Arguments != null ? Arguments.GetHashCode() : 0);
             }
         }
 
