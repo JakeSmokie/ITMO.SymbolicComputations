@@ -1,21 +1,22 @@
-﻿using ITMO.SymbolicComputations.Base.Models;
+﻿using System.Collections.Immutable;
+using ITMO.SymbolicComputations.Base.Models;
 using static ITMO.SymbolicComputations.Base.Predefined.Functions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
-    public sealed class FunctionEvaluator : ISymbolVisitor<Symbol> {
-        public Symbol VisitFunction(Expression expression) {
+    public sealed class FunctionEvaluator : ISymbolVisitor<(ImmutableList<Symbol>, Symbol)> {
+        public (ImmutableList<Symbol>, Symbol) VisitFunction(Expression expression) {
             if (!(expression.Head is Expression head)) {
-                return expression;
+                return (ImmutableList<Symbol>.Empty, expression);
             }
 
             if (!Equals(head.Head, Function)) {
-                return expression;
+                return (ImmutableList<Symbol>.Empty, expression);
             }
 
             var variableSymbol = head.Arguments[0];
 
             if (!(variableSymbol is StringSymbol variable)) {
-                return expression;
+                return (ImmutableList<Symbol>.Empty, expression);
             }
 
             var funcArgument = expression.Arguments[0];
@@ -23,10 +24,10 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
             var function = head.Arguments[1];
             var substituted = function.Visit(new VariableReplacer(variable, funcArgument));
 
-            return substituted;
+            return substituted.Visit(new FullEvaluator());
         }
 
-        public Symbol VisitSymbol(StringSymbol symbol) => symbol;
-        public Symbol VisitConstant(Constant constant) => constant;
+        public (ImmutableList<Symbol>, Symbol) VisitSymbol(StringSymbol symbol) => (ImmutableList<Symbol>.Empty, symbol);
+        public (ImmutableList<Symbol>, Symbol) VisitConstant(Constant constant) => (ImmutableList<Symbol>.Empty, constant);
     }
 }

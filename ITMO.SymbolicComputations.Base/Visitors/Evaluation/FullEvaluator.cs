@@ -26,7 +26,6 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
 
         public (ImmutableList<Symbol>, Symbol) VisitFunction(Expression expression) {
             var visitors = new ISymbolVisitor<Symbol>[] {
-                FunctionEvaluator,
                 FlatFlattener,
                 // Implementations
                 TimesConstantsReducer,
@@ -44,9 +43,15 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
             };
 
             var (argSteps, argSymbol) = expression.Visit(ArgumentsEvaluator);
+            var (funcSteps, funcSymbol) = argSymbol.Visit(FunctionEvaluator);
+
+            var steps = ImmutableList<Symbol>.Empty
+                .AddRange(argSteps)
+                .AddRange(funcSteps)
+                .Add(argSymbol);
 
             return visitors.Aggregate(
-                (argSteps.Add(argSymbol), argSymbol),
+                (steps, funcSymbol),
                 (state, visitor) => {
                     var (steps, symbol) = state;
                     var visited = symbol.Visit(visitor);
