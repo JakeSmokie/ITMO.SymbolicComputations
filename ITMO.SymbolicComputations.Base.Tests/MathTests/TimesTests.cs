@@ -33,7 +33,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
             Assert.Equal(Times[Power[x, 2], y], symbol);
         }
-
+        
         [Fact]
         public void ComplexEvaluationIsOkay() {
             Symbol x = "x";
@@ -46,5 +46,19 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
             Assert.Equal(Times[Power[x, 15], Power[y, Plus[y, 6]], z], symbol);
         }
+        
+        [Fact]
+        public void ATimesZeroEqualsZero() {
+            Symbol x = "x";
+            Symbol y = "y";
+            Symbol z = "z";
+
+            var source = Times[x, x, y, z, 15, 0, -10, x];
+            var (steps, symbol) = source.Visit(new FullEvaluator());
+            
+            steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
+            Assert.Equal(0, symbol);
+        }
+       
     }
 }

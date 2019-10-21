@@ -11,7 +11,6 @@ namespace ITMO.SymbolicComputations.Base.Models {
         }
 
         public string Name { get; }
-        public override string ToString() => Name;
 
         [JsonIgnore]
         public ImmutableSortedSet<StringSymbol> Attributes { get; }
@@ -62,7 +61,8 @@ namespace ITMO.SymbolicComputations.Base.Models {
         }
 
         public static bool operator ==(StringSymbol left, StringSymbol right) => Equals(left, right);
-
         public static bool operator !=(StringSymbol left, StringSymbol right) => !Equals(left, right);
+        
+        public override string ToString() => Name;
     }
 }

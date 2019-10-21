@@ -47,8 +47,8 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
 
             var steps = ImmutableList<Symbol>.Empty
                 .AddRange(argSteps)
-                .AddRange(funcSteps)
-                .Add(argSymbol);
+                .Add(argSymbol)
+                .AddRange(funcSteps);
 
             return visitors.Aggregate(
                 (steps, funcSymbol),

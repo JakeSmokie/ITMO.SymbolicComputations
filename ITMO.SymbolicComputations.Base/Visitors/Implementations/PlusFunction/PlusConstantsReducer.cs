@@ -14,17 +14,21 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.PlusFunction
             var constants = expression.Arguments
                 .OfType<Constant>()
                 .ToList();
-
+            
             if (constants.Count == 0) {
                 return expression;
             }
-
+            
             var others = expression.Arguments
                 .Where(x => !(x is Constant));
 
             var reduce = constants
                 .Select(x => x.Value)
                 .Aggregate((acc, x) => acc + x);
+
+            if (reduce == 0) {
+                return new Expression(expression.Head, others.ToImmutableList());
+            }
             
             return new Expression(expression.Head, others.Append(reduce).ToImmutableList());
         }

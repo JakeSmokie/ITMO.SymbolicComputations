@@ -18,13 +18,17 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.TimesFunction 
                 return expression;
             }
 
+            if (constants.Any(x => x.Value == 0)) {
+                return 0;
+            }
+
             var others = expression.Arguments
                 .Where(x => !(x is Constant));
 
             var reduce = constants
                 .Select(x => x.Value)
                 .Aggregate(1m, (acc, x) => acc * x);
-            
+
             return new Expression(expression.Head, others.Append(reduce).ToImmutableList());
         }
 
