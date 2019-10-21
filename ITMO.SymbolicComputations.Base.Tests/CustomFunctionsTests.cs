@@ -66,7 +66,9 @@ namespace ITMO.SymbolicComputations.Base.Tests {
             Symbol x = "x";
             Symbol y = "y";
 
-            var func = Function[x, Function[y, Plus[x, y]]];
+            var f = Function;
+            
+            var func = f[x, f[y, Plus[x, y]]];
             var (steps, result) = func[2][3].Visit(new FullEvaluator());
             
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
