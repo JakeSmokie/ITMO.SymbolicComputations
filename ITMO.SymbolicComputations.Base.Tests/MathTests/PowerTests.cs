@@ -4,7 +4,6 @@ using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using Xunit;
 using Xunit.Abstractions;
 using static ITMO.SymbolicComputations.Base.Predefined.ArithmeticFunctions;
-using static ITMO.SymbolicComputations.Base.Predefined.Functions;
 
 namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
     public class PowerTests {
@@ -14,15 +13,6 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
         private readonly ITestOutputHelper _out;
 
         [Fact]
-        public void TwoPowerZeroEqualsOne() {
-            var source = Power[2, 0];
-            var (steps, symbol) = source.Visit(new FullEvaluator());
-
-            steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
-            Assert.Equal(1, symbol);
-        }
-        
-        [Fact]
         public void TwoPowerOneEqualsTwo() {
             var source = Power[2, 1];
             var (steps, symbol) = source.Visit(new FullEvaluator());
@@ -30,16 +20,16 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
             Assert.Equal(2, symbol);
         }
-        
+
         [Fact]
-        public void XPowerZeroEqualsOne() {
-            var source = Power[Plus["x", "y"], 0];
+        public void TwoPowerZeroEqualsOne() {
+            var source = Power[2, 0];
             var (steps, symbol) = source.Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
             Assert.Equal(1, symbol);
         }
-        
+
         [Fact]
         public void XPowerOneEqualsX() {
             var source = Power[Plus["x", "y"], 1];
@@ -47,6 +37,15 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
             Assert.Equal(Plus["x", "y"], symbol);
+        }
+
+        [Fact]
+        public void XPowerZeroEqualsOne() {
+            var source = Power[Plus["x", "y"], 0];
+            var (steps, symbol) = source.Visit(new FullEvaluator());
+
+            steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
+            Assert.Equal(1, symbol);
         }
     }
 }

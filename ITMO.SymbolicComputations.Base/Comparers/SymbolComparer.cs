@@ -24,9 +24,7 @@ namespace ITMO.SymbolicComputations.Base.Comparers {
         private static int CompareInternal(StringSymbol first, StringSymbol secondStringSymbol) =>
             string.Compare(first.Name, secondStringSymbol.Name, StringComparison.InvariantCulture);
 
-        private static int CompareInternal(Expression firstExpression, Expression secondExpression) {
-            return 0;
-        }
+        private static int CompareInternal(Expression firstExpression, Expression secondExpression) => 0;
 
         private static int CompareInternal(Constant firstConstant, Constant secondConstant) =>
             firstConstant.Value.CompareTo(secondConstant.Value);

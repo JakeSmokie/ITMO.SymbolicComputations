@@ -9,13 +9,9 @@ namespace ITMO.SymbolicComputations.Base.Models {
         public decimal Value { get; }
 
         public bool Equals(Constant other) {
-            if (ReferenceEquals(null, other)) {
-                return false;
-            }
+            if (ReferenceEquals(null, other)) return false;
 
-            if (ReferenceEquals(this, other)) {
-                return true;
-            }
+            if (ReferenceEquals(this, other)) return true;
 
             return Value == other.Value;
         }

@@ -3,8 +3,8 @@ using ITMO.SymbolicComputations.Base.Models;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
     public sealed class VariableReplacer : ISymbolVisitor<Symbol> {
-        private readonly StringSymbol _variable;
         private readonly Symbol _funcArgument;
+        private readonly StringSymbol _variable;
 
         public VariableReplacer(StringSymbol variable, Symbol funcArgument) {
             _variable = variable;
@@ -15,7 +15,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
             var head = expression.Head.Visit(this);
             var arguments = expression.Arguments.Select(x => x.Visit(this));
 
-            var newArguments = arguments.Select(x => 
+            var newArguments = arguments.Select(x =>
                 x is StringSymbol s && s == _variable
                     ? _funcArgument
                     : x

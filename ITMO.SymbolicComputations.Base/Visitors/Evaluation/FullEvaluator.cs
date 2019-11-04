@@ -23,6 +23,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         private static readonly NestedPowerFlattener NestedPowerFlattener = new NestedPowerFlattener();
         private static readonly TimesPowersReducer TimesPowersReducer = new TimesPowersReducer();
         private static readonly FunctionEvaluator FunctionEvaluator = new FunctionEvaluator();
+        private static readonly SinFunctionImplementation SinFunctionImplementation = new SinFunctionImplementation();
 
         public (ImmutableList<Symbol>, Symbol) VisitFunction(Expression expression) {
             var visitors = new ISymbolVisitor<Symbol>[] {
@@ -36,6 +37,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
                 NestedPowerFlattener,
                 TimesPowersReducer,
                 ConstantsPowerEvaluator,
+                SinFunctionImplementation,
                 // Last
                 ArgumentsSorter,
                 OneIdentityShrinker,
@@ -60,7 +62,10 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
                 });
         }
 
-        public (ImmutableList<Symbol>, Symbol) VisitSymbol(StringSymbol symbol) => (ImmutableList<Symbol>.Empty, symbol);
-        public (ImmutableList<Symbol>, Symbol) VisitConstant(Constant constant) => (ImmutableList<Symbol>.Empty, constant);
+        public (ImmutableList<Symbol>, Symbol) VisitSymbol(StringSymbol symbol) =>
+            (ImmutableList<Symbol>.Empty, symbol);
+
+        public (ImmutableList<Symbol>, Symbol) VisitConstant(Constant constant) =>
+            (ImmutableList<Symbol>.Empty, constant);
     }
 }

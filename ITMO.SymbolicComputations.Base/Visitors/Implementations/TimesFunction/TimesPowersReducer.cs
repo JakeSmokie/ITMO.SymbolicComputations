@@ -6,9 +6,7 @@ using static ITMO.SymbolicComputations.Base.Predefined.ArithmeticFunctions;
 namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.TimesFunction {
     public sealed class TimesPowersReducer : ISymbolVisitor<Symbol> {
         public Symbol VisitFunction(Expression expression) {
-            if (!Equals(expression.Head, Times)) {
-                return expression;
-            }
+            if (!Equals(expression.Head, Times)) return expression;
 
             var powers = expression.Arguments
                 .Where(IsPower)
@@ -27,13 +25,9 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.TimesFunction 
                 var scale = Plus[x.Select(y => y.Arguments[1]).ToArray()]
                     .Visit(new FullEvaluator()).Symbol;
 
-                if (Equals(scale, new Constant(0))) {
-                    return 1;
-                }
+                if (Equals(scale, new Constant(0))) return 1;
 
-                if (Equals(scale, new Constant(1))) {
-                    return x.Key;
-                }
+                if (Equals(scale, new Constant(1))) return x.Key;
 
                 return Power[
                     x.Key,

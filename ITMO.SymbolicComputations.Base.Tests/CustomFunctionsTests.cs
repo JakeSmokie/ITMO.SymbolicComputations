@@ -14,67 +14,56 @@ namespace ITMO.SymbolicComputations.Base.Tests {
 
         private readonly ITestOutputHelper _out;
 
-        
         [Fact]
-        public void XPlus2() {
+        public void BigSinFunction() {
             Symbol x = "x";
 
-            var func = Function[x, Plus[x, 2]];
-            var (steps, result) = func[3].Visit(new FullEvaluator());
-            
-            steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
-            Assert.Equal(5, result);
-        }
-        
-        [Fact]
-        public void XReturnsConstant() {
-            Symbol x = "x";
+            var func = Function[x, Times[Sin[Plus[x, -2]], 10]];
+            var (steps, result) = func[2].Visit(new FullEvaluator());
 
-            var func = Function[x, 3];
-            var (steps, result) = func[0].Visit(new FullEvaluator());
-            
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
-            Assert.Equal(3, result);
+            Assert.Equal(0, result);
         }
-        
-        [Fact]
-        public void XPower2() {
-            Symbol x = "x";
 
-            var func = Function[x, Power[x, 2]];
-            var (steps, result) = func[7].Visit(new FullEvaluator());
-            
-            steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
-            Assert.Equal(49, result);
-        }
-        
         [Fact]
         public void TwoPowerX() {
             Symbol x = "x";
 
             var func = Function[x, Power[2, x]];
             var (steps, result) = func[7].Visit(new FullEvaluator());
-            
+
             _out.WriteLine(func.Visit(new MathematicaPrinter()));
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
-            
+
             Assert.Equal(128, result);
         }
-        
+
+
+        [Fact]
+        public void XMinus2() {
+            Symbol x = "x";
+
+            var func = Function[x, Plus[x, -2]];
+            var (steps, result) = func[3].Visit(new FullEvaluator());
+
+            steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
+            Assert.Equal(1, result);
+        }
+
         [Fact]
         public void XPlusY() {
             Symbol x = "x";
             Symbol y = "y";
 
             var f = Function;
-            
+
             var func = f[x, f[y, Plus[x, y]]];
             var (steps, result) = func[2][3].Visit(new FullEvaluator());
-            
+
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
             Assert.Equal(5, result);
         }
-        
+
         [Fact]
         public void XPlusYTimesZ() {
             Symbol x = "x";
@@ -86,11 +75,33 @@ namespace ITMO.SymbolicComputations.Base.Tests {
 
             var func = f[x, f[y, f[z, e[Times[Plus[x, y], z]]]]];
             var (steps, result) = func[2][3][5].Visit(new FullEvaluator());
-            
+
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
             Assert.Equal(25, result);
         }
-        
+
+        [Fact]
+        public void XPower2() {
+            Symbol x = "x";
+
+            var func = Function[x, Power[x, 2]];
+            var (steps, result) = func[7].Visit(new FullEvaluator());
+
+            steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
+            Assert.Equal(49, result);
+        }
+
+        [Fact]
+        public void XReturnsConstant() {
+            Symbol x = "x";
+
+            var func = Function[x, 3];
+            var (steps, result) = func[0].Visit(new FullEvaluator());
+
+            steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
+            Assert.Equal(3, result);
+        }
+
         [Fact]
         public void ZPowerXPlusY() {
             Symbol x = "x";
@@ -101,7 +112,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
 
             var func = f[x, f[y, f[z, Power[z, Plus[x, y]]]]];
             var (steps, result) = func[2][3][2].Visit(new FullEvaluator());
-            
+
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
             Assert.Equal(32, result);
         }

@@ -6,8 +6,7 @@ using Xunit;
 using Xunit.Abstractions;
 using static ITMO.SymbolicComputations.Base.Predefined.ArithmeticFunctions;
 
-namespace ITMO.SymbolicComputations.Base.Tests.MathTests
-{
+namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
     public sealed class PlusTests {
         public PlusTests(ITestOutputHelper output) =>
             _out = output;
@@ -22,7 +21,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
             Assert.Equal(15, symbol);
         }
-        
+
         [Fact]
         public void ConstantsReduced2() {
             var source = Plus[1, 3, 4, 5, Plus[9, -7]];
@@ -39,7 +38,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests
 
             var source = Plus[y, x, x];
             var (steps, symbol) = source.Visit(new FullEvaluator());
-            
+
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
             Assert.Equal(Plus[Times[x, 2], y], symbol);
         }
@@ -52,11 +51,11 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests
 
             var source = Plus[x, y, z, z, x, x, y];
             var (steps, symbol) = source.Visit(new FullEvaluator());
-            
+
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
             Assert.Equal(Plus[Times[x, 3], Times[y, 2], Times[z, 2]], symbol);
         }
-        
+
         [Fact]
         public void XPlusZeroEqualsX() {
             Symbol x = "x";
@@ -65,10 +64,9 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests
 
             var source = Plus[x, y, z, 6, -6];
             var (steps, symbol) = source.Visit(new FullEvaluator());
-            
+
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
             Assert.Equal(Plus[x, y, z], symbol);
         }
-
     }
 }

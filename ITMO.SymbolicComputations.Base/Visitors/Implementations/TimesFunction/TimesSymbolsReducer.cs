@@ -7,17 +7,13 @@ using static ITMO.SymbolicComputations.Base.Predefined.ArithmeticFunctions;
 namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.TimesFunction {
     public sealed class TimesSymbolsReducer : ISymbolVisitor<Symbol> {
         public Symbol VisitFunction(Expression expression) {
-            if (!Equals(expression.Head, Times)) {
-                return expression;
-            }
+            if (!Equals(expression.Head, Times)) return expression;
 
             var symbols = expression.Arguments
                 .Where(x => !IsConstant(x))
                 .ToList();
 
-            if (symbols.Count == 0) {
-                return expression;
-            }
+            if (symbols.Count == 0) return expression;
 
             var constants = expression.Arguments
                 .Where(IsConstant)

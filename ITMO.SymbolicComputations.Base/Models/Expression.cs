@@ -14,13 +14,9 @@ namespace ITMO.SymbolicComputations.Base.Models {
         public ImmutableList<Symbol> Arguments { get; }
 
         public bool Equals(Expression other) {
-            if (ReferenceEquals(null, other)) {
-                return false;
-            }
+            if (ReferenceEquals(null, other)) return false;
 
-            if (ReferenceEquals(this, other)) {
-                return true;
-            }
+            if (ReferenceEquals(this, other)) return true;
 
             return Head.Equals(other.Head) && Arguments.SequenceEqual(other.Arguments);
         }
@@ -28,11 +24,13 @@ namespace ITMO.SymbolicComputations.Base.Models {
         protected override T VisitImplementation<T>(ISymbolVisitor<T> visitor) =>
             visitor.VisitFunction(this);
 
-        public override bool Equals(object obj) => ReferenceEquals(this, obj) || obj is Expression other && Equals(other);
+        public override bool Equals(object obj) =>
+            ReferenceEquals(this, obj) || obj is Expression other && Equals(other);
 
         public override int GetHashCode() {
             unchecked {
-                return ((Head != null ? Head.GetHashCode() : 0) * 397) ^ (Arguments != null ? Arguments.GetHashCode() : 0);
+                return ((Head != null ? Head.GetHashCode() : 0) * 397) ^
+                       (Arguments != null ? Arguments.GetHashCode() : 0);
             }
         }
 

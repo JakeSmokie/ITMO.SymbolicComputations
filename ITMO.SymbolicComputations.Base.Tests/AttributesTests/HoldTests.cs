@@ -10,22 +10,13 @@ using static ITMO.SymbolicComputations.Base.Predefined.Functions;
 
 namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
     public sealed class HoldTests {
-        private static readonly StringSymbol HoldFirst = new StringSymbol("", Attributes.HoldFirst);
-        private static readonly StringSymbol HoldRest = new StringSymbol("", Attributes.HoldRest);
-
         public HoldTests(ITestOutputHelper output) =>
             _out = output;
 
+        private static readonly StringSymbol HoldFirst = new StringSymbol("", Attributes.HoldFirst);
+        private static readonly StringSymbol HoldRest = new StringSymbol("", Attributes.HoldRest);
+
         private readonly ITestOutputHelper _out;
-
-        [Fact]
-        public void HoldFirstWorks() {
-            var source = HoldFirst[Plus[2], Plus[3]];
-            var expression = source.Visit(new FullEvaluator()).Symbol;
-
-            _out.WriteLine(expression.Visit(new MathematicaPrinter()));
-            Assert.Equal(HoldFirst[Plus[2], 3], expression);
-        }
 
         [Fact]
         public void HoldFirstSuppressionWorks() {
@@ -37,23 +28,14 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
         }
 
         [Fact]
-        public void HoldRestWorks() {
-            var source = HoldRest[Plus[2], Plus[3], Plus[4]];
+        public void HoldFirstWorks() {
+            var source = HoldFirst[Plus[2], Plus[3]];
             var expression = source.Visit(new FullEvaluator()).Symbol;
 
             _out.WriteLine(expression.Visit(new MathematicaPrinter()));
-            Assert.Equal(HoldRest[2, Plus[3], Plus[4]], expression);
+            Assert.Equal(HoldFirst[Plus[2], 3], expression);
         }
 
-        [Fact]
-        public void HoldRestSuppressionWorks() {
-            var source = HoldRest[Plus[2], Plus[3], Evaluate[Plus[4]]];
-            var expression = source.Visit(new FullEvaluator()).Symbol;
-
-            _out.WriteLine(expression.Visit(new MathematicaPrinter()));
-            Assert.Equal(HoldRest[2, Plus[3], 4], expression);
-        }
-        
         [Fact]
         public void HoldFormSuppressingWithEvaluateFunctionWorks() {
             var source = HoldForm[Evaluate[Plus[2]]];
@@ -79,6 +61,24 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
 
             _out.WriteLine(expression.Visit(new MathematicaPrinter()));
             Assert.Equal(source, expression);
+        }
+
+        [Fact]
+        public void HoldRestSuppressionWorks() {
+            var source = HoldRest[Plus[2], Plus[3], Evaluate[Plus[4]]];
+            var expression = source.Visit(new FullEvaluator()).Symbol;
+
+            _out.WriteLine(expression.Visit(new MathematicaPrinter()));
+            Assert.Equal(HoldRest[2, Plus[3], 4], expression);
+        }
+
+        [Fact]
+        public void HoldRestWorks() {
+            var source = HoldRest[Plus[2], Plus[3], Plus[4]];
+            var expression = source.Visit(new FullEvaluator()).Symbol;
+
+            _out.WriteLine(expression.Visit(new MathematicaPrinter()));
+            Assert.Equal(HoldRest[2, Plus[3], Plus[4]], expression);
         }
 
         [Fact]

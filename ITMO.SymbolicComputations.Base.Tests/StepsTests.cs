@@ -16,29 +16,21 @@ namespace ITMO.SymbolicComputations.Base.Tests {
         private readonly ITestOutputHelper _out;
         private static readonly StringSymbol Orderless = new StringSymbol("Orderless", Attributes.Orderless);
 
-
         [Fact]
-        public void NestedOrderingLoggingWorks() {
-            Symbol x = "x";
-            Symbol y = "y";
-            Symbol z = "z";
-
-            var source = Orderless[y, Orderless[1, x, Orderless[y]], x, z];
-            var steps = source.Visit(new FullEvaluator()).Steps.WithoutDuplicates();
+        public void HoldFormWorks() {
+            var source = Plus[2];
+            var steps = HoldForm[source].Visit(new FullEvaluator()).Steps.WithoutDuplicates();
 
             steps.ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
 
-            var expected = new [] {
-                Orderless[y],
-                Orderless[1, x, Orderless[y]],
-                Orderless[Orderless[y], x, 1],
-                Orderless[y, Orderless[Orderless[y], x, 1], x, z],
-                Orderless[Orderless[Orderless[y], x, 1], x, y, z]
+            var expected = new[] {
+                HoldForm[Plus[2]],
+                Plus[2]
             };
-            
+
             Assert.Equal(expected, steps);
         }
-        
+
         [Fact]
         public void MoreComplexFlatWorks() {
             Symbol a = "a";
@@ -49,11 +41,11 @@ namespace ITMO.SymbolicComputations.Base.Tests {
             Symbol f = "f";
             Symbol g = "g";
             Symbol h = "h";
-            
+
             var source = Plus[Plus[a], Plus[b, Plus[c, d, Plus[e]], f], g, h];
             var steps = source.Visit(new FullEvaluator()).Steps.WithoutDuplicates();
 
-            var expected = new [] {
+            var expected = new[] {
                 Plus[a],
                 a,
                 Plus[e],
@@ -68,17 +60,25 @@ namespace ITMO.SymbolicComputations.Base.Tests {
             steps.ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
             Assert.Equal(expected, steps);
         }
-        
+
+
         [Fact]
-        public void HoldFormWorks() {
-            var source = Plus[2];
-            var steps = HoldForm[source].Visit(new FullEvaluator()).Steps.WithoutDuplicates();
+        public void NestedOrderingLoggingWorks() {
+            Symbol x = "x";
+            Symbol y = "y";
+            Symbol z = "z";
+
+            var source = Orderless[y, Orderless[1, x, Orderless[y]], x, z];
+            var steps = source.Visit(new FullEvaluator()).Steps.WithoutDuplicates();
 
             steps.ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
 
-            var expected = new [] {
-                HoldForm[Plus[2]],
-                Plus[2]
+            var expected = new[] {
+                Orderless[y],
+                Orderless[1, x, Orderless[y]],
+                Orderless[Orderless[y], x, 1],
+                Orderless[y, Orderless[Orderless[y], x, 1], x, z],
+                Orderless[Orderless[Orderless[y], x, 1], x, y, z]
             };
 
             Assert.Equal(expected, steps);

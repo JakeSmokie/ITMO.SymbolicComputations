@@ -9,13 +9,9 @@ namespace ITMO.SymbolicComputations.Base.Tools {
         public static ExpressionInfo AsExpressionInfo(this XmlDocument doc) {
             var root = doc.DocumentElement;
 
-            if (root.Name != nameof(ExpressionInfo)) {
-                throw new ArgumentException("");
-            }
+            if (root.Name != nameof(ExpressionInfo)) throw new ArgumentException("");
 
-            if (root.ChildNodes.Count > 1) {
-                throw new ArgumentException("");
-            }
+            if (root.ChildNodes.Count > 1) throw new ArgumentException("");
 
             return new ExpressionInfo(ParseExpression(root.FirstChild));
 
