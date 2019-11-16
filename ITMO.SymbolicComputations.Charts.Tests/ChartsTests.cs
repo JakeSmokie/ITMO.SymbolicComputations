@@ -239,7 +239,7 @@ namespace ITMO.SymbolicComputations.Charts.Tests {
                 (10.0m, 9.893582466233820m)
             };
 
-            chart.ForEach(x => _out.WriteLine($"({x.Item1}m, {x.Item2}m),"));
+            chart.ForEach(x => _out.WriteLine($"{x.Item1}; {x.Item2}"));
 //            Assert.Equal(expected, chart);
         }
     }
