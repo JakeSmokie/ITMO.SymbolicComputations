@@ -1,4 +1,5 @@
 ﻿using ITMO.SymbolicComputations.Base.Models;
+using ITMO.SymbolicComputations.Base.Tests.Extensions;
 using ITMO.SymbolicComputations.Base.Tools;
 using ITMO.SymbolicComputations.Base.Visitors;
 using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
@@ -15,20 +16,20 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
 
         [Fact]
         public void ConstantsReduced() {
-            var source = Plus[1m, 3m, 5m, 6m];
+            var source = BinaryPlus[1, 2];
             var (steps, symbol) = source.Visit(new FullEvaluator());
 
-            steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
-            Assert.Equal(15, symbol);
+            steps.Print(_out);
+            Assert.Equal(3, symbol);
         }
 
         [Fact]
         public void ConstantsReduced2() {
-            var source = Plus[1, 3, 4, 5, Plus[9, -7]];
+            var source = BinaryPlus[3, -5];
             var (steps, symbol) = source.Visit(new FullEvaluator());
 
-            steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
-            Assert.Equal(15, symbol);
+            steps.Print(_out);
+            Assert.Equal(-2, symbol);
         }
 
         [Fact]
@@ -36,11 +37,11 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
             Symbol x = "x";
             Symbol y = "y";
 
-            var source = Plus[y, x, x];
+            var source = BinaryPlus[y, x, x];
             var (steps, symbol) = source.Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
-            Assert.Equal(Plus[Times[x, 2], y], symbol);
+            Assert.Equal(BinaryPlus[BinaryTimes[x, 2], y], symbol);
         }
 
         [Fact]
@@ -49,11 +50,11 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
             Symbol y = "y";
             Symbol z = "z";
 
-            var source = Plus[x, y, z, z, x, x, y];
+            var source = BinaryPlus[x, y, z, z, x, x, y];
             var (steps, symbol) = source.Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
-            Assert.Equal(Plus[Times[x, 3], Times[y, 2], Times[z, 2]], symbol);
+            Assert.Equal(BinaryPlus[BinaryTimes[x, 3], BinaryTimes[y, 2], BinaryTimes[z, 2]], symbol);
         }
 
         [Fact]
@@ -62,11 +63,11 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
             Symbol y = "y";
             Symbol z = "z";
 
-            var source = Plus[x, y, z, 6, -6];
+            var source = BinaryPlus[x, y, z, 6, -6];
             var (steps, symbol) = source.Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
-            Assert.Equal(Plus[x, y, z], symbol);
+            Assert.Equal(BinaryPlus[x, y, z], symbol);
         }
     }
 }

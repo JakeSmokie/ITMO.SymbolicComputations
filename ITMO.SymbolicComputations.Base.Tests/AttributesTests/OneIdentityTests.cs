@@ -13,7 +13,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
 
         [Fact]
         public void ConstInsidePlusIsReducedToConst() {
-            var expression = Plus[Plus[Plus[Plus[2]]]]
+            var expression = BinaryPlus[BinaryPlus[BinaryPlus[BinaryPlus[2]]]]
                 .Visit(new FullEvaluator()).Symbol;
 
             _out.WriteLine(expression.Visit(new MathematicaPrinter()));
@@ -22,11 +22,11 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
 
         [Fact]
         public void PlusInsidePlusIsReducedToOnePlus() {
-            var expression = Plus[Plus[Plus[Plus["x", "y"]]]]
+            var expression = BinaryPlus[BinaryPlus[BinaryPlus[BinaryPlus["x", "y"]]]]
                 .Visit(new FullEvaluator()).Symbol;
 
             _out.WriteLine(expression.Visit(new MathematicaPrinter()));
-            Assert.Equal(Plus["x", "y"], expression);
+            Assert.Equal(BinaryPlus["x", "y"], expression);
         }
     }
 }

@@ -13,20 +13,20 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
 
         [Fact]
         public void FlatWorks() {
-            var source = Plus[Plus["x"], Plus["y"]];
+            var source = BinaryPlus[BinaryPlus["x"], BinaryPlus["y"]];
             var expression = source.Visit(new FullEvaluator()).Symbol;
 
             _out.WriteLine(expression.Visit(new MathematicaPrinter()));
-            Assert.Equal(Plus["x", "y"], expression);
+            Assert.Equal(BinaryPlus["x", "y"], expression);
         }
 
         [Fact]
         public void MoreComplexFlatWorks() {
-            var source = Plus[Plus["a"], Plus["b", Plus["c", "d", Plus["e"]], "f"], "g", "h"];
+            var source = BinaryPlus[BinaryPlus["a"], BinaryPlus["b", BinaryPlus["c", "d", BinaryPlus["e"]], "f"], "g", "h"];
             var expression = source.Visit(new FullEvaluator()).Symbol;
 
             _out.WriteLine(expression.Visit(new MathematicaPrinter()));
-            Assert.Equal(Plus["a", "b", "c", "d", "e", "f", "g", "h"], expression);
+            Assert.Equal(BinaryPlus["a", "b", "c", "d", "e", "f", "g", "h"], expression);
         }
     }
 }

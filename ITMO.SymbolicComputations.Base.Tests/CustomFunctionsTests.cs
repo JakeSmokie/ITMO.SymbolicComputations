@@ -18,7 +18,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
         public void BigSinFunction() {
             Symbol x = "x";
 
-            var func = Function[x, Times[Sin[Plus[x, -2]], 10]];
+            var func = Fun[x, BinaryTimes[Sin[BinaryPlus[x, -2]], 10]];
             var (steps, result) = func[2].Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
@@ -29,7 +29,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
         public void TwoPowerX() {
             Symbol x = "x";
 
-            var func = Function[x, Power[2, x]];
+            var func = Fun[x, Power[2, x]];
             var (steps, result) = func[7].Visit(new FullEvaluator());
 
             _out.WriteLine(func.Visit(new MathematicaPrinter()));
@@ -43,7 +43,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
         public void XMinus2() {
             Symbol x = "x";
 
-            var func = Function[x, Plus[x, -2]];
+            var func = Fun[x, BinaryPlus[x, -2]];
             var (steps, result) = func[3].Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
@@ -55,9 +55,9 @@ namespace ITMO.SymbolicComputations.Base.Tests {
             Symbol x = "x";
             Symbol y = "y";
 
-            var f = Function;
+            var f = Fun;
 
-            var func = f[x, f[y, Plus[x, y]]];
+            var func = f[x, f[y, BinaryPlus[x, y]]];
             var (steps, result) = func[2][3].Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
@@ -70,10 +70,10 @@ namespace ITMO.SymbolicComputations.Base.Tests {
             Symbol y = "y";
             Symbol z = "z";
 
-            var f = Function;
+            var f = Fun;
             var e = Evaluate;
 
-            var func = f[x, f[y, f[z, e[Times[Plus[x, y], z]]]]];
+            var func = f[x, f[y, f[z, e[BinaryTimes[BinaryPlus[x, y], z]]]]];
             var (steps, result) = func[2][3][5].Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
@@ -84,7 +84,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
         public void XPower2() {
             Symbol x = "x";
 
-            var func = Function[x, Power[x, 2]];
+            var func = Fun[x, Power[x, 2]];
             var (steps, result) = func[7].Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
@@ -95,7 +95,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
         public void XReturnsConstant() {
             Symbol x = "x";
 
-            var func = Function[x, 3];
+            var func = Fun[x, 3];
             var (steps, result) = func[0].Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
@@ -108,9 +108,9 @@ namespace ITMO.SymbolicComputations.Base.Tests {
             Symbol y = "y";
             Symbol z = "z";
 
-            var f = Function;
+            var f = Fun;
 
-            var func = f[x, f[y, f[z, Power[z, Plus[x, y]]]]];
+            var func = f[x, f[y, f[z, Power[z, BinaryPlus[x, y]]]]];
             var (steps, result) = func[2][3][2].Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));

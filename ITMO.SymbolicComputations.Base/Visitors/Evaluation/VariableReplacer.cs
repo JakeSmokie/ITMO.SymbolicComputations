@@ -15,8 +15,12 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
             var head = expression.Head.Visit(this);
             var arguments = expression.Arguments.Select(x => x.Visit(this));
 
+            head = Equals(head, _variable)
+                ? _funcArgument
+                : head;
+
             var newArguments = arguments.Select(x =>
-                x is StringSymbol s && s == _variable
+                Equals(x, _variable)
                     ? _funcArgument
                     : x
             ).ToArray();

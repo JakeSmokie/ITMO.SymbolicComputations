@@ -9,7 +9,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
                 return (ImmutableList<Symbol>.Empty, expression);
             }
 
-            if (!Equals(head.Head, Function)) {
+            if (!Equals(head.Head, Fun)) {
                 return (ImmutableList<Symbol>.Empty, expression);
             }
 

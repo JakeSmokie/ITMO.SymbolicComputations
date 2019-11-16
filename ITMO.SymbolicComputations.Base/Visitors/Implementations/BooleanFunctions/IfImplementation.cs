@@ -1,17 +1,17 @@
 using ITMO.SymbolicComputations.Base.Models;
-using ITMO.SymbolicComputations.Base.Predefined;
+using static ITMO.SymbolicComputations.Base.Predefined.Boolean;
 
-namespace ITMO.SymbolicComputations.Base.Visitors.Implementations {
+namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.BooleanFunctions {
     public class IfImplementation : AbstractFunctionImplementation {
-        public IfImplementation() : base(Functions.If) {
+        public IfImplementation() : base(If) {
         }
 
         protected override Symbol Evaluate(Expression expression) {
-            if (expression.Arguments[0].Equals(Boolean.True)) {
+            if (expression.Arguments[0].Equals(True)) {
                 return expression.Arguments[1];
             }
 
-            if (expression.Arguments[0].Equals(Boolean.False)) {
+            if (expression.Arguments[0].Equals(False)) {
                 return expression.Arguments[2];
             }
 

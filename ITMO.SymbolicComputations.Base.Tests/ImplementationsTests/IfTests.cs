@@ -1,6 +1,4 @@
 using ITMO.SymbolicComputations.Base.Tests.Extensions;
-using ITMO.SymbolicComputations.Base.Tools;
-using ITMO.SymbolicComputations.Base.Visitors;
 using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using Xunit;
 using Xunit.Abstractions;
