@@ -14,9 +14,13 @@ namespace ITMO.SymbolicComputations.Base.Models {
         public ImmutableList<Symbol> Arguments { get; }
 
         public bool Equals(Expression other) {
-            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(null, other)) {
+                return false;
+            }
 
-            if (ReferenceEquals(this, other)) return true;
+            if (ReferenceEquals(this, other)) {
+                return true;
+            }
 
             return Head.Equals(other.Head) && Arguments.SequenceEqual(other.Arguments);
         }

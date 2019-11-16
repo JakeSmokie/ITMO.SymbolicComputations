@@ -24,6 +24,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         private static readonly TimesPowersReducer TimesPowersReducer = new TimesPowersReducer();
         private static readonly FunctionEvaluator FunctionEvaluator = new FunctionEvaluator();
         private static readonly SinFunctionImplementation SinFunctionImplementation = new SinFunctionImplementation();
+        private static readonly IfImplementation IfImplementation = new IfImplementation();
 
         public (ImmutableList<Symbol>, Symbol) VisitFunction(Expression expression) {
             var visitors = new ISymbolVisitor<Symbol>[] {
@@ -38,6 +39,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
                 TimesPowersReducer,
                 ConstantsPowerEvaluator,
                 SinFunctionImplementation,
+                IfImplementation,
                 // Last
                 ArgumentsSorter,
                 OneIdentityShrinker,

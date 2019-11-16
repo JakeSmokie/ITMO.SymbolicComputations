@@ -15,9 +15,13 @@ namespace ITMO.SymbolicComputations.Base.Models {
         [JsonIgnore] public ImmutableSortedSet<StringSymbol> Attributes { get; }
 
         public int CompareTo(object obj) {
-            if (ReferenceEquals(null, obj)) return 1;
+            if (ReferenceEquals(null, obj)) {
+                return 1;
+            }
 
-            if (ReferenceEquals(this, obj)) return 0;
+            if (ReferenceEquals(this, obj)) {
+                return 0;
+            }
 
             return obj is StringSymbol other
                 ? CompareTo(other)
@@ -25,17 +29,25 @@ namespace ITMO.SymbolicComputations.Base.Models {
         }
 
         public int CompareTo(StringSymbol other) {
-            if (ReferenceEquals(this, other)) return 0;
+            if (ReferenceEquals(this, other)) {
+                return 0;
+            }
 
-            if (ReferenceEquals(null, other)) return 1;
+            if (ReferenceEquals(null, other)) {
+                return 1;
+            }
 
             return string.Compare(Name, other.Name, StringComparison.InvariantCulture);
         }
 
         public bool Equals(StringSymbol other) {
-            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(null, other)) {
+                return false;
+            }
 
-            if (ReferenceEquals(this, other)) return true;
+            if (ReferenceEquals(this, other)) {
+                return true;
+            }
 
             return Name == other.Name;
         }

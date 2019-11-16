@@ -5,13 +5,19 @@ using static ITMO.SymbolicComputations.Base.Predefined.Functions;
 namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
     public sealed class FunctionEvaluator : ISymbolVisitor<(ImmutableList<Symbol>, Symbol)> {
         public (ImmutableList<Symbol>, Symbol) VisitFunction(Expression expression) {
-            if (!(expression.Head is Expression head)) return (ImmutableList<Symbol>.Empty, expression);
+            if (!(expression.Head is Expression head)) {
+                return (ImmutableList<Symbol>.Empty, expression);
+            }
 
-            if (!Equals(head.Head, Function)) return (ImmutableList<Symbol>.Empty, expression);
+            if (!Equals(head.Head, Function)) {
+                return (ImmutableList<Symbol>.Empty, expression);
+            }
 
             var variableSymbol = head.Arguments[0];
 
-            if (!(variableSymbol is StringSymbol variable)) return (ImmutableList<Symbol>.Empty, expression);
+            if (!(variableSymbol is StringSymbol variable)) {
+                return (ImmutableList<Symbol>.Empty, expression);
+            }
 
             var funcArgument = expression.Arguments[0];
 

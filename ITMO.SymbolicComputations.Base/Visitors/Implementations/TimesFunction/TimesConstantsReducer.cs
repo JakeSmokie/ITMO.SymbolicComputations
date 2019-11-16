@@ -6,15 +6,21 @@ using ITMO.SymbolicComputations.Base.Predefined;
 namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.TimesFunction {
     public sealed class TimesConstantsReducer : ISymbolVisitor<Symbol> {
         public Symbol VisitFunction(Expression expression) {
-            if (!Equals(expression.Head, ArithmeticFunctions.Times)) return expression;
+            if (!Equals(expression.Head, ArithmeticFunctions.Times)) {
+                return expression;
+            }
 
             var constants = expression.Arguments
                 .OfType<Constant>()
                 .ToList();
 
-            if (constants.Count == 0) return expression;
+            if (constants.Count == 0) {
+                return expression;
+            }
 
-            if (constants.Any(x => x.Value == 0)) return 0;
+            if (constants.Any(x => x.Value == 0)) {
+                return 0;
+            }
 
             var others = expression.Arguments
                 .Where(x => !(x is Constant));

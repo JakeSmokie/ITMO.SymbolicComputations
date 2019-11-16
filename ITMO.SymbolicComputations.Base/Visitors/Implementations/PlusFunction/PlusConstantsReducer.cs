@@ -6,13 +6,17 @@ using ITMO.SymbolicComputations.Base.Predefined;
 namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.PlusFunction {
     public sealed class PlusConstantsReducer : ISymbolVisitor<Symbol> {
         public Symbol VisitFunction(Expression expression) {
-            if (!Equals(expression.Head, ArithmeticFunctions.Plus)) return expression;
+            if (!Equals(expression.Head, ArithmeticFunctions.Plus)) {
+                return expression;
+            }
 
             var constants = expression.Arguments
                 .OfType<Constant>()
                 .ToList();
 
-            if (constants.Count == 0) return expression;
+            if (constants.Count == 0) {
+                return expression;
+            }
 
             var others = expression.Arguments
                 .Where(x => !(x is Constant));
@@ -21,7 +25,9 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.PlusFunction {
                 .Select(x => x.Value)
                 .Aggregate((acc, x) => acc + x);
 
-            if (reduce == 0 && others.Any()) return new Expression(expression.Head, others.ToImmutableList());
+            if (reduce == 0 && others.Any()) {
+                return new Expression(expression.Head, others.ToImmutableList());
+            }
 
             return new Expression(expression.Head, others.Append(reduce).ToImmutableList());
         }

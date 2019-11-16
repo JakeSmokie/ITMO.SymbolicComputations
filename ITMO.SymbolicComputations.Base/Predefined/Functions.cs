@@ -21,5 +21,9 @@ namespace ITMO.SymbolicComputations.Base.Predefined {
         public static readonly StringSymbol Function = new StringSymbol(nameof(Function),
             Attributes.HoldAll
         );
+
+        public static readonly StringSymbol If = new StringSymbol(nameof(If),
+            Attributes.HoldRest
+        );
     }
 }

@@ -38,26 +38,32 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         public (ImmutableList<Symbol>, Symbol) VisitConstant(Constant constant) =>
             (ImmutableList<Symbol>.Empty, constant);
 
-        private static ImmutableList<(ImmutableList<Symbol> Steps, Symbol Symbol)> EvaluateArguments(Symbol head,
-            ImmutableList<Symbol> arguments) {
-            if (head.Visit(HoldAllCompleteChecker))
+        private static ImmutableList<(ImmutableList<Symbol> Steps, Symbol Symbol)> EvaluateArguments(
+            Symbol head,
+            ImmutableList<Symbol> arguments
+        ) {
+            if (head.Visit(HoldAllCompleteChecker)) {
                 return arguments
                     .Select(a => (ImmutableList<Symbol>.Empty, a))
                     .ToImmutableList();
+            }
 
-            if (head.Visit(HoldAllChecker))
+            if (head.Visit(HoldAllChecker)) {
                 return EvaluateEagerly(arguments)
                     .ToImmutableList();
+            }
 
-            if (head.Visit(HoldRestChecker))
+            if (head.Visit(HoldRestChecker)) {
                 return ImmutableList<(ImmutableList<Symbol>, Symbol)>.Empty
                     .Add(arguments.First().Visit(FullEvaluator))
                     .AddRange(EvaluateEagerly(arguments.Skip(1)));
+            }
 
-            if (head.Visit(HoldFirstChecker))
+            if (head.Visit(HoldFirstChecker)) {
                 return ImmutableList<(ImmutableList<Symbol>, Symbol)>.Empty
                     .AddRange(EvaluateEagerly(arguments.Take(1)))
                     .AddRange(arguments.Skip(1).Select(a => a.Visit(FullEvaluator)));
+            }
 
             return arguments
                 .Select(a => a.Visit(FullEvaluator))

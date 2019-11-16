@@ -8,7 +8,9 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Attributes {
             new HasAttributeChecker(Predefined.Attributes.Flat);
 
         public Symbol VisitFunction(Expression expression) {
-            if (!expression.Head.Visit(FlatChecker)) return expression;
+            if (!expression.Head.Visit(FlatChecker)) {
+                return expression;
+            }
 
             return new Expression(expression.Head,
                 expression.Arguments.SelectMany(a =>
