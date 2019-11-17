@@ -61,14 +61,23 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
             );
         }
 
-//        [Fact]
-//        public void AppendListWorks() {
-//            Test.EvaluateAndAssert(
-//                AppendList[List[1, 2, 3, 4]][List[5, 6]],
-//                List[1, 2, 3, 4, 5, 6],
-//                _out
-//            );
-//        }
+        [Fact]
+        public void AppendEmptyListAndEmptyListWorks() {
+            Test.EvaluateAndAssert(
+                AppendList[EmptyList][EmptyList],
+                EmptyList,
+                _out
+            );
+        }
+        
+        [Fact]
+        public void AppendEmptyListAndNonEmptyListWorks() {
+            Test.EvaluateAndAssert(
+                AppendList[EmptyList][List[1, 2, 3]],
+                List[1, 2, 3],
+                _out
+            );
+        }
 
         [Fact]
         public void FilterWorks() {
@@ -93,6 +102,24 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
             Test.EvaluateAndAssert(
                 Length[List[1, 2, 3, 4]],
                 4,
+                _out
+            );
+        }
+        
+        [Fact]
+        public void CountItemWorks() {
+            Test.EvaluateAndAssert(
+                CountItem[List[1, 2, 3, 4, 4, 5, 4]][4],
+                3,
+                _out
+            );
+        }
+        
+        [Fact]
+        public void ContainsWorks() {
+            Test.EvaluateAndAssert(
+                Contains[List[1, 2, 3, 4]][4],
+                True,
                 _out
             );
         }

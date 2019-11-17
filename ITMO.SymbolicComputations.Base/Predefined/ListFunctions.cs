@@ -19,11 +19,11 @@ namespace ITMO.SymbolicComputations.Base.Predefined {
                     Append[acc, f[x]]
                 ]]]
             ]];
-        
+
         public static readonly Expression Filter =
             Fun[list, Fun[f,
                 Fold[list, EmptyList, Fun[acc, Fun[x,
-                    If[f[x], 
+                    If[f[x],
                         Append[acc, x],
                         acc,
                         "Error"
@@ -42,5 +42,22 @@ namespace ITMO.SymbolicComputations.Base.Predefined {
                     Append[acc, x]
                 ]]]
             ]];
+
+        public static readonly Expression CountItem =
+            Fun[list, Fun[x,
+                Length[
+                    Filter[list][Fun[y, Eq[x, y]]]
+                ]
+            ]];
+
+        public static readonly Expression Contains =
+            Fun[list, Fun[x,
+                Not[Eq[
+                    CountItem[list][x],
+                    0
+                ]]
+            ]];
+        
+//        public static readonly 
     }
 }
