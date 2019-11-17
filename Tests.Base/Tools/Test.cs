@@ -4,7 +4,7 @@ using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace ITMO.SymbolicComputations.Base.Tests.Tools {
+namespace Tests.Base.Tools {
     public static class Test {
         public static void EvaluateAndAssert(Expression expression, Symbol expectedResult, ITestOutputHelper output) {
             var (steps, actual) = expression.Visit(new FullEvaluator());

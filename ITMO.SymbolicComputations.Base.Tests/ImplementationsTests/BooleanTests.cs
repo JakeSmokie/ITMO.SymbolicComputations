@@ -1,6 +1,6 @@
 using System;
 using ITMO.SymbolicComputations.Base.Models;
-using ITMO.SymbolicComputations.Base.Tests.Tools;
+using Tests.Base.Tools;
 using Xunit;
 using Xunit.Abstractions;
 using static ITMO.SymbolicComputations.Base.Predefined.BooleanFunctions;

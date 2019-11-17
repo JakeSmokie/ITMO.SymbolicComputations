@@ -1,9 +1,9 @@
 ﻿using System;
 using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Predefined;
-using ITMO.SymbolicComputations.Base.Tests.Tools;
 using ITMO.SymbolicComputations.Base.Visitors;
 using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
+using Tests.Base.Tools;
 using Xunit;
 using Xunit.Abstractions;
 

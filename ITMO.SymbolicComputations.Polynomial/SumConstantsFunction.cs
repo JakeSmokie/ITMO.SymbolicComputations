@@ -7,20 +7,29 @@ using static ITMO.SymbolicComputations.Base.Predefined.Functions;
 using static ITMO.SymbolicComputations.Base.Predefined.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Polynomial {
-    public static class ReduceConstantsFunction {
-        public static readonly Expression ReduceConstants =
+    public static class SumConstantsFunction {
+        public static readonly Expression SumConstants =
             Fun[list,
-                Fun["constants",
+                Fun["constants", Fun["others", 
                     If[
                         Eq[Length["constants"], 0],
+                        
                         list,
-                        Append[
-                            Filter[list, Fun[x, Not[IsConstant[x]]]],
-                            ListPlus["constants"]
+                        Evaluate[
+                            Append[
+                                "others",
+                                ListPlus["constants"]
+                            ]
                         ],
+                        
                         "Error"
                     ]
-                ][Filter[list, Fun[x, IsConstant[x]]]]
+//                    List["constants", "others"]
+                ]][
+                    Filter[list][Fun[x, IsConstant[x]]]
+                ][
+                    Filter[list][Fun[x, Not[IsConstant[x]]]]
+                ]
             ];
     }
 }

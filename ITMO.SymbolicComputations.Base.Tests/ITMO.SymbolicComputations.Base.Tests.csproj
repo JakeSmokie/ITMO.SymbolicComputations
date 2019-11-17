@@ -37,6 +37,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ITMO.SymbolicComputations.Base\ITMO.SymbolicComputations.Base.csproj" />
+      <ProjectReference Include="..\Tests.Base\Tests.Base.csproj" />
     </ItemGroup>
 
 </Project>
