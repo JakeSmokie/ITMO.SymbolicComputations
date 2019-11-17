@@ -1,3 +1,4 @@
+using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Tests.Tools;
 using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using Xunit;
@@ -14,47 +15,47 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
 
         [Fact]
         public void TrueIsTrue() {
-            var expression = If[True, 2, 3];
-            var (steps, actual) = expression.Visit(new FullEvaluator());
-            
-            steps.Print(_out);
-            Assert.Equal(2, actual);
+            Test.EvaluateAndAssert(
+                If[True, 2, 3],
+                2,
+                _out
+            );
         }
 
         [Fact]
         public void FalseIsFalse() {
-            var expression = If[False, 2, 3];
-            var (steps, actual) = expression.Visit(new FullEvaluator());
-            
-            steps.Print(_out);
-            Assert.Equal(3, actual);
+            Test.EvaluateAndAssert(
+                If[False, 2, 3],
+                3,
+                _out
+            );
         }
 
         [Fact]
         public void BottomIsBottom() {
-            var expression = If[If, 2, 3, 4];
-            var (steps, actual) = expression.Visit(new FullEvaluator());
-            
-            steps.Print(_out);
-            Assert.Equal(4, actual);
+            Test.EvaluateAndAssert(
+                If[If, 2, 3, 4],
+                4,
+                _out
+            );
         }
 
         [Fact]
         public void Holds() {
-            var expression = If[True, If[True, 1]];
-            var (steps, actual) = expression.Visit(new FullEvaluator());
-            
-            steps.Print(_out);
-            Assert.Equal(If[True, 1], actual);
+            Test.EvaluateAndAssert(
+                If[True, If[True, 1]],
+                If[True, 1],
+                _out
+            );
         }
 
         [Fact]
         public void HoldsAndEvaluates() {
-            var expression = If[False, 3, Evaluate[If[True, 1]]];
-            var (steps, actual) = expression.Visit(new FullEvaluator());
-            
-            steps.Print(_out);
-            Assert.Equal(1, actual);
+            Test.EvaluateAndAssert(
+                If[False, 3, Evaluate[If[True, 1]]],
+                1,
+                _out
+            );
         }
     }
 }

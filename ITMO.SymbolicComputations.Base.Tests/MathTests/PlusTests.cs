@@ -17,22 +17,22 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
 
         [Fact]
         public void BinaryPlusWorks() {
-            var source = BinaryPlus[1, 2];
-            var (steps, symbol) = source.Visit(new FullEvaluator());
-
-            steps.Print(_out);
-            Assert.Equal(3, symbol);
+            Test.EvaluateAndAssert(
+                BinaryPlus[1, 2],
+                3,
+                _out
+            );
         }
 
         [Fact]
         public void ListPlusWorks() {
-            var source = ListPlus[List[1, 3, 5, 7, -7]];
-            var (steps, symbol) = source.Visit(new FullEvaluator());
-
-            steps.Print(_out);
-            Assert.Equal(9, symbol);
+            Test.EvaluateAndAssert(
+                ListPlus[List[1, 3, 5, 7, -7]],
+                9,
+                _out
+            );
         }
-        
+
         [Fact]
         public void PlusForSameSymbolCreatesTimes() {
             Symbol x = "x";

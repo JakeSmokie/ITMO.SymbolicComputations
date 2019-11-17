@@ -1,5 +1,7 @@
-﻿using ITMO.SymbolicComputations.Base.Models;
+﻿using System;
+using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Predefined;
+using ITMO.SymbolicComputations.Base.Tests.Tools;
 using ITMO.SymbolicComputations.Base.Visitors;
 using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using Xunit;
@@ -7,38 +9,36 @@ using Xunit.Abstractions;
 
 namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
     public sealed class OrderlessTests {
-        public OrderlessTests(ITestOutputHelper output) =>
-            _out = output;
+        public OrderlessTests(ITestOutputHelper output) {
+            _evaluateAndAssert = Test.EvaluateAndAssert(output);
+        }
 
-        private readonly ITestOutputHelper _out;
+        private readonly Action<Expression, Symbol> _evaluateAndAssert;
 
         private static readonly StringSymbol Orderless = new StringSymbol("Orderless", Attributes.Orderless);
 
         [Fact]
         public void ConstantOrderingWorks() {
-            var source = Orderless["y", 30, "x", 10, "z", 60];
-            var expression = source.Visit(new FullEvaluator()).Symbol;
-
-            _out.WriteLine(expression.Visit(new MathematicaPrinter()));
-            Assert.Equal(Orderless["x", "y", "z", 10, 30, 60], expression);
+            _evaluateAndAssert(
+                Orderless["y", 30, "x", 10, "z", 60],
+                Orderless["x", "y", "z", 10, 30, 60]
+            );
         }
 
         [Fact]
         public void NestedOrderingWorks() {
-            var source = Orderless["y", Orderless[1, "x", Orderless["y"]], "x", "z"];
-            var expression = source.Visit(new FullEvaluator()).Symbol;
-
-            _out.WriteLine(expression.Visit(new MathematicaPrinter()));
-            Assert.Equal(Orderless[Orderless[Orderless["y"], "x", 1], "x", "y", "z"], expression);
+            _evaluateAndAssert(
+                Orderless["y", Orderless[1, "x", Orderless["y"]], "x", "z"],
+                Orderless[Orderless[Orderless["y"], "x", 1], "x", "y", "z"]
+            );
         }
 
         [Fact]
         public void StringSymbolsOrderingWorks() {
-            var source = Orderless["y", "x", "z"];
-            var expression = source.Visit(new FullEvaluator()).Symbol;
-
-            _out.WriteLine(expression.Visit(new MathematicaPrinter()));
-            Assert.Equal(Orderless["x", "y", "z"], expression);
+            _evaluateAndAssert(
+                Orderless["y", "x", "z"],
+                Orderless["x", "y", "z"]
+            );
         }
     }
 }
