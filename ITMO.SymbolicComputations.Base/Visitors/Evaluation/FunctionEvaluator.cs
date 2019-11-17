@@ -6,8 +6,8 @@ using static ITMO.SymbolicComputations.Base.Predefined.Functions;
 namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
     public sealed class FunctionEvaluator : ISymbolVisitor<(ImmutableList<Symbol>, Symbol)> {
         public (ImmutableList<Symbol>, Symbol) VisitFunction(Expression expression) {
-            if (expression.Arguments.Count > 2) {
-                throw new ArgumentException("You can't apply more then 2 arguments");
+            if (expression.Arguments.Count > 1) {
+                throw new ArgumentException("You can't apply more then 1 arguments");
             }
 
             if (!(expression.Head is Expression funcHead)) {
@@ -16,6 +16,10 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
 
             if (!Equals(funcHead.Head, Fun)) {
                 return (ImmutableList<Symbol>.Empty, expression);
+            }
+
+            if (funcHead.Arguments.Count > 2) {
+                throw new ArgumentException("You can't apply more then 2 arguments");
             }
 
             var variableSymbol = funcHead.Arguments[0];
