@@ -4,6 +4,7 @@ using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Visitors.Attributes;
 using ITMO.SymbolicComputations.Base.Visitors.Implementations;
 using ITMO.SymbolicComputations.Base.Visitors.Implementations.BooleanFunctions;
+using ITMO.SymbolicComputations.Base.Visitors.Implementations.Casting;
 using ITMO.SymbolicComputations.Base.Visitors.Implementations.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
@@ -24,6 +25,9 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         private static readonly AppendImplementation AppendImplementation = new AppendImplementation();
         private static readonly EqImplementation EqImplementation = new EqImplementation();
         private static readonly CompareImplementation CompareImplementation = new CompareImplementation();
+        
+        private static readonly AsConstantImplementation AsConstant = new AsConstantImplementation();
+        private static readonly AsStringSymbolImplementation AsStringSymbol = new AsStringSymbolImplementation();
 
         public (ImmutableList<Symbol>, Symbol) VisitExpression(Expression expression) {
             var visitors = new ISymbolVisitor<Symbol>[] {
@@ -38,6 +42,8 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
                 PartImplementation,
                 FoldImplementation,
                 AppendImplementation,
+                AsConstant,
+                AsStringSymbol,
                 // Last
                 ArgumentsSorter,
                 OneIdentityShrinker,
