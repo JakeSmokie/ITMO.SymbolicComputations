@@ -1,10 +1,15 @@
-﻿using System.Collections.Immutable;
+﻿using System;
+using System.Collections.Immutable;
 using ITMO.SymbolicComputations.Base.Models;
 using static ITMO.SymbolicComputations.Base.Predefined.Functions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
     public sealed class FunctionEvaluator : ISymbolVisitor<(ImmutableList<Symbol>, Symbol)> {
         public (ImmutableList<Symbol>, Symbol) VisitFunction(Expression expression) {
+            if (expression.Arguments.Count > 2) {
+                throw new ArgumentException("You can't apply more then 2 arguments");
+            }
+
             if (!(expression.Head is Expression funcHead)) {
                 return (ImmutableList<Symbol>.Empty, expression);
             }
