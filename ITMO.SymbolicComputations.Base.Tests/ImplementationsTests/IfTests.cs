@@ -1,8 +1,8 @@
-using ITMO.SymbolicComputations.Base.Tests.Extensions;
+using ITMO.SymbolicComputations.Base.Tests.Tools;
 using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using Xunit;
 using Xunit.Abstractions;
-using static ITMO.SymbolicComputations.Base.Predefined.Boolean;
+using static ITMO.SymbolicComputations.Base.Predefined.BooleanFunctions;
 using static ITMO.SymbolicComputations.Base.Predefined.Functions;
 
 namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {

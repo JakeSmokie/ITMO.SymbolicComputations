@@ -19,7 +19,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.ListFunctions 
             }
 
             if (!Equals(list.Head, List)) {
-                throw new ArgumentException();
+                throw new ArgumentException($"Invalid usage of {_name}: Argument is not a list");
             }
             
             return EvaluateList(expression, list.Arguments);

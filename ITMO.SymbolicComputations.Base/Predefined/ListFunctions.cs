@@ -1,5 +1,6 @@
 using ITMO.SymbolicComputations.Base.Models;
-using static ITMO.SymbolicComputations.Base.Predefined.Boolean;
+using static ITMO.SymbolicComputations.Base.Predefined.Alphabet;
+using static ITMO.SymbolicComputations.Base.Predefined.BooleanFunctions;
 using static ITMO.SymbolicComputations.Base.Predefined.Functions;
 
 namespace ITMO.SymbolicComputations.Base.Predefined {
@@ -11,40 +12,22 @@ namespace ITMO.SymbolicComputations.Base.Predefined {
 
         public static readonly Expression EmptyList = List[new Symbol[0]];
 
-        public static Expression Map {
-            get {
-                Symbol list = "list";
-                Symbol f = "f";
+        public static readonly Expression Map =
+            Fun[list, Fun[f,
+                Fold[list, EmptyList, Fun[acc, Fun[x,
+                    Append[acc, f[x]]
+                ]]]
+            ]];
 
-                Symbol acc = "acc";
-                Symbol x = "x";
-
-                return Fun[list, Fun[f,
-                    Fold[list, EmptyList, Fun[acc, Fun[x,
-                        Append[acc, f[x]]
-                    ]]]
-                ]];
-            }
-        }
-
-        public static Expression Filter {
-            get {
-                Symbol list = "list";
-                Symbol f = "f";
-
-                Symbol acc = "acc";
-                Symbol x = "x";
-
-                return Fun[list, Fun[f,
-                    Fold[list, EmptyList, Fun[acc, Fun[x,
-                        If[f[x], 
-                            Append[acc, x],
-                            acc,
-                            "Error"
-                        ]
-                    ]]]
-                ]];
-            }
-        }
+        public static readonly Expression Filter =
+            Fun[list, Fun[f,
+                Fold[list, EmptyList, Fun[acc, Fun[x,
+                    If[f[x], 
+                        Append[acc, x],
+                        acc,
+                        "Error"
+                    ]
+                ]]]
+            ]];
     }
 }

@@ -4,7 +4,7 @@ using ITMO.SymbolicComputations.Base.Tools;
 using ITMO.SymbolicComputations.Base.Visitors;
 using Xunit.Abstractions;
 
-namespace ITMO.SymbolicComputations.Base.Tests.Extensions {
+namespace ITMO.SymbolicComputations.Base.Tests.Tools {
     public static class StepsPrintingExtensions {
         private static readonly MathematicaPrinter MathematicaPrinter = new MathematicaPrinter();
 

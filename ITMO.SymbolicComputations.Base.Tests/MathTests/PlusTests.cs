@@ -1,11 +1,12 @@
 ﻿using ITMO.SymbolicComputations.Base.Models;
-using ITMO.SymbolicComputations.Base.Tests.Extensions;
+using ITMO.SymbolicComputations.Base.Tests.Tools;
 using ITMO.SymbolicComputations.Base.Tools;
 using ITMO.SymbolicComputations.Base.Visitors;
 using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using Xunit;
 using Xunit.Abstractions;
 using static ITMO.SymbolicComputations.Base.Predefined.ArithmeticFunctions;
+using static ITMO.SymbolicComputations.Base.Predefined.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
     public sealed class PlusTests {
@@ -15,7 +16,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
         private readonly ITestOutputHelper _out;
 
         [Fact]
-        public void ConstantsReduced() {
+        public void BinaryPlusWorks() {
             var source = BinaryPlus[1, 2];
             var (steps, symbol) = source.Visit(new FullEvaluator());
 
@@ -24,14 +25,14 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
         }
 
         [Fact]
-        public void ConstantsReduced2() {
-            var source = BinaryPlus[3, -5];
+        public void ListPlusWorks() {
+            var source = ListPlus[List[1, 3, 5, 7, -7]];
             var (steps, symbol) = source.Visit(new FullEvaluator());
 
             steps.Print(_out);
-            Assert.Equal(-2, symbol);
+            Assert.Equal(9, symbol);
         }
-
+        
         [Fact]
         public void PlusForSameSymbolCreatesTimes() {
             Symbol x = "x";

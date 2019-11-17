@@ -16,6 +16,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         private static readonly FunctionEvaluator FunctionEvaluator = new FunctionEvaluator();
         
         private static readonly BinaryPlusImplementation BinaryPlusImplementation = new BinaryPlusImplementation();
+        private static readonly BinaryTimesImplementation BinaryTimesImplementation = new BinaryTimesImplementation();
         private static readonly SinFunctionImplementation SinFunctionImplementation = new SinFunctionImplementation();
         private static readonly IfImplementation IfImplementation = new IfImplementation();
         private static readonly PartImplementation PartImplementation = new PartImplementation();
@@ -29,6 +30,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
                 FlatFlattener,
                 // Implementations
                 BinaryPlusImplementation,
+                BinaryTimesImplementation,
                 SinFunctionImplementation,
                 IfImplementation,
                 EqImplementation,

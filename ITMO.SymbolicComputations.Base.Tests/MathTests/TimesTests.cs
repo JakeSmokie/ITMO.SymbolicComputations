@@ -40,12 +40,21 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
         }
 
         [Fact]
-        public void ConstantsReduced() {
-            var source = BinaryTimes[1m, 3m, 5m, -6m];
+        public void BinaryTimesWorks() {
+            var source = BinaryTimes[1m, 3m];
             var (steps, symbol) = source.Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
-            Assert.Equal(-90, symbol);
+            Assert.Equal(3, symbol);
+        }
+
+        [Fact]
+        public void ListTimesWorks() {
+            var source = BinaryTimes[1m, 3m];
+            var (steps, symbol) = source.Visit(new FullEvaluator());
+
+            steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
+            Assert.Equal(3, symbol);
         }
 
         [Fact]
