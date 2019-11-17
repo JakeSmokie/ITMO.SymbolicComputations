@@ -10,17 +10,13 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.ListFunctions 
         }
 
         protected override Symbol EvaluateList(Expression expression, ImmutableList<Symbol> items) {
-            var variable = expression.Arguments[0].Visit(AsConstantVisitor.Instance);
+            var index = expression.Arguments[1].Visit(AsConstantVisitor.Instance);
 
-            if (variable == null) {
+            if (index == null) {
                 throw new ArgumentException("Syntax only constant as argument");
             }
-            
-//            if (!(expression.Arguments[1] is Constant index)) {
-//                throw new ArgumentException();
-//            }
-//
-            var indexValue = (int) variable.Value;
+
+            var indexValue = (int) index.Value;
             return items[indexValue];
         }
     }
