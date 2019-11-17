@@ -57,7 +57,23 @@ namespace ITMO.SymbolicComputations.Base.Predefined {
                     0
                 ]]
             ]];
-        
-//        public static readonly 
+
+        public static readonly Expression Distinct =
+            Fun[list,
+                Fold[list, EmptyList, Fun[acc, Fun[x,
+                    If[
+                        Contains[acc][x],
+                        acc,
+                        Append[acc, x]
+                    ]
+                ]]]
+            ];
+
+        public static readonly Expression Group =
+            Fun[list,
+                Map[Distinct[list]][Fun[x,
+                    List[x, CountItem[list][x]]]
+                ]
+            ];
     }
 }

@@ -123,5 +123,23 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
                 _out
             );
         }
+        
+        [Fact]
+        public void DistinctWorks() {
+            Test.EvaluateAndAssert(
+                Distinct[List[1, 2, 3, 4, 2, 3, 4, 4, 4, 1]],
+                List[1, 2, 3, 4],
+                _out
+            );
+        }
+        
+        [Fact]
+        public void GroupWorks() {
+            Test.EvaluateAndAssert(
+                Group[List[1, 2, 3, 4, 2, 3, 4, 4, 4, 1]],
+                List[List[1, 2], List[2, 2], List[3, 2], List[4, 4]],
+                _out
+            );
+        }
     }
 }
