@@ -23,5 +23,14 @@ namespace ITMO.SymbolicComputations.Base.Predefined {
             Fun[x, Fun[x,
                 Eq[Compare[x, y], 1]
             ]];
+
+        public static readonly Expression And =
+            Fun[x, Fun[y,
+                If[x,
+                    If[y, True, False, "Error"],
+                    False,
+                    "Error"
+                ]
+            ]];
     }
 }

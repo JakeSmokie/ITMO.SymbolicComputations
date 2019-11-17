@@ -1,6 +1,6 @@
+using System;
 using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Tests.Tools;
-using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using Xunit;
 using Xunit.Abstractions;
 using static ITMO.SymbolicComputations.Base.Predefined.BooleanFunctions;
@@ -8,66 +8,48 @@ using static ITMO.SymbolicComputations.Base.Predefined.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
     public class BooleanTests {
-        public BooleanTests(ITestOutputHelper output) =>
-            _out = output;
+        public BooleanTests(ITestOutputHelper output) {
+            _evaluateAndAssert = Test.EvaluateAndAssert(output);
+        }
 
-        private void EvaluateAndAssert(Expression expression, Symbol expectedResult) {
-            var (steps, actual) = expression.Visit(new FullEvaluator());
+        private readonly Action<Expression, Symbol> _evaluateAndAssert;
+
+        [Fact]
+        public void CompareWorks() {
+            _evaluateAndAssert(Compare[1, 1], 0);
+            _evaluateAndAssert(Compare[1, 2], -1);
+            _evaluateAndAssert(Compare[3, 2], 1);
+        }
+
+        [Fact]
+        public void EqWorks() {
+            _evaluateAndAssert(Eq[3, 3], True);
+            _evaluateAndAssert(Eq[3, 5], False);
             
-            steps.Print(_out);
-            Assert.Equal(expectedResult, actual);
-        }
-
-        private readonly ITestOutputHelper _out;
-
-        [Fact]
-        public void CompareEqWorks() {
-            EvaluateAndAssert(Compare[1, 1], 0);
+            _evaluateAndAssert(Eq[List[1, 2, List[4]], List[1, 2, List[4]]], True);
+            _evaluateAndAssert(Eq[List[1, 2, List[4]], List[1, 2, List[6]]], False);
         }
 
         [Fact]
-        public void CompareLessWorks() {
-            EvaluateAndAssert(Compare[1, 2], -1);
-        }
-
-        [Fact]
-        public void CompareMoreWorks() {
-            EvaluateAndAssert(Compare[3, 2], 1);
-        }
-
-        [Fact]
-        public void FalseWorks() {
-            EvaluateAndAssert(Eq[3, 5], False);
-        }
-
-        [Fact]
-        public void LessWorks() {
-            EvaluateAndAssert(Less[1][2], True);
-        }
-
-        [Fact]
-        public void MoreWorks() {
-            EvaluateAndAssert(More[2][1], True);
-        }
-
-        [Fact]
-        public void ListEqualityWorks() {
-            EvaluateAndAssert(Eq[List[1, 2, List[4]], List[1, 2, List[4]]], True);
-        }
-
-        [Fact]
-        public void NotLessWorks() {
-            EvaluateAndAssert(Less[2][1], False);
+        public void InequalityWorks() {
+            _evaluateAndAssert(Less[1][2], True);
+            _evaluateAndAssert(More[2][1], True);
+            
+            _evaluateAndAssert(Less[2][1], False);
+            _evaluateAndAssert(More[1][2], False);
         }
 
         [Fact]
         public void NotWorks() {
-            EvaluateAndAssert(Not[Eq[1, 1]], False);
+            _evaluateAndAssert(Not[Eq[1, 1]], False);
         }
 
         [Fact]
-        public void TrueWorks() {
-            EvaluateAndAssert(Eq[3, 3], True);
+        public void AndWorks() {
+            _evaluateAndAssert(And[True][True], True);
+            _evaluateAndAssert(And[True][False], False);
+            _evaluateAndAssert(And[False][True], False);
+            _evaluateAndAssert(And[False][False], False);
         }
     }
 }
