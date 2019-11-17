@@ -10,21 +10,25 @@ namespace ITMO.SymbolicComputations.Polynomial {
     public static class SumConstantsFunction {
         public static readonly Expression SumConstants =
             Fun[list,
-                Fun["constants", Fun["others", 
+                Fun["constants", Fun["others",
                     If[
                         Eq[Length["constants"], 0],
-                        
+                        //
                         list,
-                        Evaluate[
-                            Append[
+                        Evaluate[If[
+                            And[
+                                Eq[ListPlus["constants"], 0]
+                            ][
+                                Not[Eq[Length["others"], 0]]
+                            ],
+                            //
+                            "others",
+                            Evaluate[Append[
                                 "others",
                                 ListPlus["constants"]
-                            ]
-                        ],
-                        
-                        "Error"
+                            ]]
+                        ]]
                     ]
-//                    List["constants", "others"]
                 ]][
                     Filter[list][Fun[x, IsConstant[x]]]
                 ][

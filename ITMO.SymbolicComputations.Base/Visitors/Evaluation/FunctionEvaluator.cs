@@ -10,17 +10,19 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
             var funcHead = expression.Head.Visit(AsExpressionVisitor.Instance);
 
             if (funcHead == null) {
-                return (ImmutableList<Symbol>.Empty, expression);;
+                return (ImmutableList<Symbol>.Empty, expression);
+                ;
             }
 
             if (!Equals(funcHead.Head, Fun)) {
                 return (ImmutableList<Symbol>.Empty, expression);
             }
-            
+
             if (expression.Arguments.Count != 1) {
-                throw new ArgumentException("You can't apply not 1 argument");
+                throw new ArgumentException($"You cannot apply not 1 argument. \nFunc: {funcHead}\n" +
+                                            $"Args: \n * {string.Join("\n * ", expression.Arguments)}");
             }
-            
+
             if (funcHead.Arguments.Count != 2) {
                 throw new ArgumentException("Function declaration should contain only 2 arguments");
             }

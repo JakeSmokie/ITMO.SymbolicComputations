@@ -9,7 +9,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations {
 
         protected override Symbol Evaluate(Expression expression) {
             if (!(expression.Arguments[0] is Constant first) || !(expression.Arguments[1] is Constant second)) {
-                throw new ArgumentException();
+                return expression;
             }
 
             return first.Value * second.Value;

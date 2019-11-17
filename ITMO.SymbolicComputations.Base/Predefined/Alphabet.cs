@@ -8,6 +8,8 @@ namespace ITMO.SymbolicComputations.Base.Predefined {
         public static readonly StringSymbol list = new StringSymbol("list'");
         public static readonly StringSymbol list2 = new StringSymbol("list2'");
         
+        public static readonly StringSymbol tuple = new StringSymbol("tuple'");
+        
         public static readonly StringSymbol f = new StringSymbol("f'");
         public static readonly StringSymbol acc = new StringSymbol("acc'");
     }

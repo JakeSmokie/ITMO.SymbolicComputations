@@ -3,40 +3,31 @@ using ITMO.SymbolicComputations.Base.Models;
 using Tests.Base.Tools;
 using Xunit;
 using Xunit.Abstractions;
+using static ITMO.SymbolicComputations.Base.Predefined.ArithmeticFunctions;
+using static ITMO.SymbolicComputations.Base.Predefined.Functions;
 using static ITMO.SymbolicComputations.Base.Predefined.ListFunctions;
+using static ITMO.SymbolicComputations.Polynomial.SumSymbolsFunction;
 using static ITMO.SymbolicComputations.Polynomial.SumConstantsFunction;
 
 namespace ITMO.SymbolicComputations.Polynomial.Tests {
-    public class ConstantsSumTests {
-        public ConstantsSumTests(ITestOutputHelper output) {
+    public class PolynomialTests {
+        public PolynomialTests(ITestOutputHelper output) {
             _evaluateAndAssert = Test.EvaluateAndAssert(output);
         }
 
         private readonly Action<Expression, Symbol> _evaluateAndAssert;
 
         [Fact]
-        public void ConstantsSummed() {
+        public void AllOkay() {
             Symbol x = "x";
             Symbol y = "y";
+            Symbol z = "z";
             
             _evaluateAndAssert(
-                SumConstants[
-                    List[3, x, y, 10, -1]
-                ],
-                List[x, y, 12]
-            );
-        }
-        
-        [Fact]
-        public void ConstantsLost() {
-            Symbol x = "x";
-            Symbol y = "y";
-            
-            _evaluateAndAssert(
-                SumConstants[
-                    List[3, x, y, 10, -13]
-                ],
-                List[x, y]
+                SumConstants[SumSymbols[
+                    List[3, x, y, 10, x, y, y, x, -1, y, z, 4]
+                ]],
+                List[BinaryTimes[3, x], BinaryTimes[4, y], z, 16]
             );
         }
     }

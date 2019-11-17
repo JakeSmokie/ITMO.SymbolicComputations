@@ -7,6 +7,7 @@ using static ITMO.SymbolicComputations.Base.Predefined.Functions;
 namespace ITMO.SymbolicComputations.Base.Predefined {
     public static class ListFunctions {
         public static readonly StringSymbol List = new StringSymbol(nameof(List));
+        
         public static readonly StringSymbol Part = new StringSymbol(nameof(Part));
         public static readonly StringSymbol Fold = new StringSymbol(nameof(Fold));
         public static readonly StringSymbol Append = new StringSymbol(nameof(Append));
