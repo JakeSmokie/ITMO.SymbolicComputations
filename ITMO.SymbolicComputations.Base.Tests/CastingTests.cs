@@ -1,6 +1,7 @@
 using ITMO.SymbolicComputations.Base.Tests.Tools;
 using Xunit;
 using Xunit.Abstractions;
+using static ITMO.SymbolicComputations.Base.Predefined.BooleanFunctions;
 using static ITMO.SymbolicComputations.Base.Predefined.CastingFunctions;
 using static ITMO.SymbolicComputations.Base.Predefined.ListFunctions;
 
@@ -20,6 +21,17 @@ namespace ITMO.SymbolicComputations.Base.Tests {
             Test.EvaluateAndAssert(AsStringSymbol["Three"], "Three", _out);
             Test.EvaluateAndAssert(AsStringSymbol[3], Null, _out);
             Test.EvaluateAndAssert(AsStringSymbol[List[1, 2]], Null, _out);
+        }
+        
+        [Fact]
+        public void TypeTestingWorks() {
+            Test.EvaluateAndAssert(IsConstant[3], True, _out);
+            Test.EvaluateAndAssert(IsConstant["Three"], False, _out);
+            Test.EvaluateAndAssert(IsConstant[List[1, 2]], False, _out);
+            
+            Test.EvaluateAndAssert(IsStringSymbol["Three"], True, _out);
+            Test.EvaluateAndAssert(IsStringSymbol[3], False, _out);
+            Test.EvaluateAndAssert(IsStringSymbol[List[1, 2]], False, _out);
         }
     }
 }
