@@ -6,6 +6,8 @@ namespace ITMO.SymbolicComputations.Base.Predefined {
         public static readonly StringSymbol y = new StringSymbol(nameof(y));
         
         public static readonly StringSymbol list = new StringSymbol(nameof(list));
+        public static readonly StringSymbol list2 = new StringSymbol(nameof(list2));
+        
         public static readonly StringSymbol f = new StringSymbol(nameof(f));
         public static readonly StringSymbol acc = new StringSymbol(nameof(acc));
     }

@@ -53,10 +53,46 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
         }
 
         [Fact]
+        public void AppendListWorks() {
+            Test.EvaluateAndAssert(
+                AppendList[List[1, 2, 3, 4]][List[5, 6]],
+                List[1, 2, 3, 4, 5, 6],
+                _out
+            );
+        }
+
+//        [Fact]
+//        public void AppendListWorks() {
+//            Test.EvaluateAndAssert(
+//                AppendList[List[1, 2, 3, 4]][List[5, 6]],
+//                List[1, 2, 3, 4, 5, 6],
+//                _out
+//            );
+//        }
+
+        [Fact]
         public void FilterWorks() {
             Test.EvaluateAndAssert(
                 Filter[List[1, 2, 3, 4]][Fun[x, Less[x][3]]],
                 List[1, 2],
+                _out
+            );
+        }
+
+        [Fact]
+        public void LengthWorksOnEmptyList() {
+            Test.EvaluateAndAssert(
+                Length[EmptyList],
+                0,
+                _out
+            );
+        }
+
+        [Fact]
+        public void LengthWorksOnNonEmptyList() {
+            Test.EvaluateAndAssert(
+                Length[List[1, 2, 3, 4]],
+                4,
                 _out
             );
         }

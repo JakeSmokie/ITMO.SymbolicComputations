@@ -1,5 +1,6 @@
 using ITMO.SymbolicComputations.Base.Models;
 using static ITMO.SymbolicComputations.Base.Predefined.Alphabet;
+using static ITMO.SymbolicComputations.Base.Predefined.ArithmeticFunctions;
 using static ITMO.SymbolicComputations.Base.Predefined.BooleanFunctions;
 using static ITMO.SymbolicComputations.Base.Predefined.Functions;
 
@@ -18,7 +19,7 @@ namespace ITMO.SymbolicComputations.Base.Predefined {
                     Append[acc, f[x]]
                 ]]]
             ]];
-
+        
         public static readonly Expression Filter =
             Fun[list, Fun[f,
                 Fold[list, EmptyList, Fun[acc, Fun[x,
@@ -27,6 +28,18 @@ namespace ITMO.SymbolicComputations.Base.Predefined {
                         acc,
                         "Error"
                     ]
+                ]]]
+            ]];
+
+        public static readonly Expression Length =
+            Fun[list,
+                Fold[list, 0, Fun[acc, Fun[x, BinaryPlus[acc, 1]]]]
+            ];
+
+        public static readonly Expression AppendList =
+            Fun[list, Fun[list2,
+                Fold[list2, list, Fun[acc, Fun[x,
+                    Append[acc, x]
                 ]]]
             ]];
     }
