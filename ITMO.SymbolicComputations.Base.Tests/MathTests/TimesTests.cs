@@ -5,6 +5,7 @@ using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using Xunit;
 using Xunit.Abstractions;
 using static ITMO.SymbolicComputations.Base.Predefined.ArithmeticFunctions;
+using static ITMO.SymbolicComputations.Base.Predefined.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
     public sealed class TimesTests {
@@ -50,11 +51,11 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
 
         [Fact]
         public void ListTimesWorks() {
-            var source = BinaryTimes[1m, 3m];
+            var source = ListTimes[List[-1, 6, 3]];
             var (steps, symbol) = source.Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
-            Assert.Equal(3, symbol);
+            Assert.Equal(-18, symbol);
         }
 
         [Fact]
