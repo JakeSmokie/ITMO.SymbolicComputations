@@ -20,34 +20,34 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
 
         [Fact]
         public void HoldFirstSuppressionWorks() {
-            var source = HoldFirst[Evaluate[BinaryPlus[2]], BinaryPlus[3]];
+            var source = HoldFirst[Evaluate[BinaryPlus[2, 4]], BinaryPlus[3, 5]];
             var expression = source.Visit(new FullEvaluator()).Symbol;
 
             _out.WriteLine(expression.Visit(new MathematicaPrinter()));
-            Assert.Equal(HoldFirst[2, 3], expression);
+            Assert.Equal(HoldFirst[6, 8], expression);
         }
 
         [Fact]
         public void HoldFirstWorks() {
-            var source = HoldFirst[BinaryPlus[2], BinaryPlus[3]];
+            var source = HoldFirst[BinaryPlus[2, 4], BinaryPlus[3, 5]];
             var expression = source.Visit(new FullEvaluator()).Symbol;
 
             _out.WriteLine(expression.Visit(new MathematicaPrinter()));
-            Assert.Equal(HoldFirst[BinaryPlus[2], 3], expression);
+            Assert.Equal(HoldFirst[BinaryPlus[2, 4], 8], expression);
         }
 
         [Fact]
         public void HoldFormSuppressingWithEvaluateFunctionWorks() {
-            var source = HoldForm[Evaluate[BinaryPlus[2]]];
+            var source = HoldForm[Evaluate[BinaryPlus[2, 1]]];
             var expression = source.Visit(new FullEvaluator()).Symbol;
 
             _out.WriteLine(expression.Visit(new MathematicaPrinter()));
-            Assert.Equal(2, expression);
+            Assert.Equal(3, expression);
         }
 
         [Fact]
         public void HoldFormWorks() {
-            var source = BinaryPlus[2];
+            var source = BinaryPlus[2, 4];
             var (steps, expression) = HoldForm[source].Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
@@ -56,7 +56,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
 
         [Fact]
         public void HoldIsNotSuppressedWhenItIsComplete() {
-            var source = HoldComplete[Evaluate[BinaryPlus[2]]];
+            var source = HoldComplete[Evaluate[BinaryPlus[2, 6]]];
             var expression = source.Visit(new FullEvaluator()).Symbol;
 
             _out.WriteLine(expression.Visit(new MathematicaPrinter()));
@@ -65,29 +65,29 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
 
         [Fact]
         public void HoldRestSuppressionWorks() {
-            var source = HoldRest[BinaryPlus[2], BinaryPlus[3], Evaluate[BinaryPlus[4]]];
+            var source = HoldRest[BinaryPlus[2, 5], BinaryPlus[3, 7], Evaluate[BinaryPlus[4, 8]]];
             var expression = source.Visit(new FullEvaluator()).Symbol;
 
             _out.WriteLine(expression.Visit(new MathematicaPrinter()));
-            Assert.Equal(HoldRest[2, BinaryPlus[3], 4], expression);
+            Assert.Equal(HoldRest[7, BinaryPlus[3, 7], 12], expression);
         }
 
         [Fact]
         public void HoldRestWorks() {
-            var source = HoldRest[BinaryPlus[2], BinaryPlus[3], BinaryPlus[4]];
+            var source = HoldRest[BinaryPlus[2, 1], BinaryPlus[3], BinaryPlus[4]];
             var expression = source.Visit(new FullEvaluator()).Symbol;
 
             _out.WriteLine(expression.Visit(new MathematicaPrinter()));
-            Assert.Equal(HoldRest[2, BinaryPlus[3], BinaryPlus[4]], expression);
+            Assert.Equal(HoldRest[3, BinaryPlus[3], BinaryPlus[4]], expression);
         }
 
         [Fact]
         public void HoldSuppressingWithEvaluateFunctionWorks() {
-            var source = Hold[Evaluate[BinaryPlus[2]]];
+            var source = Hold[Evaluate[BinaryPlus[2, 3]]];
             var (steps, expression) = source.Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
-            Assert.Equal(Hold[2], expression);
+            Assert.Equal(Hold[5], expression);
         }
 
         [Fact]
@@ -101,12 +101,13 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
 
         [Fact]
         public void NestedHoldWorks() {
-            var insides = Hold[BinaryPlus[2]];
-            var source = BinaryPlus[insides];
+            Symbol dull = "";
+
+            var source = dull[Hold[BinaryPlus[2, 4]], 1];
             var expression = source.Visit(new FullEvaluator()).Symbol;
 
             _out.WriteLine(expression.Visit(new MathematicaPrinter()));
-            Assert.Equal(insides, expression);
+            Assert.Equal(source, expression);
         }
     }
 }

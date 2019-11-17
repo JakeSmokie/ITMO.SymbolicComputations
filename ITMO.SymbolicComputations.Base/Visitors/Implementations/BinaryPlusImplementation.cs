@@ -13,7 +13,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations {
             var second = expression.Arguments[1].Visit(AsConstantVisitor.Instance);
 
             if (first == null || second == null) {
-                throw new ArgumentException("Syntax only constant as argument");
+                throw new ArgumentException($"{BinaryPlus} supports only constants as args");
             }
 
             return first.Value + second.Value;
