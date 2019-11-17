@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Immutable;
 using ITMO.SymbolicComputations.Base.Models;
+using ITMO.SymbolicComputations.Base.Visitors.Casting;
 using static ITMO.SymbolicComputations.Base.Predefined.Functions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
     public sealed class FunctionEvaluator : ISymbolVisitor<(ImmutableList<Symbol>, Symbol)> {
         public (ImmutableList<Symbol>, Symbol) VisitFunction(Expression expression) {
-            if (!(expression.Head is Expression funcHead)) {
-                return (ImmutableList<Symbol>.Empty, expression);
+            var funcHead = expression.Head.Visit(AsExpressionVisitor.Instance);
+
+            if (funcHead == null) {
+                return (ImmutableList<Symbol>.Empty, expression);;
             }
 
             if (!Equals(funcHead.Head, Fun)) {
@@ -23,8 +26,9 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
             }
 
             var variableSymbol = funcHead.Arguments[0];
+            var variable = variableSymbol.Visit(AsStringSymbolVisitor.Instance);
 
-            if (!(variableSymbol is StringSymbol variable)) {
+            if (variable == null) {
                 throw new ArgumentException("Fun parameter can be only StringSymbol. Something gone wrong");
             }
 

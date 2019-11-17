@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Immutable;
 using ITMO.SymbolicComputations.Base.Models;
+using ITMO.SymbolicComputations.Base.Visitors.Casting;
 using static ITMO.SymbolicComputations.Base.Predefined.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.ListFunctions {
@@ -9,11 +10,17 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.ListFunctions 
         }
 
         protected override Symbol EvaluateList(Expression expression, ImmutableList<Symbol> items) {
-            if (!(expression.Arguments[1] is Constant index)) {
-                throw new ArgumentException();
-            }
+            var variable = expression.Arguments[0].Visit(AsConstantVisitor.Instance);
 
-            var indexValue = (int) index.Value;
+            if (variable == null) {
+                throw new ArgumentException("Syntax only constant as argument");
+            }
+            
+//            if (!(expression.Arguments[1] is Constant index)) {
+//                throw new ArgumentException();
+//            }
+//
+            var indexValue = (int) variable.Value;
             return items[indexValue];
         }
     }

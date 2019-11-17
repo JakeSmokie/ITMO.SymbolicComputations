@@ -1,6 +1,7 @@
 using System;
 using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Predefined;
+using ITMO.SymbolicComputations.Base.Visitors.Casting;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Implementations {
     public sealed class SinFunctionImplementation : AbstractFunctionImplementation {
@@ -8,11 +9,13 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations {
         }
 
         protected override Symbol Evaluate(Expression expression) {
-            if (!(expression.Arguments[0] is Constant x)) {
-                throw new NotImplementedException();
+            var variable = expression.Arguments[0].Visit(AsConstantVisitor.Instance);
+
+            if (variable == null) {
+                throw new ArgumentException("Syntax only constant as argument");
             }
 
-            return (decimal) Math.Sin((double) x.Value);
+            return (decimal) Math.Sin((double) variable.Value);
         }
     }
 }

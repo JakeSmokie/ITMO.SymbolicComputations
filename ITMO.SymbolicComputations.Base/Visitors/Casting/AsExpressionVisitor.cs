@@ -7,5 +7,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Casting {
         public Expression VisitSymbol(StringSymbol symbol) => null;
 
         public Expression VisitConstant(Constant constant) => null;
+        
+        public static readonly AsExpressionVisitor Instance = new AsExpressionVisitor();
     }
 }

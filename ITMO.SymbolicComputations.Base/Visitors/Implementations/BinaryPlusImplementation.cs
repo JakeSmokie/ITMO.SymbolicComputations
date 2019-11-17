@@ -1,5 +1,6 @@
 using System;
 using ITMO.SymbolicComputations.Base.Models;
+using ITMO.SymbolicComputations.Base.Visitors.Casting;
 using static ITMO.SymbolicComputations.Base.Predefined.ArithmeticFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Implementations {
@@ -8,8 +9,11 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations {
         }
 
         protected override Symbol Evaluate(Expression expression) {
-            if (!(expression.Arguments[0] is Constant first) || !(expression.Arguments[1] is Constant second)) {
-                throw new ArgumentException();
+            var first = expression.Arguments[0].Visit(AsConstantVisitor.Instance);
+            var second = expression.Arguments[1].Visit(AsConstantVisitor.Instance);
+
+            if (first == null || second == null) {
+                throw new ArgumentException("Syntax only constant as argument");
             }
 
             return first.Value + second.Value;
