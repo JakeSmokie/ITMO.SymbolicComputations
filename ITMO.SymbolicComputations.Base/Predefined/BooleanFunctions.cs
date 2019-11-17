@@ -20,7 +20,7 @@ namespace ITMO.SymbolicComputations.Base.Predefined {
             ]];
 
         public static readonly Expression More =
-            Fun[x, Fun[x,
+            Fun[x, Fun[y,
                 Eq[Compare[x, y], 1]
             ]];
 
@@ -29,6 +29,15 @@ namespace ITMO.SymbolicComputations.Base.Predefined {
                 If[x,
                     If[y, True, False, "Error"],
                     False,
+                    "Error"
+                ]
+            ]];
+
+        public static readonly Expression Or =
+            Fun[x, Fun[y,
+                If[x,
+                    True,
+                    If[y, True, False, "Error"],
                     "Error"
                 ]
             ]];

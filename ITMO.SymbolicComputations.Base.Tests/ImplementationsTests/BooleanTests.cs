@@ -51,5 +51,13 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
             _evaluateAndAssert(And[False][True], False);
             _evaluateAndAssert(And[False][False], False);
         }
+
+        [Fact]
+        public void OrWorks() {
+            _evaluateAndAssert(Or[True][True], True);
+            _evaluateAndAssert(Or[True][False], True);
+            _evaluateAndAssert(Or[False][True], True);
+            _evaluateAndAssert(Or[False][False], False);
+        }
     }
 }
