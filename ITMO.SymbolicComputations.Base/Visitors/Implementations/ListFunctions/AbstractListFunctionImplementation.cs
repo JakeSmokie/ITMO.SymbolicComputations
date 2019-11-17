@@ -14,14 +14,10 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.ListFunctions 
         protected override Symbol Evaluate(Expression expression) {
             var list = expression.Arguments[0].Visit(AsExpressionVisitor.Instance);
 
-            if (list == null) {
-                throw new ArgumentException("Syntax only constant as argument");
-            }
-
-            if (!Equals(list.Head, List)) {
+            if (list == null || !Equals(list.Head, List)) {
                 throw new ArgumentException($"Invalid usage of {_name}: Argument is not a list");
             }
-            
+
             return EvaluateList(expression, list.Arguments);
         }
     }
