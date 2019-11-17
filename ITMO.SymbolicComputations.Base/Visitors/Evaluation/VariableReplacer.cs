@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using ITMO.SymbolicComputations.Base.Models;
+using static ITMO.SymbolicComputations.Base.Predefined.Functions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
     public sealed class VariableReplacer : ISymbolVisitor<Symbol> {
@@ -15,6 +16,10 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
             var head = expression.Head.Visit(this);
             var arguments = expression.Arguments.Select(x => x.Visit(this));
 
+            if (Equals(head, Fun) && Equals(expression.Arguments[0], _variable)) {
+                return expression;
+            }
+            
             head = Equals(head, _variable)
                 ? _funcArgument
                 : head;

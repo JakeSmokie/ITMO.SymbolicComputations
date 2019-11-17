@@ -6,10 +6,6 @@ using static ITMO.SymbolicComputations.Base.Predefined.Functions;
 namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
     public sealed class FunctionEvaluator : ISymbolVisitor<(ImmutableList<Symbol>, Symbol)> {
         public (ImmutableList<Symbol>, Symbol) VisitFunction(Expression expression) {
-            if (expression.Arguments.Count > 2) {
-                throw new ArgumentException("You can't apply more then 2 arguments");
-            }
-
             if (!(expression.Head is Expression funcHead)) {
                 return (ImmutableList<Symbol>.Empty, expression);
             }
@@ -17,11 +13,19 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
             if (!Equals(funcHead.Head, Fun)) {
                 return (ImmutableList<Symbol>.Empty, expression);
             }
+            
+            if (expression.Arguments.Count != 1) {
+                throw new ArgumentException("You can't apply not 1 argument");
+            }
+            
+            if (funcHead.Arguments.Count != 2) {
+                throw new ArgumentException("Function declaration should contain only 2 arguments");
+            }
 
             var variableSymbol = funcHead.Arguments[0];
 
             if (!(variableSymbol is StringSymbol variable)) {
-                return (ImmutableList<Symbol>.Empty, expression);
+                throw new ArgumentException("Fun parameter can be only StringSymbol. Something gone wrong");
             }
 
             var functionBody = funcHead.Arguments[1];

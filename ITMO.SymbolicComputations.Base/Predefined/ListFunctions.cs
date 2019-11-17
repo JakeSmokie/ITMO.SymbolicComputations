@@ -17,7 +17,7 @@ namespace ITMO.SymbolicComputations.Base.Predefined {
                 Symbol f = "f";
 
                 Symbol acc = "acc";
-                Symbol x = "map_x";
+                Symbol x = "x";
 
                 return Fun[list, Fun[f,
                     Fold[list, EmptyList, Fun[acc, Fun[x,
@@ -33,7 +33,7 @@ namespace ITMO.SymbolicComputations.Base.Predefined {
                 Symbol f = "f";
 
                 Symbol acc = "acc";
-                Symbol x = "filter_x";
+                Symbol x = "x";
 
                 return Fun[list, Fun[f,
                     Fold[list, EmptyList, Fun[acc, Fun[x,
