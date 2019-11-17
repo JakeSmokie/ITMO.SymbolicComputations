@@ -12,7 +12,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
             _funcArgument = funcArgument;
         }
 
-        public Symbol VisitFunction(Expression expression) {
+        public Symbol VisitExpression(Expression expression) {
             var head = expression.Head.Visit(this);
             var arguments = expression.Arguments.Select(x => x.Visit(this));
 

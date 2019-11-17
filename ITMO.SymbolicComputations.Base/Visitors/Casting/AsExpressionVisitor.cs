@@ -2,7 +2,7 @@
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Casting {
     public sealed class AsExpressionVisitor : ISymbolVisitor<Expression>  {
-        public Expression VisitFunction(Expression expression) => expression;
+        public Expression VisitExpression(Expression expression) => expression;
 
         public Expression VisitSymbol(StringSymbol symbol) => null;
 

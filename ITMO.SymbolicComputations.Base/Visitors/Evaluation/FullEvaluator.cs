@@ -24,7 +24,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         private static readonly EqImplementation EqImplementation = new EqImplementation();
         private static readonly CompareImplementation CompareImplementation = new CompareImplementation();
 
-        public (ImmutableList<Symbol>, Symbol) VisitFunction(Expression expression) {
+        public (ImmutableList<Symbol>, Symbol) VisitExpression(Expression expression) {
             var visitors = new ISymbolVisitor<Symbol>[] {
                 FlatFlattener,
                 // Implementations

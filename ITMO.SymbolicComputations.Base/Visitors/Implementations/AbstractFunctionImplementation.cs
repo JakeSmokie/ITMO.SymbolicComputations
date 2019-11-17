@@ -5,7 +5,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations {
         private readonly StringSymbol _name;
         protected AbstractFunctionImplementation(StringSymbol name) => _name = name;
 
-        public Symbol VisitFunction(Expression expression) {
+        public Symbol VisitExpression(Expression expression) {
             if (!Equals(expression.Head, _name)) {
                 return expression;
             }

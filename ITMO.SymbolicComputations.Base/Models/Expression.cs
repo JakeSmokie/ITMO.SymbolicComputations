@@ -26,7 +26,7 @@ namespace ITMO.SymbolicComputations.Base.Models {
         }
 
         protected override T VisitImplementation<T>(ISymbolVisitor<T> visitor) =>
-            visitor.VisitFunction(this);
+            visitor.VisitExpression(this);
 
         public override bool Equals(object obj) =>
             ReferenceEquals(this, obj) || obj is Expression other && Equals(other);

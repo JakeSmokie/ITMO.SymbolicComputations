@@ -7,7 +7,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Attributes {
         private static readonly HasAttributeChecker FlatChecker =
             new HasAttributeChecker(Predefined.Attributes.Flat);
 
-        public Symbol VisitFunction(Expression expression) {
+        public Symbol VisitExpression(Expression expression) {
             if (!expression.Head.Visit(FlatChecker)) {
                 return expression;
             }

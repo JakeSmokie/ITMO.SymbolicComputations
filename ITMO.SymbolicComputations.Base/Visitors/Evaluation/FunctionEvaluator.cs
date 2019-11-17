@@ -6,7 +6,7 @@ using static ITMO.SymbolicComputations.Base.Predefined.Functions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
     public sealed class FunctionEvaluator : ISymbolVisitor<(ImmutableList<Symbol>, Symbol)> {
-        public (ImmutableList<Symbol>, Symbol) VisitFunction(Expression expression) {
+        public (ImmutableList<Symbol>, Symbol) VisitExpression(Expression expression) {
             var funcHead = expression.Head.Visit(AsExpressionVisitor.Instance);
 
             if (funcHead == null) {

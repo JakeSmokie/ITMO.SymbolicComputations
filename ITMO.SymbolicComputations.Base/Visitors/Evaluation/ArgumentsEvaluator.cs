@@ -22,7 +22,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         private static readonly FullEvaluator FullEvaluator =
             new FullEvaluator();
 
-        public (ImmutableList<Symbol>, Symbol) VisitFunction(Expression expression) {
+        public (ImmutableList<Symbol>, Symbol) VisitExpression(Expression expression) {
             var (headSteps, head) = expression.Head.Visit(FullEvaluator);
             var args = EvaluateArguments(head, expression.Arguments);
 

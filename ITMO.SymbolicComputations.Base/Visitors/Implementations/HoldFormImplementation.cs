@@ -4,7 +4,7 @@ using ITMO.SymbolicComputations.Base.Predefined;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Implementations {
     public sealed class HoldFormImplementation : ISymbolVisitor<Symbol> {
-        public Symbol VisitFunction(Expression expression) =>
+        public Symbol VisitExpression(Expression expression) =>
             Equals(expression.Head, Functions.HoldForm)
                 ? expression.Arguments.First()
                 : expression;

@@ -4,7 +4,7 @@ using ITMO.SymbolicComputations.Base.Models;
 
 namespace ITMO.SymbolicComputations.Base.Visitors {
     public sealed class MathematicaPrinter : ISymbolVisitor<string> {
-        public string VisitFunction(Expression expression) =>
+        public string VisitExpression(Expression expression) =>
             expression.Head.Visit(this) +
             $"[{string.Join(", ", expression.Arguments.Select(a => a.Visit(this)))}]";
 

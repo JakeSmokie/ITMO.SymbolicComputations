@@ -2,7 +2,7 @@
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Casting {
     public sealed class AsConstantVisitor : ISymbolVisitor<Constant>  {
-        public Constant VisitFunction(Expression expression) => null;
+        public Constant VisitExpression(Expression expression) => null;
 
         public Constant VisitSymbol(StringSymbol symbol) => null;
 

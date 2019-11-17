@@ -5,7 +5,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Attributes {
         private static readonly HasAttributeChecker IsOneIdentityVisitor =
             new HasAttributeChecker(Predefined.Attributes.OneIdentity);
 
-        public Symbol VisitFunction(Expression expression) =>
+        public Symbol VisitExpression(Expression expression) =>
             expression.Head.Visit(IsOneIdentityVisitor)
             && expression.Arguments.Count == 1
                 ? expression.Arguments[0]
