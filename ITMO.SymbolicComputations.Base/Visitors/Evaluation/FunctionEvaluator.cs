@@ -5,6 +5,10 @@ using static ITMO.SymbolicComputations.Base.Predefined.Functions;
 namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
     public sealed class FunctionEvaluator : ISymbolVisitor<(ImmutableList<Symbol>, Symbol)> {
         public (ImmutableList<Symbol>, Symbol) VisitFunction(Expression expression) {
+            if (expression.Arguments.Count > 2) {
+                throw new ArgumentException("You can't apply more then 2 arguments");
+            }
+
             if (!(expression.Head is Expression head)) {
                 return (ImmutableList<Symbol>.Empty, expression);
             }
