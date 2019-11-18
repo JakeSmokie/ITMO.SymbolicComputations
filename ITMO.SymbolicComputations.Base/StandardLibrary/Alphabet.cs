@@ -8,6 +8,8 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
         public static readonly StringSymbol pred = new StringSymbol("pred'");
         public static readonly StringSymbol body = new StringSymbol("body'");
 
+        public static readonly StringSymbol expr = new StringSymbol("expr'");
+        
         public static readonly StringSymbol list = new StringSymbol("list'");
         public static readonly StringSymbol list2 = new StringSymbol("list2'");
         

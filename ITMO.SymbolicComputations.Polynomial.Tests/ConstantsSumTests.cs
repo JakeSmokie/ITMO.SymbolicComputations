@@ -3,6 +3,7 @@ using ITMO.SymbolicComputations.Base.Models;
 using Tests.Base.Tools;
 using Xunit;
 using Xunit.Abstractions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.ArithmeticFunctions;
 using static ITMO.SymbolicComputations.Base.StandardLibrary.ListFunctions;
 using static ITMO.SymbolicComputations.Polynomial.SumConstantsFunction;
 
@@ -21,9 +22,9 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
             
             _evaluateAndAssert(
                 SumConstants[
-                    List[3, x, y, 10, -1]
+                    Plus[3, x, y, 10, -1]
                 ],
-                List[x, y, 12]
+                Plus[x, y, 12]
             );
         }
         
@@ -34,9 +35,9 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
             
             _evaluateAndAssert(
                 SumConstants[
-                    List[3, x, y, 10, -13]
+                    Plus[3, x, y, 10, -13]
                 ],
-                List[x, y]
+                Plus[x, y]
             );
         }
     }

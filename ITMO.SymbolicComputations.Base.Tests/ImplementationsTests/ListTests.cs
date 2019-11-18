@@ -69,7 +69,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
                 _out
             );
         }
-        
+
         [Fact]
         public void AppendEmptyListAndNonEmptyListWorks() {
             Test.EvaluateAndAssert(
@@ -105,7 +105,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
                 _out
             );
         }
-        
+
         [Fact]
         public void CountItemWorks() {
             Test.EvaluateAndAssert(
@@ -114,7 +114,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
                 _out
             );
         }
-        
+
         [Fact]
         public void ContainsWorks() {
             Test.EvaluateAndAssert(
@@ -123,7 +123,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
                 _out
             );
         }
-        
+
         [Fact]
         public void DistinctWorks() {
             Test.EvaluateAndAssert(
@@ -132,12 +132,21 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
                 _out
             );
         }
-        
+
         [Fact]
         public void GroupWorks() {
             Test.EvaluateAndAssert(
                 Group[List[1, 2, 3, 4, 2, 3, 4, 4, 4, 1]],
                 List[List[1, 2], List[2, 2], List[3, 2], List[4, 4]],
+                _out
+            );
+        }
+
+        [Fact]
+        public void ApplyListWorks() {
+            Test.EvaluateAndAssert(
+                ApplyList[Plus, List[x, y, 12]],
+                Plus[x, y, 12],
                 _out
             );
         }
