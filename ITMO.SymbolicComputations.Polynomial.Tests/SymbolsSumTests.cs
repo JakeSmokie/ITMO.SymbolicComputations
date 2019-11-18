@@ -37,7 +37,7 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
                 SumSymbols[
                     List[Times[x, 3], Times[x, 3]]
                 ],
-                List[Times[2, Times[3, x]]]
+                List[Times[x, 6]]
             );
         }
     }
