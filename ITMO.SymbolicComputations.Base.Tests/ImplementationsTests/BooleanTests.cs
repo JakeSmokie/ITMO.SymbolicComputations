@@ -3,7 +3,10 @@ using ITMO.SymbolicComputations.Base.Models;
 using Tests.Base.Tools;
 using Xunit;
 using Xunit.Abstractions;
+using static ITMO.SymbolicComputations.Base.Functions.Alphabet;
+using static ITMO.SymbolicComputations.Base.Functions.ArithmeticFunctions;
 using static ITMO.SymbolicComputations.Base.Functions.BooleanFunctions;
+using static ITMO.SymbolicComputations.Base.Functions.Functions;
 using static ITMO.SymbolicComputations.Base.Functions.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
@@ -25,7 +28,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
         public void EqWorks() {
             _evaluateAndAssert(Eq[3, 3], True);
             _evaluateAndAssert(Eq[3, 5], False);
-            
+
             _evaluateAndAssert(Eq[List[1, 2, List[4]], List[1, 2, List[4]]], True);
             _evaluateAndAssert(Eq[List[1, 2, List[4]], List[1, 2, List[6]]], False);
         }
@@ -34,7 +37,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
         public void InequalityWorks() {
             _evaluateAndAssert(Less[1][2], True);
             _evaluateAndAssert(More[2][1], True);
-            
+
             _evaluateAndAssert(Less[2][1], False);
             _evaluateAndAssert(More[1][2], False);
         }
@@ -59,5 +62,15 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
             _evaluateAndAssert(Or[False][True], True);
             _evaluateAndAssert(Or[False][False], False);
         }
+
+//        [Fact]
+//        public void WhileWorks() {
+//            _evaluateAndAssert(
+//                While.Value[10][Fun[x, Eq[x, 0]]][Fun[x,
+//                    BinaryPlus[x, -1]
+//                ]],
+//                0
+//            );
+//        }
     }
 }

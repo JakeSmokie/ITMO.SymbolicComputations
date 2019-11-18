@@ -1,3 +1,4 @@
+using System;
 using ITMO.SymbolicComputations.Base.Models;
 using static ITMO.SymbolicComputations.Base.Functions.Alphabet;
 using static ITMO.SymbolicComputations.Base.Functions.Functions;
@@ -27,7 +28,7 @@ namespace ITMO.SymbolicComputations.Base.Functions {
         public static readonly Expression And =
             Fun[x, Fun[y,
                 If[x,
-                    If[y, True, False, "Error"],
+                    y,
                     False,
                     "Error"
                 ]
@@ -37,9 +38,19 @@ namespace ITMO.SymbolicComputations.Base.Functions {
             Fun[x, Fun[y,
                 If[x,
                     True,
-                    If[y, True, False, "Error"],
+                    y,
                     "Error"
                 ]
             ]];
+
+//        public static readonly Lazy<Expression> While = new Lazy<Expression>(() =>
+//            Fun[x, Fun[pred, Fun[body,
+//                If[
+//                    pred[x],
+//                    While.Value[body[x]][pred][body],
+//                    body[x]
+//                ]
+//            ]]]
+//        );
     }
 }

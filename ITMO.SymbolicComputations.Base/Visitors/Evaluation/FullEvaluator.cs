@@ -28,6 +28,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         
         private static readonly AsConstantImplementation AsConstant = new AsConstantImplementation();
         private static readonly AsStringSymbolImplementation AsStringSymbol = new AsStringSymbolImplementation();
+        private static readonly AsExpressionArgsImplementation AsExpressionArgs = new AsExpressionArgsImplementation();
 
         public (ImmutableList<Symbol>, Symbol) VisitExpression(Expression expression) {
             var visitors = new ISymbolVisitor<Symbol>[] {
@@ -44,6 +45,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
                 AppendImplementation,
                 AsConstant,
                 AsStringSymbol,
+                AsExpressionArgs,
                 // Last
                 ArgumentsSorter,
                 OneIdentityShrinker,

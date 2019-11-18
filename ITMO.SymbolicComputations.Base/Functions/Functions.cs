@@ -19,5 +19,7 @@ namespace ITMO.SymbolicComputations.Base.Functions {
         public static readonly StringSymbol Fun = new StringSymbol(nameof(Fun),
             Attributes.HoldAll
         );
+        
+        public static readonly StringSymbol ApplyList = new StringSymbol(nameof(ApplyList));
     }
 }

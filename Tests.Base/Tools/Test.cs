@@ -10,6 +10,8 @@ namespace Tests.Base.Tools {
             var (steps, actual) = expression.Visit(new FullEvaluator());
             
             steps.Print(output);
+            output.WriteLine("");
+
             Assert.Equal(expectedResult, actual);
         }
         
@@ -18,6 +20,8 @@ namespace Tests.Base.Tools {
                 var (steps, actual) = expression.Visit(new FullEvaluator());
             
                 steps.Print(output);
+                output.WriteLine("");
+                
                 Assert.Equal(expected, actual);
             };
     }
