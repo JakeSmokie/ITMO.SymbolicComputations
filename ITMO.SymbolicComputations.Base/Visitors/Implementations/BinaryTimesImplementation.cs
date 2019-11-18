@@ -1,4 +1,3 @@
-using System;
 using ITMO.SymbolicComputations.Base.Models;
 using static ITMO.SymbolicComputations.Base.Predefined.ArithmeticFunctions;
 
@@ -9,6 +8,8 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations {
 
         protected override Symbol Evaluate(Expression expression) {
             if (!(expression.Arguments[0] is Constant first) || !(expression.Arguments[1] is Constant second)) {
+//                return ListTimes[expression.Arguments.ToArray()]
+//                    .Visit(new FullEvaluator()).Symbol;
                 return expression;
             }
 

@@ -27,7 +27,7 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
                 SumConstants[SumSymbols[
                     List[3, x, y, 10, x, y, y, x, -1, y, z, 4]
                 ]],
-                List[BinaryTimes[3, x], BinaryTimes[4, y], z, 16]
+                List[BinaryTimes[x, 3], BinaryTimes[y, 4], z, 16]
             );
         }
     }

@@ -16,7 +16,7 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
         private readonly Action<Expression, Symbol> _evaluateAndAssert;
 
         [Fact]
-        public void SymbolsSummedInTimes() {
+        public void SymbolsSummed() {
             Symbol x = "x";
             Symbol y = "y";
             Symbol z = "z";
@@ -26,6 +26,18 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
                     List[3, x, y, 10, x, y, y, x, -1, z, y]
                 ],
                 List[BinaryTimes[3, x], BinaryTimes[4, y], z, 3, 10, -1]
+            );
+        }
+
+        [Fact]
+        public void EqualExpressionsSummed() {
+            Symbol x = "x";
+
+            _evaluateAndAssert(
+                SumSymbols[
+                    List[BinaryTimes[x, 3], BinaryTimes[x, 3]]
+                ],
+                List[BinaryTimes[2, BinaryTimes[3, x]]]
             );
         }
     }
