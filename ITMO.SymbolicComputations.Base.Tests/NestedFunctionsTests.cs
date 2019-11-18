@@ -16,7 +16,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
 
         [Fact]
         public void TestHiddenArg() {
-            var expression = Fun[x, Fun[x, BinaryPlus[x, 1]]][1][2];
+            var expression = Fun[x, Fun[x, Plus[x, 1]]][1][2];
             Test.EvaluateAndAssert(expression, 3, _out);
         }
     }

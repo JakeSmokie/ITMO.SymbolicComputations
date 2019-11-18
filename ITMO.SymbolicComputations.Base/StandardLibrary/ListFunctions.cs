@@ -34,7 +34,7 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
 
         public static readonly Expression Length =
             Fun[list,
-                Fold[list, 0, Fun[acc, Fun[x, BinaryPlus[acc, 1]]]]
+                Fold[list, 0, Fun[acc, Fun[x, Plus[acc, 1]]]]
             ];
 
         public static readonly Expression AppendList =

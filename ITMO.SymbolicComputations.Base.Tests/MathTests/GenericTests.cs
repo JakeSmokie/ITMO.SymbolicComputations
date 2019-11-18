@@ -18,11 +18,11 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
             Symbol x = "x";
             Symbol y = "y";
 
-            var source = Times[BinaryPlus[x, y], BinaryPlus[x, y]];
+            var source = Times[Plus[x, y], Plus[x, y]];
             var (steps, symbol) = source.Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
-            Assert.Equal(Power[BinaryPlus[x, y], 2], symbol);
+            Assert.Equal(Power[Plus[x, y], 2], symbol);
         }
 
         [Fact]
@@ -30,7 +30,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
             Symbol x = "x";
             Symbol y = "y";
 
-            var source = BinaryPlus[Power[x, y], Power[x, y]];
+            var source = Plus[Power[x, y], Power[x, y]];
             var (steps, symbol) = source.Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));

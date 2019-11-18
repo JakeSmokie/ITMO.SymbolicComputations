@@ -18,14 +18,14 @@ namespace ITMO.SymbolicComputations.Base.Tests {
 
         [Fact]
         public void HoldFormWorks() {
-            var source = BinaryPlus[2];
+            var source = Plus[2];
             var steps = HoldForm[source].Visit(new FullEvaluator()).Steps.WithoutDuplicates();
 
             steps.ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
 
             var expected = new[] {
-                HoldForm[BinaryPlus[2]],
-                BinaryPlus[2]
+                HoldForm[Plus[2]],
+                Plus[2]
             };
 
             Assert.Equal(expected, steps);
@@ -42,19 +42,19 @@ namespace ITMO.SymbolicComputations.Base.Tests {
             Symbol g = "g";
             Symbol h = "h";
 
-            var source = BinaryPlus[BinaryPlus[a], BinaryPlus[b, BinaryPlus[c, d, BinaryPlus[e]], f], g, h];
+            var source = Plus[Plus[a], Plus[b, Plus[c, d, Plus[e]], f], g, h];
             var steps = source.Visit(new FullEvaluator()).Steps.WithoutDuplicates();
 
             var expected = new[] {
-                BinaryPlus[a],
+                Plus[a],
                 a,
-                BinaryPlus[e],
+                Plus[e],
                 e,
-                BinaryPlus[c, d, e],
-                BinaryPlus[b, BinaryPlus[c, d, e], f],
-                BinaryPlus[b, c, d, e, f],
-                BinaryPlus[a, BinaryPlus[b, c, d, e, f], g, h],
-                BinaryPlus[a, b, c, d, e, f, g, h]
+                Plus[c, d, e],
+                Plus[b, Plus[c, d, e], f],
+                Plus[b, c, d, e, f],
+                Plus[a, Plus[b, c, d, e, f], g, h],
+                Plus[a, b, c, d, e, f, g, h]
             };
 
             steps.ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));

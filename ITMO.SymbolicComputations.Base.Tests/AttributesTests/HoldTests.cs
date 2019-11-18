@@ -19,7 +19,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
         [Fact]
         public void HoldFirstSuppressionWorks() {
             Test.EvaluateAndAssert(
-                HoldFirst[Evaluate[BinaryPlus[2, 4]], BinaryPlus[3, 5]],
+                HoldFirst[Evaluate[Plus[2, 4]], Plus[3, 5]],
                 HoldFirst[6, 8],
                 _out
             );
@@ -28,8 +28,8 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
         [Fact]
         public void HoldFirstWorks() {
             Test.EvaluateAndAssert(
-                HoldFirst[BinaryPlus[2, 4], BinaryPlus[3, 5]],
-                HoldFirst[BinaryPlus[2, 4], 8],
+                HoldFirst[Plus[2, 4], Plus[3, 5]],
+                HoldFirst[Plus[2, 4], 8],
                 _out
             );
         }
@@ -37,7 +37,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
         [Fact]
         public void HoldFormSuppressingWithEvaluateFunctionWorks() {
             Test.EvaluateAndAssert(
-                HoldForm[Evaluate[BinaryPlus[2, 1]]],
+                HoldForm[Evaluate[Plus[2, 1]]],
                 3,
                 _out
             );
@@ -45,7 +45,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
 
         [Fact]
         public void HoldFormWorks() {
-            var source = BinaryPlus[2, 4];
+            var source = Plus[2, 4];
 
             Test.EvaluateAndAssert(
                 HoldForm[source],
@@ -56,7 +56,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
 
         [Fact]
         public void HoldIsNotSuppressedWhenItIsComplete() {
-            var source = HoldComplete[Evaluate[BinaryPlus[2, 6]]];
+            var source = HoldComplete[Evaluate[Plus[2, 6]]];
 
             Test.EvaluateAndAssert(
                 source,
@@ -68,8 +68,8 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
         [Fact]
         public void HoldRestSuppressionWorks() {
             Test.EvaluateAndAssert(
-                HoldRest[BinaryPlus[2, 5], BinaryPlus[3, 7], Evaluate[BinaryPlus[4, 8]]],
-                HoldRest[7, BinaryPlus[3, 7], 12],
+                HoldRest[Plus[2, 5], Plus[3, 7], Evaluate[Plus[4, 8]]],
+                HoldRest[7, Plus[3, 7], 12],
                 _out
             );
         }
@@ -77,8 +77,8 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
         [Fact]
         public void HoldRestWorks() {
             Test.EvaluateAndAssert(
-                HoldRest[BinaryPlus[2, 1], BinaryPlus[3], BinaryPlus[4]],
-                HoldRest[3, BinaryPlus[3], BinaryPlus[4]],
+                HoldRest[Plus[2, 1], Plus[3], Plus[4]],
+                HoldRest[3, Plus[3], Plus[4]],
                 _out
             );
         }
@@ -86,7 +86,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
         [Fact]
         public void HoldSuppressingWithEvaluateFunctionWorks() {
             Test.EvaluateAndAssert(
-                Hold[Evaluate[BinaryPlus[2, 3]]],
+                Hold[Evaluate[Plus[2, 3]]],
                 Hold[5],
                 _out
             );
@@ -94,7 +94,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
 
         [Fact]
         public void HoldWorks() {
-            var source = Hold[BinaryPlus[2]];
+            var source = Hold[Plus[2]];
             Test.EvaluateAndAssert(
                 source,
                 source,
@@ -106,7 +106,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
         public void NestedHoldWorks() {
             Symbol dull = "";
 
-            var source = dull[Hold[BinaryPlus[2, 4]], 1];
+            var source = dull[Hold[Plus[2, 4]], 1];
             Test.EvaluateAndAssert(
                 source,
                 source,

@@ -32,16 +32,16 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
 
         [Fact]
         public void XPowerOneEqualsX() {
-            var source = Power[BinaryPlus["x", "y"], 1];
+            var source = Power[Plus["x", "y"], 1];
             var (steps, symbol) = source.Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
-            Assert.Equal(BinaryPlus["x", "y"], symbol);
+            Assert.Equal(Plus["x", "y"], symbol);
         }
 
         [Fact]
         public void XPowerZeroEqualsOne() {
-            var source = Power[BinaryPlus["x", "y"], 0];
+            var source = Power[Plus["x", "y"], 0];
             var (steps, symbol) = source.Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));

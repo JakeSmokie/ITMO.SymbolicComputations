@@ -28,7 +28,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
         [Fact]
         public void FoldWorks() {
             Test.EvaluateAndAssert(
-                Fold[List[1, 2, 3, 4], 0, Fun[acc, Fun[x, BinaryPlus[acc, x]]]],
+                Fold[List[1, 2, 3, 4], 0, Fun[acc, Fun[x, Plus[acc, x]]]],
                 10,
                 _out
             );
@@ -46,7 +46,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
         [Fact]
         public void MapWorks() {
             Test.EvaluateAndAssert(
-                Map[List[1, 2, 3, 4]][Fun[x, BinaryPlus[x, 3]]],
+                Map[List[1, 2, 3, 4]][Fun[x, Plus[x, 3]]],
                 List[4, 5, 6, 7],
                 _out
             );

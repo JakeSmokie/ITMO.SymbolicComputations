@@ -16,7 +16,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         private static readonly ArgumentsSorter ArgumentsSorter = new ArgumentsSorter();
         private static readonly FunctionEvaluator FunctionEvaluator = new FunctionEvaluator();
         
-        private static readonly BinaryPlusImplementation BinaryPlusImplementation = new BinaryPlusImplementation();
+        private static readonly PlusImplementation PlusImplementation = new PlusImplementation();
         private static readonly TimesImplementation TimesImplementation = new TimesImplementation();
         private static readonly SinFunctionImplementation SinFunctionImplementation = new SinFunctionImplementation();
         private static readonly IfImplementation IfImplementation = new IfImplementation();
@@ -34,7 +34,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
             var visitors = new ISymbolVisitor<Symbol>[] {
                 FlatFlattener,
                 // Implementations
-                BinaryPlusImplementation,
+                PlusImplementation,
                 TimesImplementation,
                 SinFunctionImplementation,
                 IfImplementation,

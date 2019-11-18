@@ -18,7 +18,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
         public void BigSinFunction() {
             Symbol x = "x";
 
-            var func = Fun[x, Times[Sin[BinaryPlus[x, -2]], 10]];
+            var func = Fun[x, Times[Sin[Plus[x, -2]], 10]];
             var (steps, result) = func[2].Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
@@ -43,7 +43,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
         public void XMinus2() {
             Symbol x = "x";
 
-            var func = Fun[x, BinaryPlus[x, -2]];
+            var func = Fun[x, Plus[x, -2]];
             var (steps, result) = func[3].Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
@@ -57,7 +57,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
 
             var f = Fun;
 
-            var func = f[x, f[y, BinaryPlus[x, y]]];
+            var func = f[x, f[y, Plus[x, y]]];
             var (steps, result) = func[2][3].Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
@@ -73,7 +73,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
             var f = Fun;
             var e = Evaluate;
 
-            var func = f[x, f[y, f[z, e[Times[BinaryPlus[x, y], z]]]]];
+            var func = f[x, f[y, f[z, e[Times[Plus[x, y], z]]]]];
             var (steps, result) = func[2][3][5].Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
@@ -110,7 +110,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
 
             var f = Fun;
 
-            var func = f[x, f[y, f[z, Power[z, BinaryPlus[x, y]]]]];
+            var func = f[x, f[y, f[z, Power[z, Plus[x, y]]]]];
             var (steps, result) = func[2][3][2].Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
