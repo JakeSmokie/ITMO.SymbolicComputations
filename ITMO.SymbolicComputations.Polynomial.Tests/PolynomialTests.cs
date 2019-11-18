@@ -3,9 +3,9 @@ using ITMO.SymbolicComputations.Base.Models;
 using Tests.Base.Tools;
 using Xunit;
 using Xunit.Abstractions;
-using static ITMO.SymbolicComputations.Base.Functions.ArithmeticFunctions;
-using static ITMO.SymbolicComputations.Base.Functions.Functions;
-using static ITMO.SymbolicComputations.Base.Functions.ListFunctions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.ArithmeticFunctions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.Functions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.ListFunctions;
 using static ITMO.SymbolicComputations.Polynomial.SumSymbolsFunction;
 using static ITMO.SymbolicComputations.Polynomial.SumConstantsFunction;
 

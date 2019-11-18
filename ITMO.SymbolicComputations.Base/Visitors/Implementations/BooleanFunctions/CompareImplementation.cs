@@ -1,6 +1,6 @@
 using ITMO.SymbolicComputations.Base.Comparers;
 using ITMO.SymbolicComputations.Base.Models;
-using static ITMO.SymbolicComputations.Base.Functions.BooleanFunctions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.BooleanFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.BooleanFunctions {
     public class CompareImplementation : AbstractFunctionImplementation {

@@ -1,12 +1,12 @@
-﻿using ITMO.SymbolicComputations.Base.Functions;
-using ITMO.SymbolicComputations.Base.Models;
+﻿using ITMO.SymbolicComputations.Base.Models;
+using ITMO.SymbolicComputations.Base.StandardLibrary;
 using ITMO.SymbolicComputations.Base.Tools;
 using ITMO.SymbolicComputations.Base.Visitors;
 using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using Xunit;
 using Xunit.Abstractions;
-using static ITMO.SymbolicComputations.Base.Functions.ArithmeticFunctions;
-using static ITMO.SymbolicComputations.Base.Functions.Functions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.ArithmeticFunctions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.Functions;
 
 namespace ITMO.SymbolicComputations.Base.Tests {
     public sealed class StepsTests {

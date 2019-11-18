@@ -1,6 +1,6 @@
 using ITMO.SymbolicComputations.Base.Models;
 
-namespace ITMO.SymbolicComputations.Base.Functions {
+namespace ITMO.SymbolicComputations.Base.StandardLibrary {
     public static class Alphabet {
         public static readonly StringSymbol x = new StringSymbol("x'");
         public static readonly StringSymbol y = new StringSymbol("y'");

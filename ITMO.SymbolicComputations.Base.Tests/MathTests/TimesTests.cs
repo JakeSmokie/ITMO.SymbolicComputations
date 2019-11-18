@@ -4,8 +4,8 @@ using ITMO.SymbolicComputations.Base.Visitors;
 using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using Xunit;
 using Xunit.Abstractions;
-using static ITMO.SymbolicComputations.Base.Functions.ArithmeticFunctions;
-using static ITMO.SymbolicComputations.Base.Functions.ListFunctions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.ArithmeticFunctions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
     public sealed class TimesTests {

@@ -7,7 +7,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Attributes {
         private static readonly IComparer<Symbol> Comparer = new SymbolComparer();
 
         private static readonly HasAttributeChecker OrderlessChecker =
-            new HasAttributeChecker(Functions.Attributes.Orderless);
+            new HasAttributeChecker(StandardLibrary.Attributes.Orderless);
 
         public Symbol VisitExpression(Expression expression) =>
             !expression.Head.Visit(OrderlessChecker)

@@ -1,8 +1,8 @@
 using System.Linq;
 using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Visitors.Casting;
-using static ITMO.SymbolicComputations.Base.Functions.CastingFunctions;
-using static ITMO.SymbolicComputations.Base.Functions.ListFunctions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.CastingFunctions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.Casting {
     public class AsExpressionArgsImplementation : AbstractFunctionImplementation {

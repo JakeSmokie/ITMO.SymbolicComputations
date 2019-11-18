@@ -2,7 +2,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
-using static ITMO.SymbolicComputations.Base.Functions.ListFunctions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.ListFunctions {
     public class FoldImplementation : AbstractListFunctionImplementation {

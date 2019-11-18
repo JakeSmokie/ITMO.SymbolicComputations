@@ -1,9 +1,9 @@
 using ITMO.SymbolicComputations.Base.Models;
-using static ITMO.SymbolicComputations.Base.Functions.Alphabet;
-using static ITMO.SymbolicComputations.Base.Functions.BooleanFunctions;
-using static ITMO.SymbolicComputations.Base.Functions.Functions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.Alphabet;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.BooleanFunctions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.Functions;
 
-namespace ITMO.SymbolicComputations.Base.Functions {
+namespace ITMO.SymbolicComputations.Base.StandardLibrary {
     public static class CastingFunctions {
         public static readonly StringSymbol AsConstant = new StringSymbol(nameof(AsConstant));
         public static readonly StringSymbol AsStringSymbol = new StringSymbol(nameof(AsStringSymbol));

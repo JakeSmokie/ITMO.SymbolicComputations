@@ -1,10 +1,10 @@
-﻿using ITMO.SymbolicComputations.Base.Functions;
-using ITMO.SymbolicComputations.Base.Models;
+﻿using ITMO.SymbolicComputations.Base.Models;
+using ITMO.SymbolicComputations.Base.StandardLibrary;
 using Tests.Base.Tools;
 using Xunit;
 using Xunit.Abstractions;
-using static ITMO.SymbolicComputations.Base.Functions.ArithmeticFunctions;
-using static ITMO.SymbolicComputations.Base.Functions.Functions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.ArithmeticFunctions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.Functions;
 
 namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
     public sealed class HoldTests {

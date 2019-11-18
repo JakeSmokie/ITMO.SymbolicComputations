@@ -1,9 +1,8 @@
-using System;
 using ITMO.SymbolicComputations.Base.Models;
-using static ITMO.SymbolicComputations.Base.Functions.Alphabet;
-using static ITMO.SymbolicComputations.Base.Functions.Functions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.Alphabet;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.Functions;
 
-namespace ITMO.SymbolicComputations.Base.Functions {
+namespace ITMO.SymbolicComputations.Base.StandardLibrary {
     public static class BooleanFunctions {
         public static readonly StringSymbol True = new StringSymbol(nameof(True));
         public static readonly StringSymbol False = new StringSymbol(nameof(False));

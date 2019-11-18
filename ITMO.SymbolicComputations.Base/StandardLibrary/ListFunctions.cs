@@ -1,10 +1,10 @@
 using ITMO.SymbolicComputations.Base.Models;
-using static ITMO.SymbolicComputations.Base.Functions.Alphabet;
-using static ITMO.SymbolicComputations.Base.Functions.ArithmeticFunctions;
-using static ITMO.SymbolicComputations.Base.Functions.BooleanFunctions;
-using static ITMO.SymbolicComputations.Base.Functions.Functions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.Alphabet;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.ArithmeticFunctions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.BooleanFunctions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.Functions;
 
-namespace ITMO.SymbolicComputations.Base.Functions {
+namespace ITMO.SymbolicComputations.Base.StandardLibrary {
     public static class ListFunctions {
         public static readonly StringSymbol List = new StringSymbol(nameof(List));
         

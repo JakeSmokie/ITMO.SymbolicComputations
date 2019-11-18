@@ -3,7 +3,7 @@
 namespace ITMO.SymbolicComputations.Base.Visitors.Attributes {
     public sealed class OneIdentityShrinker : ISymbolVisitor<Symbol> {
         private static readonly HasAttributeChecker IsOneIdentityVisitor =
-            new HasAttributeChecker(Functions.Attributes.OneIdentity);
+            new HasAttributeChecker(StandardLibrary.Attributes.OneIdentity);
 
         public Symbol VisitExpression(Expression expression) =>
             expression.Head.Visit(IsOneIdentityVisitor)

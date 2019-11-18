@@ -1,6 +1,6 @@
 ﻿using ITMO.SymbolicComputations.Base.Models;
 
-namespace ITMO.SymbolicComputations.Base.Functions {
+namespace ITMO.SymbolicComputations.Base.StandardLibrary {
     public static class Attributes {
         public static readonly StringSymbol HoldAll = new StringSymbol(nameof(HoldAll));
         public static readonly StringSymbol HoldRest = new StringSymbol(nameof(HoldRest));

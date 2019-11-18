@@ -1,6 +1,6 @@
 using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Visitors.Casting;
-using static ITMO.SymbolicComputations.Base.Functions.CastingFunctions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.CastingFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.Casting {
     public class AsStringSymbolImplementation : AbstractFunctionImplementation {

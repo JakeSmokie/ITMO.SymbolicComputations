@@ -1,6 +1,6 @@
 using System;
-using ITMO.SymbolicComputations.Base.Functions;
 using ITMO.SymbolicComputations.Base.Models;
+using ITMO.SymbolicComputations.Base.StandardLibrary;
 using ITMO.SymbolicComputations.Base.Visitors.Casting;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Implementations {

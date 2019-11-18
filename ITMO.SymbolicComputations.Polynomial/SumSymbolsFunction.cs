@@ -1,10 +1,10 @@
 using ITMO.SymbolicComputations.Base.Models;
-using static ITMO.SymbolicComputations.Base.Functions.Alphabet;
-using static ITMO.SymbolicComputations.Base.Functions.ArithmeticFunctions;
-using static ITMO.SymbolicComputations.Base.Functions.BooleanFunctions;
-using static ITMO.SymbolicComputations.Base.Functions.CastingFunctions;
-using static ITMO.SymbolicComputations.Base.Functions.Functions;
-using static ITMO.SymbolicComputations.Base.Functions.ListFunctions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.Alphabet;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.ArithmeticFunctions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.BooleanFunctions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.CastingFunctions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.Functions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Polynomial {
     public static class SumSymbolsFunction {
