@@ -36,9 +36,9 @@ namespace ITMO.SymbolicComputations.Polynomial {
                         "Error"
                     ]
                 ]][
-                    Filter[list][Fun[x, IsConstant[x]]]
-                ][
                     Filter[list][Fun[x, Not[IsConstant[x]]]]
+                ][
+                    Filter[list][Fun[x, IsConstant[x]]]
                 ]
             ];
     }
