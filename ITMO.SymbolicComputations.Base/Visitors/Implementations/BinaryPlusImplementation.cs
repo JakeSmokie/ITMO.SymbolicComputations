@@ -1,7 +1,7 @@
 using System;
 using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Visitors.Casting;
-using static ITMO.SymbolicComputations.Base.Predefined.ArithmeticFunctions;
+using static ITMO.SymbolicComputations.Base.Functions.ArithmeticFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Implementations {
     public class BinaryPlusImplementation : AbstractFunctionImplementation {

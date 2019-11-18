@@ -5,8 +5,8 @@ using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using Tests.Base.Tools;
 using Xunit;
 using Xunit.Abstractions;
-using static ITMO.SymbolicComputations.Base.Predefined.ArithmeticFunctions;
-using static ITMO.SymbolicComputations.Base.Predefined.ListFunctions;
+using static ITMO.SymbolicComputations.Base.Functions.ArithmeticFunctions;
+using static ITMO.SymbolicComputations.Base.Functions.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
     public sealed class PlusTests {
@@ -42,7 +42,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
             var (steps, symbol) = source.Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
-            Assert.Equal(BinaryPlus[BinaryTimes[x, 2], y], symbol);
+            Assert.Equal(BinaryPlus[Times[x, 2], y], symbol);
         }
 
         [Fact]
@@ -55,7 +55,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
             var (steps, symbol) = source.Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
-            Assert.Equal(BinaryPlus[BinaryTimes[x, 3], BinaryTimes[y, 2], BinaryTimes[z, 2]], symbol);
+            Assert.Equal(BinaryPlus[Times[x, 3], Times[y, 2], Times[z, 2]], symbol);
         }
 
         [Fact]

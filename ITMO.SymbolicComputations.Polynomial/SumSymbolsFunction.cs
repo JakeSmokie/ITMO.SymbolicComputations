@@ -1,10 +1,10 @@
 using ITMO.SymbolicComputations.Base.Models;
-using static ITMO.SymbolicComputations.Base.Predefined.Alphabet;
-using static ITMO.SymbolicComputations.Base.Predefined.ArithmeticFunctions;
-using static ITMO.SymbolicComputations.Base.Predefined.BooleanFunctions;
-using static ITMO.SymbolicComputations.Base.Predefined.CastingFunctions;
-using static ITMO.SymbolicComputations.Base.Predefined.Functions;
-using static ITMO.SymbolicComputations.Base.Predefined.ListFunctions;
+using static ITMO.SymbolicComputations.Base.Functions.Alphabet;
+using static ITMO.SymbolicComputations.Base.Functions.ArithmeticFunctions;
+using static ITMO.SymbolicComputations.Base.Functions.BooleanFunctions;
+using static ITMO.SymbolicComputations.Base.Functions.CastingFunctions;
+using static ITMO.SymbolicComputations.Base.Functions.Functions;
+using static ITMO.SymbolicComputations.Base.Functions.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Polynomial {
     public static class SumSymbolsFunction {
@@ -15,7 +15,7 @@ namespace ITMO.SymbolicComputations.Polynomial {
                         Eq[Part[tuple, 1], 1],
                         //
                         Part[tuple, 0],
-                        BinaryTimes[Part[tuple, 1], Part[tuple, 0]],
+                        Times[Part[tuple, 1], Part[tuple, 0]],
                         //
                         "Error"
                     ]
@@ -36,9 +36,9 @@ namespace ITMO.SymbolicComputations.Polynomial {
                         "Error"
                     ]
                 ]][
-                    Filter[list][Fun[x, IsStringSymbol[x]]]
+                    Filter[list][Fun[x, IsConstant[x]]]
                 ][
-                    Filter[list][Fun[x, Not[IsStringSymbol[x]]]]
+                    Filter[list][Fun[x, Not[IsConstant[x]]]]
                 ]
             ];
     }

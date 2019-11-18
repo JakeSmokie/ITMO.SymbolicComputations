@@ -4,7 +4,7 @@ using ITMO.SymbolicComputations.Base.Visitors;
 using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using Xunit;
 using Xunit.Abstractions;
-using static ITMO.SymbolicComputations.Base.Predefined.ArithmeticFunctions;
+using static ITMO.SymbolicComputations.Base.Functions.ArithmeticFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
     public sealed class GenericTests {
@@ -18,7 +18,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
             Symbol x = "x";
             Symbol y = "y";
 
-            var source = BinaryTimes[BinaryPlus[x, y], BinaryPlus[x, y]];
+            var source = Times[BinaryPlus[x, y], BinaryPlus[x, y]];
             var (steps, symbol) = source.Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
@@ -34,7 +34,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
             var (steps, symbol) = source.Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
-            Assert.Equal(BinaryTimes[Power[x, y], 2], symbol);
+            Assert.Equal(Times[Power[x, y], 2], symbol);
         }
     }
 }

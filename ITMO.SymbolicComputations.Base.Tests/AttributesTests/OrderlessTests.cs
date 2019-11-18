@@ -1,6 +1,6 @@
 ﻿using System;
+using ITMO.SymbolicComputations.Base.Functions;
 using ITMO.SymbolicComputations.Base.Models;
-using ITMO.SymbolicComputations.Base.Predefined;
 using ITMO.SymbolicComputations.Base.Visitors;
 using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using Tests.Base.Tools;
@@ -10,7 +10,7 @@ using Xunit.Abstractions;
 namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
     public sealed class OrderlessTests {
         public OrderlessTests(ITestOutputHelper output) {
-            _evaluateAndAssert = Test.EvaluateAndAssert(output);
+            _evaluateAndAssert = Test.CreateAsserter(output);
         }
 
         private readonly Action<Expression, Symbol> _evaluateAndAssert;

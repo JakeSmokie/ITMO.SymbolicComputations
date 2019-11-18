@@ -1,14 +1,20 @@
 ﻿using ITMO.SymbolicComputations.Base.Models;
-using static ITMO.SymbolicComputations.Base.Predefined.Alphabet;
-using static ITMO.SymbolicComputations.Base.Predefined.Functions;
-using static ITMO.SymbolicComputations.Base.Predefined.ListFunctions;
+using static ITMO.SymbolicComputations.Base.Functions.Alphabet;
+using static ITMO.SymbolicComputations.Base.Functions.Functions;
+using static ITMO.SymbolicComputations.Base.Functions.ListFunctions;
 
-namespace ITMO.SymbolicComputations.Base.Predefined {
+namespace ITMO.SymbolicComputations.Base.Functions {
     public static class ArithmeticFunctions {
         public static readonly StringSymbol BinaryPlus = new StringSymbol(nameof(BinaryPlus));
-        public static readonly StringSymbol BinaryTimes = new StringSymbol(nameof(BinaryTimes));
+
+        public static readonly StringSymbol Times = new StringSymbol(nameof(Times),
+            Attributes.Flat,
+            Attributes.OneIdentity,
+            Attributes.Orderless
+        );
+
         public static readonly StringSymbol Power = new StringSymbol(nameof(Power));
-        
+
         public static readonly StringSymbol Sin = new StringSymbol(nameof(Sin));
 
         public static readonly Expression ListPlus =
@@ -18,7 +24,7 @@ namespace ITMO.SymbolicComputations.Base.Predefined {
 
         public static readonly Expression ListTimes =
             Fun[list,
-                Fold[list, 1, Fun[acc, Fun[x, BinaryTimes[acc, x]]]]
+                Fold[list, 1, Fun[acc, Fun[x, Times[acc, x]]]]
             ];
     }
 }

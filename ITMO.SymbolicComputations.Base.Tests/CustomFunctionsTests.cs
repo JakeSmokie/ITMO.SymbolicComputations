@@ -4,8 +4,8 @@ using ITMO.SymbolicComputations.Base.Visitors;
 using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using Xunit;
 using Xunit.Abstractions;
-using static ITMO.SymbolicComputations.Base.Predefined.ArithmeticFunctions;
-using static ITMO.SymbolicComputations.Base.Predefined.Functions;
+using static ITMO.SymbolicComputations.Base.Functions.ArithmeticFunctions;
+using static ITMO.SymbolicComputations.Base.Functions.Functions;
 
 namespace ITMO.SymbolicComputations.Base.Tests {
     public sealed class CustomFunctionsTests {
@@ -18,7 +18,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
         public void BigSinFunction() {
             Symbol x = "x";
 
-            var func = Fun[x, BinaryTimes[Sin[BinaryPlus[x, -2]], 10]];
+            var func = Fun[x, Times[Sin[BinaryPlus[x, -2]], 10]];
             var (steps, result) = func[2].Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
@@ -73,7 +73,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
             var f = Fun;
             var e = Evaluate;
 
-            var func = f[x, f[y, f[z, e[BinaryTimes[BinaryPlus[x, y], z]]]]];
+            var func = f[x, f[y, f[z, e[Times[BinaryPlus[x, y], z]]]]];
             var (steps, result) = func[2][3][5].Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));

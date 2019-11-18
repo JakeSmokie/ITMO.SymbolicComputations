@@ -1,6 +1,6 @@
 ﻿using ITMO.SymbolicComputations.Base.Models;
 
-namespace ITMO.SymbolicComputations.Base.Predefined {
+namespace ITMO.SymbolicComputations.Base.Functions {
     public static class Functions {
         public static readonly StringSymbol Evaluate = new StringSymbol(nameof(Evaluate));
 

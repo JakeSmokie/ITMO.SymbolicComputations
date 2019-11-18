@@ -2,22 +2,21 @@
 using System.Collections.Immutable;
 using System.Linq;
 using ITMO.SymbolicComputations.Base.Models;
-using ITMO.SymbolicComputations.Base.Predefined;
 using ITMO.SymbolicComputations.Base.Visitors.Attributes;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
     public sealed class ArgumentsEvaluator : ISymbolVisitor<(ImmutableList<Symbol> Steps, Symbol Symbol)> {
         private static readonly HasAttributeChecker HoldAllCompleteChecker =
-            new HasAttributeChecker(Predefined.Attributes.HoldAllComplete);
+            new HasAttributeChecker(Functions.Attributes.HoldAllComplete);
 
         private static readonly HasAttributeChecker HoldAllChecker =
-            new HasAttributeChecker(Predefined.Attributes.HoldAll);
+            new HasAttributeChecker(Functions.Attributes.HoldAll);
 
         private static readonly HasAttributeChecker HoldRestChecker =
-            new HasAttributeChecker(Predefined.Attributes.HoldRest);
+            new HasAttributeChecker(Functions.Attributes.HoldRest);
 
         private static readonly HasAttributeChecker HoldFirstChecker =
-            new HasAttributeChecker(Predefined.Attributes.HoldFirst);
+            new HasAttributeChecker(Functions.Attributes.HoldFirst);
 
         private static readonly FullEvaluator FullEvaluator =
             new FullEvaluator();
@@ -72,7 +71,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
 
         private static IEnumerable<(ImmutableList<Symbol>, Symbol)> EvaluateEagerly(IEnumerable<Symbol> symbols) =>
             symbols.SelectMany(s =>
-                s is Expression e && Equals(e.Head, Functions.Evaluate)
+                s is Expression e && Equals(e.Head, Functions.Functions.Evaluate)
                     ? e.Arguments.Select(a => a.Visit(FullEvaluator))
                     : new[] {(ImmutableList<Symbol>.Empty, s)}
             );

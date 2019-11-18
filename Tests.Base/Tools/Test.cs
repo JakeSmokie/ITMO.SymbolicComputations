@@ -13,7 +13,7 @@ namespace Tests.Base.Tools {
             Assert.Equal(expectedResult, actual);
         }
         
-        public static Action<Expression, Symbol> EvaluateAndAssert(ITestOutputHelper output) =>
+        public static Action<Expression, Symbol> CreateAsserter(ITestOutputHelper output) =>
             (expression, expected) => {
                 var (steps, actual) = expression.Visit(new FullEvaluator());
             

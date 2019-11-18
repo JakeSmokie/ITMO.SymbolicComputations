@@ -5,7 +5,7 @@ using ITMO.SymbolicComputations.Base.Models;
 namespace ITMO.SymbolicComputations.Base.Visitors.Attributes {
     public sealed class FlatFlattener : ISymbolVisitor<Symbol> {
         private static readonly HasAttributeChecker FlatChecker =
-            new HasAttributeChecker(Predefined.Attributes.Flat);
+            new HasAttributeChecker(Functions.Attributes.Flat);
 
         public Symbol VisitExpression(Expression expression) {
             if (!expression.Head.Visit(FlatChecker)) {

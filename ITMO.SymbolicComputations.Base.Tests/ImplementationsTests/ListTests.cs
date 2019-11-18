@@ -3,11 +3,11 @@ using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using Tests.Base.Tools;
 using Xunit;
 using Xunit.Abstractions;
-using static ITMO.SymbolicComputations.Base.Predefined.Alphabet;
-using static ITMO.SymbolicComputations.Base.Predefined.ArithmeticFunctions;
-using static ITMO.SymbolicComputations.Base.Predefined.BooleanFunctions;
-using static ITMO.SymbolicComputations.Base.Predefined.Functions;
-using static ITMO.SymbolicComputations.Base.Predefined.ListFunctions;
+using static ITMO.SymbolicComputations.Base.Functions.Alphabet;
+using static ITMO.SymbolicComputations.Base.Functions.ArithmeticFunctions;
+using static ITMO.SymbolicComputations.Base.Functions.BooleanFunctions;
+using static ITMO.SymbolicComputations.Base.Functions.Functions;
+using static ITMO.SymbolicComputations.Base.Functions.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
     public class ListTests {

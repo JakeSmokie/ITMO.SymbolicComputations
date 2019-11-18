@@ -3,13 +3,13 @@ using ITMO.SymbolicComputations.Base.Models;
 using Tests.Base.Tools;
 using Xunit;
 using Xunit.Abstractions;
-using static ITMO.SymbolicComputations.Base.Predefined.ListFunctions;
+using static ITMO.SymbolicComputations.Base.Functions.ListFunctions;
 using static ITMO.SymbolicComputations.Polynomial.SumConstantsFunction;
 
 namespace ITMO.SymbolicComputations.Polynomial.Tests {
     public class ConstantsSumTests {
         public ConstantsSumTests(ITestOutputHelper output) {
-            _evaluateAndAssert = Test.EvaluateAndAssert(output);
+            _evaluateAndAssert = Test.CreateAsserter(output);
         }
 
         private readonly Action<Expression, Symbol> _evaluateAndAssert;

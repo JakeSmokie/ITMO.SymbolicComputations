@@ -1,5 +1,5 @@
 using ITMO.SymbolicComputations.Base.Models;
-using static ITMO.SymbolicComputations.Base.Predefined.BooleanFunctions;
+using static ITMO.SymbolicComputations.Base.Functions.BooleanFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.BooleanFunctions {
     public class IfImplementation : AbstractFunctionImplementation {

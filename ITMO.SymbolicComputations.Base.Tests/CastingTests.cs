@@ -1,9 +1,9 @@
 using Tests.Base.Tools;
 using Xunit;
 using Xunit.Abstractions;
-using static ITMO.SymbolicComputations.Base.Predefined.BooleanFunctions;
-using static ITMO.SymbolicComputations.Base.Predefined.CastingFunctions;
-using static ITMO.SymbolicComputations.Base.Predefined.ListFunctions;
+using static ITMO.SymbolicComputations.Base.Functions.BooleanFunctions;
+using static ITMO.SymbolicComputations.Base.Functions.CastingFunctions;
+using static ITMO.SymbolicComputations.Base.Functions.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Tests {
     public class CastingTests {

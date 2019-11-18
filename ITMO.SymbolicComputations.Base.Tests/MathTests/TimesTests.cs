@@ -4,8 +4,8 @@ using ITMO.SymbolicComputations.Base.Visitors;
 using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using Xunit;
 using Xunit.Abstractions;
-using static ITMO.SymbolicComputations.Base.Predefined.ArithmeticFunctions;
-using static ITMO.SymbolicComputations.Base.Predefined.ListFunctions;
+using static ITMO.SymbolicComputations.Base.Functions.ArithmeticFunctions;
+using static ITMO.SymbolicComputations.Base.Functions.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
     public sealed class TimesTests {
@@ -20,7 +20,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
             Symbol y = "y";
             Symbol z = "z";
 
-            var source = BinaryTimes[x, x, y, z, 15, 0, -10, x];
+            var source = Times[x, x, y, z, 15, 0, -10, x];
             var (steps, symbol) = source.Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
@@ -33,16 +33,16 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
             Symbol y = "y";
             Symbol z = "z";
 
-            var source = BinaryTimes[x, x, y, z, Power[x, 3], Power[y, y], Power[BinaryTimes[x, y, x], 5]];
+            var source = Times[x, x, y, z, Power[x, 3], Power[y, y], Power[Times[x, y, x], 5]];
             var (steps, symbol) = source.Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
-            Assert.Equal(BinaryTimes[Power[x, 15], Power[y, BinaryPlus[y, 6]], z], symbol);
+            Assert.Equal(Times[Power[x, 15], Power[y, BinaryPlus[y, 6]], z], symbol);
         }
 
         [Fact]
         public void BinaryTimesWorks() {
-            var source = BinaryTimes[1m, 3m];
+            var source = Times[1m, 3m];
             var (steps, symbol) = source.Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
@@ -63,11 +63,11 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
             Symbol x = "x";
             Symbol y = "y";
 
-            var source = BinaryTimes[y, x, x];
+            var source = Times[y, x, x];
             var (steps, symbol) = source.Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
-            Assert.Equal(BinaryTimes[Power[x, 2], y], symbol);
+            Assert.Equal(Times[Power[x, 2], y], symbol);
         }
     }
 }

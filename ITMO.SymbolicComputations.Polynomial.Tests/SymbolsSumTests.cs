@@ -3,14 +3,14 @@ using ITMO.SymbolicComputations.Base.Models;
 using Tests.Base.Tools;
 using Xunit;
 using Xunit.Abstractions;
-using static ITMO.SymbolicComputations.Base.Predefined.ArithmeticFunctions;
-using static ITMO.SymbolicComputations.Base.Predefined.ListFunctions;
+using static ITMO.SymbolicComputations.Base.Functions.ArithmeticFunctions;
+using static ITMO.SymbolicComputations.Base.Functions.ListFunctions;
 using static ITMO.SymbolicComputations.Polynomial.SumSymbolsFunction;
 
 namespace ITMO.SymbolicComputations.Polynomial.Tests {
     public class SymbolsSumTests {
         public SymbolsSumTests(ITestOutputHelper output) {
-            _evaluateAndAssert = Test.EvaluateAndAssert(output);
+            _evaluateAndAssert = Test.CreateAsserter(output);
         }
 
         private readonly Action<Expression, Symbol> _evaluateAndAssert;
@@ -25,7 +25,7 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
                 SumSymbols[
                     List[3, x, y, 10, x, y, y, x, -1, z, y]
                 ],
-                List[BinaryTimes[3, x], BinaryTimes[4, y], z, 3, 10, -1]
+                List[Times[3, x], Times[4, y], z, 3, 10, -1]
             );
         }
 
@@ -35,9 +35,9 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
 
             _evaluateAndAssert(
                 SumSymbols[
-                    List[BinaryTimes[x, 3], BinaryTimes[x, 3]]
+                    List[Times[x, 3], Times[x, 3]]
                 ],
-                List[BinaryTimes[2, BinaryTimes[3, x]]]
+                List[Times[2, Times[3, x]]]
             );
         }
     }

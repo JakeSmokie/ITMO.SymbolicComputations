@@ -1,7 +1,7 @@
 using System.Collections.Immutable;
 using System.Linq;
 using ITMO.SymbolicComputations.Base.Models;
-using static ITMO.SymbolicComputations.Base.Predefined.ListFunctions;
+using static ITMO.SymbolicComputations.Base.Functions.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.ListFunctions {
     public class AppendImplementation : AbstractListFunctionImplementation {

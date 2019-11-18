@@ -1,25 +1,32 @@
-﻿using ITMO.SymbolicComputations.Base.Models;
-using ITMO.SymbolicComputations.Base.Predefined;
-using ITMO.SymbolicComputations.Base.Visitors;
-using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
+﻿using System;
+using ITMO.SymbolicComputations.Base.Functions;
+using ITMO.SymbolicComputations.Base.Models;
 using Tests.Base.Tools;
 using Xunit;
 using Xunit.Abstractions;
+using static ITMO.SymbolicComputations.Base.Functions.ArithmeticFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
     public sealed class OneIdentityTests {
         public OneIdentityTests(ITestOutputHelper output) =>
-            _out = output;
+            _evaluateAndAssert = Test.CreateAsserter(output);
 
-        private readonly ITestOutputHelper _out;
+        private readonly Action<Expression, Symbol> _evaluateAndAssert;
 
         [Fact]
         public void OneIdentityWorks() {
             var one = new StringSymbol("OneIdentity", Attributes.OneIdentity);
-            Test.EvaluateAndAssert(
+            _evaluateAndAssert(
                 one[one[one["x"]]],
-                "x",
-                _out
+                "x"
+            );
+        }
+
+        [Fact]
+        public void TimesOneIdentityWorks() {
+            _evaluateAndAssert(
+                Times[Times[Times[3]], 4],
+                12
             );
         }
     }

@@ -2,7 +2,7 @@
 using System.Collections.Immutable;
 using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Visitors.Casting;
-using static ITMO.SymbolicComputations.Base.Predefined.Functions;
+using static ITMO.SymbolicComputations.Base.Functions.Functions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
     public sealed class FunctionEvaluator : ISymbolVisitor<(ImmutableList<Symbol>, Symbol)> {

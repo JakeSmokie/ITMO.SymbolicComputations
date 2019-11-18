@@ -3,7 +3,7 @@ using ITMO.SymbolicComputations.Base.Visitors;
 using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using Xunit;
 using Xunit.Abstractions;
-using static ITMO.SymbolicComputations.Base.Predefined.ArithmeticFunctions;
+using static ITMO.SymbolicComputations.Base.Functions.ArithmeticFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
     public class PowerTests {

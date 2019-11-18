@@ -3,8 +3,8 @@ using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using Tests.Base.Tools;
 using Xunit;
 using Xunit.Abstractions;
-using static ITMO.SymbolicComputations.Base.Predefined.BooleanFunctions;
-using static ITMO.SymbolicComputations.Base.Predefined.Functions;
+using static ITMO.SymbolicComputations.Base.Functions.BooleanFunctions;
+using static ITMO.SymbolicComputations.Base.Functions.Functions;
 
 namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
     public class IfTests {
