@@ -14,6 +14,8 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations {
             var func = expression.Arguments[0];
             var list = expression.Arguments[1].Visit(AsExpressionVisitor.Instance);
 
+            ;
+            
             if (!Equals(list.Head, List)) {
                 throw new ArgumentException();
             }

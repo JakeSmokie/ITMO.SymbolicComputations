@@ -9,30 +9,46 @@ using static ITMO.SymbolicComputations.Base.StandardLibrary.ListFunctions;
 namespace ITMO.SymbolicComputations.Polynomial {
     public static class TimesConstantsFunction {
         public static readonly Expression TimesConstants =
-            Fun[list,
-                Fun["constants", Fun["others",
-                    If[
-                        Eq[Length["constants"], 0],
-                        //
-                        list,
-                        Evaluate[If[
-                            Eq[ListTimes["constants"], 0],
-                            //
-                            0,
-                            Evaluate[If[
-                                Eq[ListTimes["constants"], 1],
-                                "others",
-                                Evaluate[Append[
-                                    "others",
-                                    ListTimes["constants"]
-                                ]]
-                            ]]
-                        ]]
+            Fun[expr,
+                If[Not[IsExpressionWithName[Times][expr]],
+                    expr,
+                    //
+                    Evaluate[
+                        Fun["timesArgs'",
+                            Fun["constants", Fun["others",
+                                If[
+                                    Eq[Length["constants"], 0],
+                                    //
+                                    list,
+                                    Evaluate[
+                                        ApplyList[
+                                            Times,
+                                            If[
+                                                Eq[ListTimes["constants"], 0],
+                                                List[0],
+                                                Evaluate[If[
+                                                    Eq[ListTimes["constants"], 1],
+                                                    "others",
+                                                    Evaluate[
+                                                        Append[
+                                                            "others",
+                                                            ListTimes["constants"]
+                                                        ]
+                                                    ]   
+                                                ]]
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ]][
+                                Filter["timesArgs'"][Fun[x, IsConstant[x]]]
+                            ][
+                                Filter["timesArgs'"][Fun[x, Not[IsConstant[x]]]]
+                            ]
+                        ][
+                            AsExpressionArgs[Times, expr]
+                        ]
                     ]
-                ]][
-                    Filter[list][Fun[x, IsConstant[x]]]
-                ][
-                    Filter[list][Fun[x, Not[IsConstant[x]]]]
                 ]
             ];
     }

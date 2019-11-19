@@ -2,6 +2,7 @@
 using ITMO.SymbolicComputations.Base.Models;
 using Tests.Base.Tools;
 using Xunit;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.ArithmeticFunctions;
 using Xunit.Abstractions;
 using static ITMO.SymbolicComputations.Base.StandardLibrary.ListFunctions;
 using static ITMO.SymbolicComputations.Polynomial.TimesConstantsFunction;
@@ -21,9 +22,9 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
             
             _evaluateAndAssert(
                 TimesConstants[
-                    List[3, x, y, 10, -1]
+                    Times[3, x, y, 10, -1]
                 ],
-                List[x, y, -30]
+                Times[x, y, -30]
             );
         }
         
@@ -34,7 +35,7 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
             
             _evaluateAndAssert(
                 TimesConstants[
-                    List[3, x, y, 0, -1]
+                    Times[3, x, y, 0, -1]
                 ],
                 0
             );
@@ -47,9 +48,9 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
             
             _evaluateAndAssert(
                 TimesConstants[
-                    List[1, x, y, 0.2m, 5]
+                    Times[1, x, y, 0.2m, 5]
                 ],
-                List[x, y]
+                Times[x, y]
             );
         }
     }
