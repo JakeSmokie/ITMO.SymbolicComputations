@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Visitors.Attributes;
@@ -31,38 +32,18 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         private static readonly ApplyListImplementation ApplyListImplementation = new ApplyListImplementation();
 
         private readonly ArgumentsEvaluator _argumentsEvaluator;
-        private readonly FoldImplementation _foldImplementation;
         private readonly FunctionEvaluator _functionEvaluator;
+        private readonly ImmutableList<Expression> _preprocessors;
 
-        public FullEvaluator() {
+        public FullEvaluator(ImmutableList<Expression> preprocessors = null) {
+            _preprocessors = preprocessors ?? ImmutableList<Expression>.Empty;
             _argumentsEvaluator = new ArgumentsEvaluator(this);
-            _foldImplementation = new FoldImplementation(this);
             _functionEvaluator = new FunctionEvaluator(this);
         }
 
         public (ImmutableList<Symbol>, Symbol) VisitExpression(Expression expression) {
-            var visitors = new ISymbolVisitor<Symbol>[] {
-                FlatFlattener,
-                // Implementations
-                PlusImplementation,
-                TimesImplementation,
-                SinFunctionImplementation,
-                IfImplementation,
-                EqImplementation,
-                CompareImplementation,
-                PartImplementation,
-                _foldImplementation,
-                AppendImplementation,
-                AsConstant,
-                AsStringSymbol,
-                AsExpressionArgs,
-                ApplyListImplementation,
-                // Last
-                ArgumentsSorter,
-                OneIdentityShrinker,
-                HoldFormImplementation
-            };
-
+            var visitors = GetFlow();
+            
             var (argSteps, argSymbol) = expression.Visit(_argumentsEvaluator);
             var (funcSteps, funcSymbol) = argSymbol.Visit(_functionEvaluator);
 
@@ -86,5 +67,32 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
 
         public (ImmutableList<Symbol>, Symbol) VisitConstant(Constant constant) =>
             (ImmutableList<Symbol>.Empty, constant);
+
+        private ImmutableList<ISymbolVisitor<Symbol>> GetFlow() {
+            var foldImplementation = new FoldImplementation(this);
+            var flow = new ISymbolVisitor<Symbol>[] {
+                FlatFlattener,
+                // Implementations
+                PlusImplementation,
+                TimesImplementation,
+                SinFunctionImplementation,
+                IfImplementation,
+                EqImplementation,
+                CompareImplementation,
+                PartImplementation,
+                foldImplementation,
+                AppendImplementation,
+                AsConstant,
+                AsStringSymbol,
+                AsExpressionArgs,
+                ApplyListImplementation,
+                // Last
+                ArgumentsSorter,
+                OneIdentityShrinker,
+                HoldFormImplementation
+            }.ToImmutableList();
+            
+            return flow;
+        }
     }
 }
