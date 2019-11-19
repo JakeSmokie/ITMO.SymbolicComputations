@@ -45,7 +45,7 @@ namespace ITMO.SymbolicComputations.Polynomial {
                             ][
                                 Filter["plusArgs'"][Fun[x, IsConstant[x]]]
                             ]
-                        ][AsExpressionArgs[Plus, expr]]
+                        ][DefaultValue[AsExpressionArgs[Plus, expr]][EmptyList]]
                     ]
                 ]
             ];
