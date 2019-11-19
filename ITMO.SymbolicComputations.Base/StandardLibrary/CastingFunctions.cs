@@ -25,5 +25,10 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
             Fun["name'", Fun["expression'", 
                 Not[Eq[AsExpressionArgs["name'", "expression'"], Null]]
             ]];
+        
+        public static readonly Expression DefaultValue =
+            Fun[x, Fun[y, 
+                If[Eq[x, Null], y, x]
+            ]];
     }
 }
