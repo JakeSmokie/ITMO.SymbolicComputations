@@ -53,5 +53,19 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
                 Times[x, y]
             );
         }
+        
+        
+        [Fact]
+        public void NotPlusIsOkay() {
+            Symbol x = "x";
+            Symbol y = "y";
+            
+            _evaluateAndAssert(
+                TimesConstants[
+                    Plus[3, x, y, 10, -1]
+                ],
+                Plus[x, y, -1, 3, 10]
+            );
+        }
     }
 }

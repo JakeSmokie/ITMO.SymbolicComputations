@@ -46,7 +46,7 @@ namespace ITMO.SymbolicComputations.Polynomial {
                                 Filter["timesArgs'"][Fun[x, Not[IsConstant[x]]]]
                             ]
                         ][
-                            AsExpressionArgs[Times, expr]
+                            DefaultValue[AsExpressionArgs[Times, expr]][EmptyList]
                         ]
                     ]
                 ]
