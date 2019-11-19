@@ -6,14 +6,17 @@ using static ITMO.SymbolicComputations.Base.StandardLibrary.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.ListFunctions {
     public class FoldImplementation : AbstractListFunctionImplementation {
-        public FoldImplementation() : base(Fold) {
+        private readonly FullEvaluator _fullEvaluator;
+
+        public FoldImplementation(FullEvaluator fullEvaluator) : base(Fold) {
+            _fullEvaluator = fullEvaluator;
         }
 
         protected override Symbol EvaluateList(Expression expression, ImmutableList<Symbol> items) {
             var f = expression.Arguments[2];
             return items.Aggregate(expression.Arguments[1],
                 (acc, x) => f[acc][x]
-                    .Visit(new FullEvaluator()).Symbol
+                    .Visit(_fullEvaluator).Symbol
             );
         }
     }
