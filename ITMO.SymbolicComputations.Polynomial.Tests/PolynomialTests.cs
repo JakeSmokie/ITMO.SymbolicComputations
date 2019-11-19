@@ -4,8 +4,6 @@ using Tests.Base.Tools;
 using Xunit;
 using Xunit.Abstractions;
 using static ITMO.SymbolicComputations.Base.StandardLibrary.ArithmeticFunctions;
-using static ITMO.SymbolicComputations.Base.StandardLibrary.Functions;
-using static ITMO.SymbolicComputations.Base.StandardLibrary.ListFunctions;
 using static ITMO.SymbolicComputations.Polynomial.SumSymbolsFunction;
 using static ITMO.SymbolicComputations.Polynomial.SumConstantsFunction;
 
@@ -25,9 +23,9 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
             
             _evaluateAndAssert(
                 SumConstants[SumSymbols[
-                    List[3, x, y, 10, x, y, y, x, -1, y, z, 4]
+                    Plus[3, x, y, 10, x, y, y, x, -1, y, z, 4]
                 ]],
-                List[Times[x, 3], Times[y, 4], z, 16]
+                Plus[Times[x, 3], Times[y, 4], z, 16]
             );
         }
     }

@@ -39,7 +39,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
             Symbol y = "y";
 
             var source = Plus[y, x, x];
-            var (steps, symbol) = source.Visit(new FullEvaluator());
+            var (steps, symbol) = source.Visit(FullEvaluator.Default);
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
             Assert.Equal(Plus[Times[x, 2], y], symbol);
@@ -52,7 +52,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
             Symbol z = "z";
 
             var source = Plus[x, y, z, z, x, x, y];
-            var (steps, symbol) = source.Visit(new FullEvaluator());
+            var (steps, symbol) = source.Visit(FullEvaluator.Default);
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
             Assert.Equal(Plus[Times[x, 3], Times[y, 2], Times[z, 2]], symbol);
@@ -65,7 +65,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
             Symbol z = "z";
 
             var source = Plus[x, y, z, 6, -6];
-            var (steps, symbol) = source.Visit(new FullEvaluator());
+            var (steps, symbol) = source.Visit(FullEvaluator.Default);
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
             Assert.Equal(Plus[x, y, z], symbol);
