@@ -85,7 +85,8 @@ namespace ITMO.SymbolicComputations.Base.Tests {
             Symbol x = "x";
 
             var func = Fun[x, Power[x, 2]];
-            var (steps, result) = func[7].Visit(FullEvaluator.Default);
+            var ex = PowerImplementation[func[7]];
+            var (steps, result) = ex.Visit(FullEvaluator.Default);
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
             Assert.Equal(49, result);
@@ -110,7 +111,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
 
             var f = Fun;
 
-            var func = f[x, f[y, f[z, Power[z, Plus[x, y]]]]];
+            var func = f[x, f[y, f[z, PowerImplementation[Power[z, Plus[x, y]]]]]];
             var (steps, result) = func[2][3][2].Visit(FullEvaluator.Default);
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));

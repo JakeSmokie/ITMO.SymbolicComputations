@@ -16,6 +16,7 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
         public static readonly StringSymbol tuple = new StringSymbol("tuple'");
         
         public static readonly StringSymbol f = new StringSymbol("f'");
+        public static readonly StringSymbol g = new StringSymbol("g'");
         public static readonly StringSymbol acc = new StringSymbol("acc'");
     }
 }
