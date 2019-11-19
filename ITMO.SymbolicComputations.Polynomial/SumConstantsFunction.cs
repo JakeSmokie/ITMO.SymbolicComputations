@@ -20,24 +20,26 @@ namespace ITMO.SymbolicComputations.Polynomial {
                                         Eq[Length["constants"], 0],
                                         //
                                         list,
-                                        Evaluate[If[
-                                            And[
-                                                Eq[ListPlus["constants"], 0]
-                                            ][
-                                                Not[Eq[Length["others"], 0]]
-                                            ],
-                                            //
-                                            "others",
-                                            Evaluate[
-                                                ApplyList[
-                                                    Plus,
-                                                    Append[
-                                                        "others",
-                                                        ListPlus["constants"]
+                                        Evaluate[
+                                            ApplyList[
+                                                Plus,
+                                                If[
+                                                    And[
+                                                        Eq[ListPlus["constants"], 0]
+                                                    ][
+                                                        Not[Eq[Length["others"], 0]]
+                                                    ],
+                                                    //
+                                                    "others",
+                                                    Evaluate[
+                                                        Append[
+                                                            "others",
+                                                            ListPlus["constants"]
+                                                        ]
                                                     ]
                                                 ]
                                             ]
-                                        ]]
+                                        ]
                                     ]
                                 ]
                             ][
