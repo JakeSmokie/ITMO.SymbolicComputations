@@ -55,7 +55,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
         [Fact]
         public void AppendListWorks() {
             Test.EvaluateAndAssert(
-                AppendList[List[1, 2, 3, 4]][List[5, 6]],
+                Concat[List[1, 2, 3, 4]][List[5, 6]],
                 List[1, 2, 3, 4, 5, 6],
                 _out
             );
@@ -64,7 +64,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
         [Fact]
         public void AppendEmptyListAndEmptyListWorks() {
             Test.EvaluateAndAssert(
-                AppendList[EmptyList][EmptyList],
+                Concat[EmptyList][EmptyList],
                 EmptyList,
                 _out
             );
@@ -73,7 +73,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
         [Fact]
         public void AppendEmptyListAndNonEmptyListWorks() {
             Test.EvaluateAndAssert(
-                AppendList[EmptyList][List[1, 2, 3]],
+                Concat[EmptyList][List[1, 2, 3]],
                 List[1, 2, 3],
                 _out
             );

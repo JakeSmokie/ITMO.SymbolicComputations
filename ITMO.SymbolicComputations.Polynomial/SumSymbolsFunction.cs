@@ -30,7 +30,7 @@ namespace ITMO.SymbolicComputations.Polynomial {
                         //
                         list,
                         Evaluate[
-                            AppendList[GroupAndSum["symbols"]]["others"]
+                            Concat[GroupAndSum["symbols"]]["others"]
                         ],
                         //
                         "Error"

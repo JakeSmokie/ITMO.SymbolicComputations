@@ -37,7 +37,7 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
                 Fold[list, 0, Fun[acc, Fun[x, Plus[acc, 1]]]]
             ];
 
-        public static readonly Expression AppendList =
+        public static readonly Expression Concat =
             Fun[list, Fun[list2,
                 Fold[list2, list, Fun[acc, Fun[x,
                     Append[acc, x]
