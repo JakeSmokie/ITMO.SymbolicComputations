@@ -33,26 +33,26 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
                 Fold[list, 1, Fun[acc, Fun[x, Times[acc, x]]]]
             ];
 
-//        public static readonly Expression PowerImplementation =
-//            Fun[expr,
-//                If[Not[IsExpressionWithName[Power][expr]],
-//                    expr,
-//                    Evaluate[
-//                        Fun["powerArgs'",
-//                            Fun["others", Fun["constants",
-//                                If[More[Length["others"]][0],
-//                                    expr,
-//                                    Evaluate[""]
-//                                ]
-//                            ]][
-//                                Filter["powerArgs'"][Fun[x, Not[IsConstant[x]]]]
-//                            ]
-//                            [
-//                                Filter["powerArgs'"][Fun[x, IsConstant[x]]]
-//                            ]
-//                        ][AsExpressionArgs[Power, expr]]
-//                    ]
-//                ]
-//            ];
+        public static Expression PowerImplementation =>
+            Fun[expr,
+                If[Not[IsExpressionWithName[Power][expr]],
+                    expr,
+                    Evaluate[
+                        Fun["powerArgs'",
+                            Fun["others", Fun["constants",
+                                If[More[Length["others"]][0],
+                                    expr,
+                                    Evaluate[""]
+                                ]
+                            ]][
+                                Filter["powerArgs'"][Fun[x, Not[IsConstant[x]]]]
+                            ]
+                            [
+                                Filter["powerArgs'"][Fun[x, IsConstant[x]]]
+                            ]
+                        ][DefaultValue[AsExpressionArgs[Power, expr]][EmptyList]]
+                    ]
+                ]
+            ];
     }
 }

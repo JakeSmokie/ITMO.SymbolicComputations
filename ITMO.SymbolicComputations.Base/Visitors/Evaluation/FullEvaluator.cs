@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using System.Linq;
 using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Visitors.Attributes;
@@ -30,6 +29,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         private static readonly AsStringSymbolImplementation AsStringSymbol = new AsStringSymbolImplementation();
         private static readonly AsExpressionArgsImplementation AsExpressionArgs = new AsExpressionArgsImplementation();
         private static readonly ApplyListImplementation ApplyListImplementation = new ApplyListImplementation();
+        private static readonly GenerateListImplementation GenerateList = new GenerateListImplementation();
 
         private readonly ArgumentsEvaluator _argumentsEvaluator;
         private readonly FunctionEvaluator _functionEvaluator;
@@ -86,6 +86,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
                 AsStringSymbol,
                 AsExpressionArgs,
                 ApplyListImplementation,
+                GenerateList,
                 // Last
                 ArgumentsSorter,
                 OneIdentityShrinker,

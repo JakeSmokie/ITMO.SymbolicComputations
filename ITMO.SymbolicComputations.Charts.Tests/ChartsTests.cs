@@ -21,13 +21,7 @@ namespace ITMO.SymbolicComputations.Charts.Tests {
             Symbol x = "x";
 
             var func = Fun[x, Sin[x]];
-            var xs = List[
-                Enumerable.Range(0, 30)
-                    .Select(x => x / 10m)
-                    .Select(x => new Constant(x))
-                    .OfType<Symbol>()
-                    .ToArray()
-            ];
+            var xs = Map[GenerateList[30]][Fun[x, Times[x, 0.1m]]];
             var expr = Map[xs][func];
             
             var (steps, actual) = expr.Visit(FullEvaluator.Default);
