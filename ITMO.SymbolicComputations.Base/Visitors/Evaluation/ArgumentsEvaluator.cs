@@ -4,7 +4,6 @@ using System.Linq;
 using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.StandardLibrary;
 using ITMO.SymbolicComputations.Base.Visitors.Attributes;
-using ITMO.SymbolicComputations.Base.Visitors.Casting;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
     public sealed class ArgumentsEvaluator : ISymbolVisitor<(ImmutableList<Symbol> Steps, Symbol Symbol)> {
@@ -20,14 +19,11 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         private static readonly HasAttributeChecker HoldFirstChecker =
             new HasAttributeChecker(StandardLibrary.Attributes.HoldFirst);
 
-        private readonly FullEvaluator _fullEvaluator;
-
-        public ArgumentsEvaluator(FullEvaluator fullEvaluator) {
-            _fullEvaluator = fullEvaluator;
-        }
+        private static readonly FullEvaluator FullEvaluator =
+            new FullEvaluator();
 
         public (ImmutableList<Symbol>, Symbol) VisitExpression(Expression expression) {
-            var (headSteps, head) = expression.Head.Visit(_fullEvaluator);
+            var (headSteps, head) = expression.Head.Visit(FullEvaluator);
             var args = EvaluateArguments(head, expression.Arguments);
 
             var argSteps = args.SelectMany(a => a.Steps).ToImmutableList();
@@ -42,7 +38,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         public (ImmutableList<Symbol>, Symbol) VisitConstant(Constant constant) =>
             (ImmutableList<Symbol>.Empty, constant);
 
-        private ImmutableList<(ImmutableList<Symbol> Steps, Symbol Symbol)> EvaluateArguments(
+        private static ImmutableList<(ImmutableList<Symbol> Steps, Symbol Symbol)> EvaluateArguments(
             Symbol head,
             ImmutableList<Symbol> arguments
         ) {
@@ -59,28 +55,26 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
 
             if (head.Visit(HoldRestChecker)) {
                 return ImmutableList<(ImmutableList<Symbol>, Symbol)>.Empty
-                    .Add(arguments.First().Visit(_fullEvaluator))
+                    .Add(arguments.First().Visit(FullEvaluator))
                     .AddRange(EvaluateEagerly(arguments.Skip(1)));
             }
 
             if (head.Visit(HoldFirstChecker)) {
                 return ImmutableList<(ImmutableList<Symbol>, Symbol)>.Empty
                     .AddRange(EvaluateEagerly(arguments.Take(1)))
-                    .AddRange(arguments.Skip(1).Select(a => a.Visit(_fullEvaluator)));
+                    .AddRange(arguments.Skip(1).Select(a => a.Visit(FullEvaluator)));
             }
 
             return arguments
-                .Select(a => a.Visit(_fullEvaluator))
+                .Select(a => a.Visit(FullEvaluator))
                 .ToImmutableList();
         }
 
-        private IEnumerable<(ImmutableList<Symbol>, Symbol)> EvaluateEagerly(IEnumerable<Symbol> symbols) =>
-            symbols.SelectMany(s => {
-                var e = s.Visit(AsExpressionVisitor.Instance);
-                
-                return e != null && Equals(e.Head, Functions.Evaluate)
-                    ? e.Arguments.Select(a => a.Visit(_fullEvaluator))
-                    : new[] {(ImmutableList<Symbol>.Empty, s)};
-            });
+        private static IEnumerable<(ImmutableList<Symbol>, Symbol)> EvaluateEagerly(IEnumerable<Symbol> symbols) =>
+            symbols.SelectMany(s =>
+                s is Expression e && Equals(e.Head, Functions.Evaluate)
+                    ? e.Arguments.Select(a => a.Visit(FullEvaluator))
+                    : new[] {(ImmutableList<Symbol>.Empty, s)}
+            );
     }
 }

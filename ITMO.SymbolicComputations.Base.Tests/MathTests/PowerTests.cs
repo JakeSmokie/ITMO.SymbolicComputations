@@ -15,7 +15,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
         [Fact]
         public void TwoPowerOneEqualsTwo() {
             var source = Power[2, 1];
-            var (steps, symbol) = source.Visit(FullEvaluator.Default);
+            var (steps, symbol) = source.Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
             Assert.Equal(2, symbol);
@@ -24,7 +24,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
         [Fact]
         public void TwoPowerZeroEqualsOne() {
             var source = Power[2, 0];
-            var (steps, symbol) = source.Visit(FullEvaluator.Default);
+            var (steps, symbol) = source.Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
             Assert.Equal(1, symbol);
@@ -33,7 +33,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
         [Fact]
         public void XPowerOneEqualsX() {
             var source = Power[Plus["x", "y"], 1];
-            var (steps, symbol) = source.Visit(FullEvaluator.Default);
+            var (steps, symbol) = source.Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
             Assert.Equal(Plus["x", "y"], symbol);
@@ -42,7 +42,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
         [Fact]
         public void XPowerZeroEqualsOne() {
             var source = Power[Plus["x", "y"], 0];
-            var (steps, symbol) = source.Visit(FullEvaluator.Default);
+            var (steps, symbol) = source.Visit(new FullEvaluator());
 
             steps.WithoutDuplicates().ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
             Assert.Equal(1, symbol);

@@ -19,7 +19,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
         [Fact]
         public void HoldFormWorks() {
             var source = Plus[2];
-            var steps = HoldForm[source].Visit(FullEvaluator.Default).Steps.WithoutDuplicates();
+            var steps = HoldForm[source].Visit(new FullEvaluator()).Steps.WithoutDuplicates();
 
             steps.ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
 
@@ -43,7 +43,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
             Symbol h = "h";
 
             var source = Plus[Plus[a], Plus[b, Plus[c, d, Plus[e]], f], g, h];
-            var steps = source.Visit(FullEvaluator.Default).Steps.WithoutDuplicates();
+            var steps = source.Visit(new FullEvaluator()).Steps.WithoutDuplicates();
 
             var expected = new[] {
                 Plus[a],
@@ -69,7 +69,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
             Symbol z = "z";
 
             var source = Orderless[y, Orderless[1, x, Orderless[y]], x, z];
-            var steps = source.Visit(FullEvaluator.Default).Steps.WithoutDuplicates();
+            var steps = source.Visit(new FullEvaluator()).Steps.WithoutDuplicates();
 
             steps.ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
 

@@ -9,18 +9,19 @@ using ITMO.SymbolicComputations.Base.Visitors.Implementations.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
     public sealed class FullEvaluator : ISymbolVisitor<(ImmutableList<Symbol> Steps, Symbol Symbol)> {
-        public static readonly FullEvaluator Default = new FullEvaluator();
-        
         private static readonly OneIdentityShrinker OneIdentityShrinker = new OneIdentityShrinker();
+        private static readonly ArgumentsEvaluator ArgumentsEvaluator = new ArgumentsEvaluator();
         private static readonly HoldFormImplementation HoldFormImplementation = new HoldFormImplementation();
         private static readonly FlatFlattener FlatFlattener = new FlatFlattener();
         private static readonly ArgumentsSorter ArgumentsSorter = new ArgumentsSorter();
+        private static readonly FunctionEvaluator FunctionEvaluator = new FunctionEvaluator();
         
         private static readonly PlusImplementation PlusImplementation = new PlusImplementation();
         private static readonly TimesImplementation TimesImplementation = new TimesImplementation();
         private static readonly SinFunctionImplementation SinFunctionImplementation = new SinFunctionImplementation();
         private static readonly IfImplementation IfImplementation = new IfImplementation();
         private static readonly PartImplementation PartImplementation = new PartImplementation();
+        private static readonly FoldImplementation FoldImplementation = new FoldImplementation();
         private static readonly AppendImplementation AppendImplementation = new AppendImplementation();
         private static readonly EqImplementation EqImplementation = new EqImplementation();
         private static readonly CompareImplementation CompareImplementation = new CompareImplementation();
@@ -29,16 +30,6 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         private static readonly AsStringSymbolImplementation AsStringSymbol = new AsStringSymbolImplementation();
         private static readonly AsExpressionArgsImplementation AsExpressionArgs = new AsExpressionArgsImplementation();
         private static readonly ApplyListImplementation ApplyListImplementation = new ApplyListImplementation();
-
-        private readonly ArgumentsEvaluator _argumentsEvaluator;
-        private readonly FoldImplementation _foldImplementation;
-        private readonly FunctionEvaluator _functionEvaluator;
-
-        public FullEvaluator() {
-            _argumentsEvaluator = new ArgumentsEvaluator(this);
-            _foldImplementation = new FoldImplementation(this);
-            _functionEvaluator = new FunctionEvaluator(this);
-        }
 
         public (ImmutableList<Symbol>, Symbol) VisitExpression(Expression expression) {
             var visitors = new ISymbolVisitor<Symbol>[] {
@@ -51,7 +42,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
                 EqImplementation,
                 CompareImplementation,
                 PartImplementation,
-                _foldImplementation,
+                FoldImplementation,
                 AppendImplementation,
                 AsConstant,
                 AsStringSymbol,
@@ -63,8 +54,8 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
                 HoldFormImplementation
             };
 
-            var (argSteps, argSymbol) = expression.Visit(_argumentsEvaluator);
-            var (funcSteps, funcSymbol) = argSymbol.Visit(_functionEvaluator);
+            var (argSteps, argSymbol) = expression.Visit(ArgumentsEvaluator);
+            var (funcSteps, funcSymbol) = argSymbol.Visit(FunctionEvaluator);
 
             var steps = ImmutableList<Symbol>.Empty
                 .AddRange(argSteps)
