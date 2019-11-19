@@ -8,6 +8,8 @@ using Xunit.Abstractions;
 using static ITMO.SymbolicComputations.Base.StandardLibrary.ArithmeticFunctions;
 using static ITMO.SymbolicComputations.Polynomial.SumSymbolsFunction;
 using static ITMO.SymbolicComputations.Polynomial.SumConstantsFunction;
+using static ITMO.SymbolicComputations.Polynomial.SymbolsTimesToPower;
+using static ITMO.SymbolicComputations.Polynomial.TimesConstantsFunction;
 
 namespace ITMO.SymbolicComputations.Polynomial.Tests {
     public class PolynomialTests {
@@ -25,9 +27,12 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
 
             _evaluateAndAssert(
                 SumConstants[SumSymbols[
-                    Plus[3, x, y, 10, x, y, y, x, -1, y, z, 4]
+                    Plus[
+                        TimesSymbols[TimesConstants[Times[x, y, x, 3, 6]]],
+                        3, x, y, 10, x, y, y, x, -1, y, z, 4
+                    ]
                 ]],
-                Plus[Times[x, 3], Times[y, 4], z, 16]
+                Plus[Times[Power[x, 2], y, 18], Times[x, 3], Times[y, 4], z, 16]
             );
         }
     }

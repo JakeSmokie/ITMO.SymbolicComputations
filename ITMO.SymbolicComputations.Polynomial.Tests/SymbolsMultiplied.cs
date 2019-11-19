@@ -26,7 +26,7 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
                 TimesSymbols[
                     Times[3, x, y, 10, x, y, y, x, -1, z, y]
                 ],
-                Plus[Power[x, 3], Power[y, 4], z, -1, 3, 10]
+                Times[Power[x, 3], Power[y, 4], z, -1, 3, 10]
             );
         }
     }

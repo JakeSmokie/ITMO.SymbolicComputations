@@ -15,7 +15,7 @@ namespace ITMO.SymbolicComputations.Polynomial {
                         Eq[Part[tuple, 1], 1],
                         //
                         Part[tuple, 0],
-                        Power[Part[tuple, 1], Part[tuple, 0]],
+                        Power[Part[tuple, 0], Part[tuple, 1]],
                         //
                         "Error"
                     ]
@@ -23,22 +23,32 @@ namespace ITMO.SymbolicComputations.Polynomial {
             ];
 
         public static readonly Expression TimesSymbols =
-            Fun[list,
-                Fun["symbols", Fun["others",
-                    If[
-                        Eq[Length["symbols"], 0],
-                        //
-                        list,
-                        Evaluate[
-                            Concat[GroupAndMultiply["symbols"]]["others"]
-                        ],
-                        //
-                        "Error"
+            Fun[expr,
+                If[Not[IsExpressionWithName[Times][expr]],
+                    expr,
+                    Evaluate[
+                        Fun["timesArgs'",
+                            Fun["symbols", Fun["others",
+                                If[
+                                    Eq[Length["symbols"], 0],
+                                    //
+                                    expr,
+                                    Evaluate[
+                                        ApplyList[
+                                            Times,
+                                            Concat[GroupAndMultiply["symbols"]]["others"]
+                                        ]
+                                    ],
+                                    //
+                                    "Error"
+                                ]
+                            ]][
+                                Filter["timesArgs'"][Fun[x, Not[IsConstant[x]]]]
+                            ][
+                                Filter["timesArgs'"][Fun[x, IsConstant[x]]]
+                            ]
+                        ][DefaultValue[AsExpressionArgs[Times, expr]][EmptyList]]
                     ]
-                ]][
-                    Filter[list][Fun[x, Not[IsConstant[x]]]]
-                ][
-                    Filter[list][Fun[x, IsConstant[x]]]
                 ]
             ];
     }
