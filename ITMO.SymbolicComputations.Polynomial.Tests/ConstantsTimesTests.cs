@@ -54,7 +54,6 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
             );
         }
         
-        
         [Fact]
         public void NotPlusIsOkay() {
             Symbol x = "x";
