@@ -27,8 +27,7 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
                 Fold[list, EmptyList, Fun[acc, Fun[x,
                     If[f[x],
                         Append[acc, x],
-                        acc,
-                        "Error"
+                        acc
                     ]
                 ]]]
             ]];

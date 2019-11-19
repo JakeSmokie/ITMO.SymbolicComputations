@@ -30,6 +30,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         private static readonly AsExpressionArgsImplementation AsExpressionArgs = new AsExpressionArgsImplementation();
         private static readonly ApplyListImplementation ApplyListImplementation = new ApplyListImplementation();
         private static readonly GenerateListImplementation GenerateList = new GenerateListImplementation();
+        private static readonly DivideImplementation DivideImplementation = new DivideImplementation();
 
         private readonly ArgumentsEvaluator _argumentsEvaluator;
         private readonly FunctionEvaluator _functionEvaluator;
@@ -75,6 +76,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
                 // Implementations
                 PlusImplementation,
                 TimesImplementation,
+                DivideImplementation,
                 SinFunctionImplementation,
                 IfImplementation,
                 EqImplementation,

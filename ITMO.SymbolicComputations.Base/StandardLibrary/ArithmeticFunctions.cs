@@ -20,6 +20,7 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
         );
 
         public static readonly StringSymbol Power = new StringSymbol(nameof(Power));
+        public static readonly StringSymbol Divide = new StringSymbol(nameof(Divide));
 
         public static readonly StringSymbol Sin = new StringSymbol(nameof(Sin));
 
@@ -72,6 +73,5 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
             Fun[f,
                 Fun[Power, f][PowerImplementation]
             ];
-
     }
 }
