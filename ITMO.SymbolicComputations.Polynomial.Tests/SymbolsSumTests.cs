@@ -25,7 +25,7 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
                 SumSymbols[
                     Plus[3, x, y, 10, x, y, y, x, -1, z, y]
                 ],
-                Plus[Times[x, 3], Times[y, 4], z, 3, 10, -1]
+                Plus[Times[x, 3], Times[y, 4], z, -1, 3, 10]
             );
         }
 
@@ -37,7 +37,7 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
                 SumSymbols[
                     Plus[Times[x, 3], Times[x, 3]]
                 ],
-                Plus[Times[x, 6]]
+                Plus[Times[x, 2, 3]]
             );
         }
     }

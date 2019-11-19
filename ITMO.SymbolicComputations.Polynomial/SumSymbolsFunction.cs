@@ -23,22 +23,30 @@ namespace ITMO.SymbolicComputations.Polynomial {
             ];
 
         public static readonly Expression SumSymbols =
-            Fun[list,
-                Fun["symbols", Fun["others",
-                    If[
-                        Eq[Length["symbols"], 0],
-                        //
-                        list,
-                        Evaluate[
-                            Concat[GroupAndSum["symbols"]]["others"]
-                        ],
-                        //
-                        "Error"
+            Fun[expr,
+                If[Not[IsExpressionWithName[Plus][expr]],
+                    expr,
+                    Evaluate[
+                        Fun["plusArgs'",
+                            Fun["symbols", Fun["others",
+                                If[
+                                    Eq[Length["symbols"], 0],
+                                    //
+                                    expr,
+                                    Evaluate[
+                                        ApplyList[
+                                            Plus,
+                                            Concat[GroupAndSum["symbols"]]["others"]
+                                        ]
+                                    ]
+                                ]
+                            ]][
+                                Filter["plusArgs'"][Fun[x, Not[IsConstant[x]]]]
+                            ][
+                                Filter["plusArgs'"][Fun[x, IsConstant[x]]]
+                            ]
+                        ][AsExpressionArgs[Plus, expr]]
                     ]
-                ]][
-                    Filter[list][Fun[x, Not[IsConstant[x]]]]
-                ][
-                    Filter[list][Fun[x, IsConstant[x]]]
                 ]
             ];
     }
