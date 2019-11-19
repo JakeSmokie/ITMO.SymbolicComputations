@@ -24,6 +24,9 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
 
         public static readonly StringSymbol Sin = new StringSymbol(nameof(Sin));
 
+        public static readonly Expression Minus =
+            Fun[x, Times[x, -1]];
+
         public static readonly Expression ListPlus =
             Fun[list,
                 Fold[list, 0, Fun[acc, Fun[x, Plus[acc, x]]]]

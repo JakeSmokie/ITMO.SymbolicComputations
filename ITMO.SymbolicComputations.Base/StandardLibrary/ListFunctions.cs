@@ -15,6 +15,21 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
 
         public static readonly Expression EmptyList = List[new Symbol[0]];
 
+        public static Expression Range {
+            get {
+                var a = new StringSymbol("a'");
+                var b = new StringSymbol("b'");
+                var stepsCount = new StringSymbol("stepsCount'");
+                var stepInterval = Divide[Plus[b, Minus[a]], stepsCount];
+                
+                return Fun[a, Fun[b, Fun[stepsCount,
+                    Map[GenerateList[stepsCount]][
+                        Fun[x, Plus[a, Times[stepInterval, x]]]
+                    ]
+                ]]];
+            }
+        }
+
         public static readonly Expression Map =
             Fun[list, Fun[f,
                 Fold[list, EmptyList, Fun[acc, Fun[x,

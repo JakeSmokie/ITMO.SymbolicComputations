@@ -150,5 +150,55 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
                 _out
             );
         }
+
+        [Fact]
+        public void RangeWorks() {
+            Test.EvaluateAndAssert(
+                Range[0][10][40],
+                List[
+                    0.00m,
+                    0.25m,
+                    0.50m,
+                    0.75m,
+                    1.00m,
+                    1.25m,
+                    1.50m,
+                    1.75m,
+                    2.00m,
+                    2.25m,
+                    2.50m,
+                    2.75m,
+                    3.00m,
+                    3.25m,
+                    3.50m,
+                    3.75m,
+                    4.00m,
+                    4.25m,
+                    4.50m,
+                    4.75m,
+                    5.00m,
+                    5.25m,
+                    5.50m,
+                    5.75m,
+                    6.00m,
+                    6.25m,
+                    6.50m,
+                    6.75m,
+                    7.00m,
+                    7.25m,
+                    7.50m,
+                    7.75m,
+                    8.00m,
+                    8.25m,
+                    8.50m,
+                    8.75m,
+                    9.00m,
+                    9.25m,
+                    9.50m,
+                    9.75m
+                ],
+                _out
+            );
+        }
     }
 }
