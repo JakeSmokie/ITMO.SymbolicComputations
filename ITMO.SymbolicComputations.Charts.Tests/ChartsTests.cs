@@ -19,8 +19,9 @@ namespace ITMO.SymbolicComputations.Charts.Tests {
         public void SinFunctionIsOkay() {
             Symbol x = "x";
 
+            var xs = Range[0][7][20];
             var func = Fun[x, List[x, Sin[x]]];
-            var xs = Map[GenerateList[30]][Fun[x, Times[x, 0.1m]]];
+            
             var expr = Map[xs][func];
             
             var (steps, actual) = expr.Visit(FullEvaluator.Default);
