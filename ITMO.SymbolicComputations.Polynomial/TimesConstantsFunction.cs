@@ -21,7 +21,7 @@ namespace ITMO.SymbolicComputations.Polynomial {
                                 //
                                 list,
                                 Seq[
-                                    Eq[ListTimes["constants"], 1],
+//                                    Eq[ListTimes["constants"], 1],
                                     ApplyList[
                                         Times,
                                         If[

@@ -34,6 +34,7 @@ namespace ITMO.SymbolicComputations.Base {
             Set[IsExpressionWithName, IsExpressionWithNameImplementation],
             Set[DefaultValue, DefaultValueImplementation],
             //
+            Set[Range, RangeImplementation],
             Set[Group, GroupImplementation],
             Set[Distinct, DistinctImplementation],
             Set[Contains, ContainsImplementation],

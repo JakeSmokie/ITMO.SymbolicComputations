@@ -32,6 +32,8 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
         public static Expression MinusImplementation =>
             Fun[x, Times[x, -1]];
 
+        public static Expression Abs => Fun[x, If[Less[x][0], Minus[x], x]];
+        
         public static Expression ListPlusImplementation =>
             Fun[list,
                 Fold[list, 0, Fun[acc, Fun[x, Plus[acc, x]]]]

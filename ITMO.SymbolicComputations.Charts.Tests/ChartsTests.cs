@@ -42,7 +42,7 @@ namespace ITMO.SymbolicComputations.Charts.Tests {
             
             var expr = Map[xs][func];
             
-            var (steps, actual) = new SymbolicContext(Seq[Set[TaylorSin, TaylorSinImplementation]]).Run(expr);
+            var (steps, actual) = new SymbolicContext().Run(expr);
             var points = actual.Visit(new ListOfListToDecimalTuples()).ToList();
             
             _out.WriteLine(actual + "\n\n");

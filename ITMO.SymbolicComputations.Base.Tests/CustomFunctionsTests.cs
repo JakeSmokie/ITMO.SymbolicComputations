@@ -8,6 +8,7 @@ using Xunit;
 using Xunit.Abstractions;
 using static ITMO.SymbolicComputations.Base.StandardLibrary.Alphabet;
 using static ITMO.SymbolicComputations.Base.StandardLibrary.ArithmeticFunctions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.BooleanFunctions;
 using static ITMO.SymbolicComputations.Base.StandardLibrary.Functions;
 using static ITMO.SymbolicComputations.Base.StandardLibrary.ListFunctions;
 
@@ -35,8 +36,12 @@ namespace ITMO.SymbolicComputations.Base.Tests {
         [Fact]
         public void TaylorSinFunction() {
             evaluateAndAssert(Seq[
-                TaylorSin[2]
-            ], 2);
+                Less[
+                    Abs[Plus[TaylorSin[2], Minus[Sin[2]]]]
+                ][
+                    0.01m
+                ]
+            ], True);
         }
 
         [Fact]

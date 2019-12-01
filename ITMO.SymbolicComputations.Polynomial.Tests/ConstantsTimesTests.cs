@@ -32,19 +32,6 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
         }
         
         [Fact]
-        public void ConstantsMultipliedWithZero() {
-            Symbol x = "x";
-            Symbol y = "y";
-
-            evaluateAndAssert(
-                TimesConstants[
-                    Times[3, x, y, 0, -1]
-                ],
-                0
-            );
-        }
-
-        [Fact]
         public void NotPlusIsOkay() {
             Symbol x = "x";
             Symbol y = "y";
