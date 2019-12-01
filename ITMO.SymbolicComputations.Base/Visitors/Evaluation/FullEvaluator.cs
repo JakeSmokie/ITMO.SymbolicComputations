@@ -9,14 +9,14 @@ using ITMO.SymbolicComputations.Base.Visitors.Implementations.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
     public sealed class FullEvaluator : ISymbolVisitor<(ImmutableList<Symbol> Steps, Symbol Symbol)> {
-        private readonly ImmutableList<ISymbolVisitor<Symbol>> processors;
+        private readonly ImmutableList<Expression> preProcessors;
+        private readonly ImmutableList<ISymbolVisitor<Symbol>> visitors;
         public static readonly FullEvaluator Default = new FullEvaluator();
-        
+
         private static readonly OneIdentityShrinker OneIdentityShrinker = new OneIdentityShrinker();
-        private static readonly HoldFormImplementation HoldFormImplementation = new HoldFormImplementation();
         private static readonly FlatFlattener FlatFlattener = new FlatFlattener();
         private static readonly ArgumentsSorter ArgumentsSorter = new ArgumentsSorter();
-        
+
         private static readonly PlusImplementation PlusImplementation = new PlusImplementation();
         private static readonly TimesImplementation TimesImplementation = new TimesImplementation();
         private static readonly SinFunctionImplementation SinFunctionImplementation = new SinFunctionImplementation();
@@ -25,7 +25,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         private static readonly AppendImplementation AppendImplementation = new AppendImplementation();
         private static readonly EqImplementation EqImplementation = new EqImplementation();
         private static readonly CompareImplementation CompareImplementation = new CompareImplementation();
-        
+
         private static readonly AsConstantImplementation AsConstant = new AsConstantImplementation();
         private static readonly AsStringSymbolImplementation AsStringSymbol = new AsStringSymbolImplementation();
         private static readonly AsExpressionArgsImplementation AsExpressionArgs = new AsExpressionArgsImplementation();
@@ -37,8 +37,12 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         private readonly FunctionEvaluator functionEvaluator;
         private readonly FoldImplementation foldImplementation;
 
-        public FullEvaluator(ImmutableList<ISymbolVisitor<Symbol>> processors = null) {
-            this.processors = processors ?? ImmutableList<ISymbolVisitor<Symbol>>.Empty;
+        public FullEvaluator(
+            ImmutableList<ISymbolVisitor<Symbol>> visitors = null,
+            ImmutableList<Expression> preProcessors = null
+        ) {
+            this.preProcessors = preProcessors ?? ImmutableList<Expression>.Empty;
+            this.visitors = visitors ?? ImmutableList<ISymbolVisitor<Symbol>>.Empty;
 
             argumentsEvaluator = new ArgumentsEvaluator(this);
             functionEvaluator = new FunctionEvaluator(this);
@@ -47,7 +51,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
 
         public (ImmutableList<Symbol>, Symbol) VisitExpression(Expression expression) {
             var visitors = GetFlow();
-            
+
             var (argSteps, argSymbol) = expression.Visit(argumentsEvaluator);
             var (funcSteps, funcSymbol) = argSymbol.Visit(functionEvaluator);
 
@@ -73,7 +77,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
             (ImmutableList<Symbol>.Empty, constant);
 
         private ImmutableList<ISymbolVisitor<Symbol>> GetFlow() {
-            var flow = new ISymbolVisitor<Symbol>[] {
+            var flow = visitors.AddRange(new ISymbolVisitor<Symbol>[] {
                 FlatFlattener,
                 ArgumentsSorter,
                 OneIdentityShrinker,
@@ -92,11 +96,10 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
                 AsStringSymbol,
                 AsExpressionArgs,
                 ApplyListImplementation,
-                GenerateList,
-                HoldFormImplementation
+                GenerateList
                 // Last
-            }.ToImmutableList().AddRange(processors);
-            
+            });
+
             return flow;
         }
     }

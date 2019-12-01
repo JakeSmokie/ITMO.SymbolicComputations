@@ -4,13 +4,16 @@ using Tests.Base.Tools;
 using Xunit;
 using Xunit.Abstractions;
 using static ITMO.SymbolicComputations.Base.StandardLibrary.ArithmeticFunctions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.Functions;
 using static ITMO.SymbolicComputations.Base.StandardLibrary.ListFunctions;
 using static ITMO.SymbolicComputations.Polynomial.SumSymbolsFunction;
 
 namespace ITMO.SymbolicComputations.Polynomial.Tests {
     public class SymbolsSumTests {
         public SymbolsSumTests(ITestOutputHelper output) {
-            evaluateAndAssert = Test.CreateAsserter(output);
+            evaluateAndAssert = Test.CreateAsserter(output, Seq[
+                Set[SumSymbols, SumSymbolsImplementation]
+            ]);
         }
 
         private readonly Action<Expression, Symbol> evaluateAndAssert;
@@ -26,6 +29,13 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
                     Plus[3, x, y, 10, x, y, y, x, -1, z, y]
                 ],
                 Plus[Times[x, 3], Times[y, 4], z, -1, 3, 10]
+            );
+
+            evaluateAndAssert(
+                SumSymbols[
+                    Plus[3, 5, 6]
+                ],
+                14
             );
         }
 

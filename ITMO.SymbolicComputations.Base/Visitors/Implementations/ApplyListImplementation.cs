@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Linq;
 using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Visitors.Casting;
@@ -14,13 +15,11 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations {
             var func = expression.Arguments[0];
             var list = expression.Arguments[1].Visit(AsExpressionVisitor.Instance);
 
-            ;
-            
-            if (!Equals(list.Head, List)) {
-                throw new ArgumentException();
+            if (!Equals(list?.Head, List)) {
+                return expression;
             }
 
-            return func[list.Arguments.ToArray()];
+            return func[list?.Arguments?.ToArray()];
         }
     }
 }

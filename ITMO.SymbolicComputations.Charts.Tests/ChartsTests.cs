@@ -1,4 +1,5 @@
 using System.Linq;
+using ITMO.SymbolicComputations.Base;
 using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using Tests.Base.Tools;
@@ -25,11 +26,26 @@ namespace ITMO.SymbolicComputations.Charts.Tests {
             
             var expr = Map[xs][func];
             
-            var (steps, actual) = expr.Visit(FullEvaluator.Default);
-//            steps.Print(_out);
-
+            var (steps, actual) = new SymbolicContext().Run(expr);
             var points = actual.Visit(new ListOfListToDecimalTuples()).ToList();
             
+            _out.WriteLine(actual + "\n\n");
+            points.ForEach(x => _out.WriteLine($"{x.Item1}, {x.Item2}"));
+        }
+        
+        [Fact]
+        public void TaylorSinIsOkay() {
+            Symbol x = "x";
+
+            var xs = Range[0][7][100]; 
+            var func = Fun[x, List[x, TaylorSin[x]]];
+            
+            var expr = Map[xs][func];
+            
+            var (steps, actual) = new SymbolicContext(Seq[Set[TaylorSin, TaylorSinImplementation]]).Run(expr);
+            var points = actual.Visit(new ListOfListToDecimalTuples()).ToList();
+            
+            _out.WriteLine(actual + "\n\n");
             points.ForEach(x => _out.WriteLine($"{x.Item1}, {x.Item2}"));
         }
     }

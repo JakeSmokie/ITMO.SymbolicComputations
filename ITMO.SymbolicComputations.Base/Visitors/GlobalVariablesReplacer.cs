@@ -11,10 +11,18 @@ namespace ITMO.SymbolicComputations.Base.Visitors {
         }
 
         public Symbol VisitExpression(Expression expression) {
-            return variableAssigner.Variables.Aggregate(
-                (Symbol) expression,
-                (acc, x) => acc.Visit(new VariableReplacer(x.Key, x.Value))
-            );
+            Symbol prev;
+            Symbol @new = expression;
+            
+            do {
+                prev = @new;
+                @new = variableAssigner.Variables.Aggregate(
+                    @new,
+                    (acc, x) => acc.Visit(new VariableReplacer(x.Key, x.Value))
+                );
+            } while (!Equals(@new, prev));
+
+            return @new;
         }
 
         public Symbol VisitSymbol(StringSymbol symbol) => symbol;

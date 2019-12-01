@@ -18,8 +18,10 @@ namespace ITMO.SymbolicComputations.Base.Tests {
         public void AssignmentWorks() {
             Symbol x = "x";
 
+            var expected = Seq["Max iterations count reached", Set[x, ""]];
+
             var expression = Set[x, Plus[x, 2]];
-            evaluateAndAssert(expression, "");
+            evaluateAndAssert(expression, expected);
         }
     }
 }

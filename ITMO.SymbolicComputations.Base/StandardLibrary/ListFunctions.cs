@@ -30,7 +30,8 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
             }
         }
 
-        public static readonly Expression Map =
+        public static readonly StringSymbol Map = new StringSymbol(nameof(Map));
+        public static readonly Expression MapImplementation =
             Fun[list, Fun[f,
                 Fold[list, EmptyList, Fun[acc, Fun[x,
                     Append[acc, f[x]]

@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Immutable;
 using System.Linq;
 using ITMO.SymbolicComputations.Base;
 using ITMO.SymbolicComputations.Base.Models;
+using ITMO.SymbolicComputations.Base.Visitors;
 using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using Xunit;
 using Xunit.Abstractions;
@@ -12,19 +14,27 @@ namespace Tests.Base.Tools {
             Expression expression,
             Symbol expectedResult,
             ITestOutputHelper output,
-            FullEvaluator fullEvaluator = null
+            Expression context = null,
+            ImmutableList<Symbol> topLevelProcessors = null
         ) {
-            var (steps, actual) = new SymbolicContext().Run(expression);
+            Logger.Log = output.WriteLine;
+
+            var (steps, actual) = new SymbolicContext(context, topLevelProcessors).Run(expression);
 
             steps.Print(output);
             output.WriteLine("");
+
+            output.WriteLine(expression.ToString());
+            output.WriteLine(actual.ToString());
+            output.WriteLine(expectedResult.ToString());
 
             Assert.Equal(expectedResult, actual);
         }
 
         public static Action<Expression, Symbol> CreateAsserter(
             ITestOutputHelper output,
-            FullEvaluator fullEvaluator = null
-        ) => (expression, expected) => EvaluateAndAssert(expression, expected, output, fullEvaluator);
+            Expression context = null,
+            ImmutableList<Symbol> topLevelProcessors = null
+        ) => (expression, expected) => EvaluateAndAssert(expression, expected, output, context, topLevelProcessors);
     }
 }

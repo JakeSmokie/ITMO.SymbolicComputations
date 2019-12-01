@@ -44,7 +44,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
         public void Holds() {
             Test.EvaluateAndAssert(
                 If[True, If[True, 1]],
-                If[True, 1],
+                1,
                 _out
             );
         }

@@ -22,31 +22,35 @@ namespace ITMO.SymbolicComputations.Polynomial {
                 ]]
             ];
 
-        public static readonly Expression SumSymbols =
+        public static readonly StringSymbol SumSymbols = new StringSymbol(nameof(SumSymbols));
+        
+        public static readonly Expression SumSymbolsImplementation =
             Fun[expr,
                 If[Not[IsExpressionWithName[Plus][expr]],
                     expr,
-                    Evaluate[
-                        Fun["plusArgs'",
-                            Fun["symbols", Fun["others",
-                                If[
-                                    Eq[Length["symbols"], 0],
-                                    //
-                                    expr,
-                                    Evaluate[
-                                        ApplyList[
-                                            Plus,
-                                            Concat[GroupAndSum["symbols"]]["others"]
-                                        ]
-                                    ]
+                    Fun["plusArgs'",
+                        Fun["symbols", Fun["others",
+                            Seq[
+//                                    "symbols", "others",
+//                                    GroupAndSum["symbols"],
+//                                    If[
+//                                        Eq[Length["symbols"], 0],
+//                                        //
+//                                        expr,
+//                                        Evaluate[
+                                ApplyList[
+                                    Plus,
+                                    Concat[GroupAndSum["symbols"]]["others"]
                                 ]
-                            ]][
-                                Filter["plusArgs'"][Fun[x, Not[IsConstant[x]]]]
-                            ][
-                                Filter["plusArgs'"][Fun[x, IsConstant[x]]]
+//                                        ]
+//                                    ]
                             ]
-                        ][DefaultValue[AsExpressionArgs[Plus, expr]][EmptyList]]
-                    ]
+                        ]][
+                            Filter["plusArgs'"][Fun[x, Not[IsConstant[x]]]]
+                        ][
+                            Filter["plusArgs'"][Fun[x, IsConstant[x]]]
+                        ]
+                    ][DefaultValue[AsExpressionArgs[Plus, expr]][EmptyList]]
                 ]
             ];
     }

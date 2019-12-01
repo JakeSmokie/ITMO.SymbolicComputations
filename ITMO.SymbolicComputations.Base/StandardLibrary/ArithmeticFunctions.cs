@@ -24,6 +24,7 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
         public static readonly StringSymbol Sin = new StringSymbol(nameof(Sin));
 
         public static readonly StringSymbol Minus = new StringSymbol(nameof(Minus));
+
         public static readonly Expression MinusImplementation =
             Fun[x, Times[x, -1]];
 
@@ -39,47 +40,17 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
             ];
 
         public static readonly StringSymbol Power = new StringSymbol(nameof(Power));
-        public static Expression PowerImplementation {
-            get {
-                Symbol constants = "constants";
-                Symbol others = "others";
 
-                return Fun[expr,
-                    If[Not[IsExpressionWithName[Power][expr]],
-                        expr,
-                        Evaluate[
-                            Fun["powerArgs'",
-                                Fun[others, Fun[constants,
-                                    If[More[Length[others]][0],
-                                        expr,
-                                        Evaluate[
-                                            ApplyList[
-                                                Times,
-                                                Map[GenerateList[Part[constants, 1]]][
-                                                    Fun[x, Part[constants, 0]]
-                                                ]
-                                            ]
-                                        ]
-                                    ]
-                                ]][
-                                    Filter["powerArgs'"][Fun[x, Not[IsConstant[x]]]]
-                                ]
-                                [
-                                    Filter["powerArgs'"][Fun[x, IsConstant[x]]]
-                                ]
-                            ][DefaultValue[AsExpressionArgs[Power, expr]][EmptyList]]
-                        ]
-                    ]
-                ];
-            }
-        }
+        public static Expression PowerImplementation =>
+            Fun[x, Fun[y, If[
+                IsConstant[x],
+                ApplyList[
+                    Times,
+                    Map[GenerateList[y]][Fun["_", x]]
+                ],
+                Power[x][y]
+            ]]];
 
-        public static Expression SubstitutePower =>
-            Fun[f,
-                Fun[Power, f][PowerImplementation]
-            ];
-        
-        
         public static Expression Factorial =>
             Fun[n,
                 ApplyList[
@@ -88,13 +59,11 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
                 ]
             ];
 
-        public static Expression TaylorSin =>
+        public static readonly StringSymbol TaylorSin = new StringSymbol(nameof(TaylorSin)); 
+        public static Expression TaylorSinImplementation =>
             Fun[x,
-                Map[GenerateList[4]][Fun[n,
-                    Divide[
-                        PowerImplementation[Power[x, Plus[Times[2, n], -1]]],
-                        Factorial[Plus[Times[2, n], -1]]
-                    ]
+                Map[GenerateList[5]][Fun[n,
+                    n
                 ]]
             ];
     }

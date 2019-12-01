@@ -13,41 +13,34 @@ namespace ITMO.SymbolicComputations.Polynomial {
                 If[Not[IsExpressionWithName[Times][expr]],
                     expr,
                     //
-                    Evaluate[
-                        Fun["timesArgs'",
-                            Fun["constants", Fun["others",
-                                If[
-                                    Eq[Length["constants"], 0],
-                                    //
-                                    list,
-                                    Evaluate[
-                                        ApplyList[
-                                            Times,
-                                            If[
-                                                Eq[ListTimes["constants"], 0],
-                                                List[0],
-                                                Evaluate[If[
-                                                    Eq[ListTimes["constants"], 1],
-                                                    "others",
-                                                    Evaluate[
-                                                        Append[
-                                                            "others",
-                                                            ListTimes["constants"]
-                                                        ]
-                                                    ]   
-                                                ]]
-                                            ]
+                    Fun["timesArgs'",
+                        Fun["constants", Fun["others",
+                            If[
+                                Eq[Length["constants"], 0],
+                                //
+                                list,
+                                ApplyList[
+                                    Times,
+                                    If[
+                                        Eq[ListTimes["constants"], 0],
+                                        List[0],
+                                        If[
+                                            Eq[ListTimes["constants"], 1],
+                                            "others",
+                                            Append[
+                                                "others",
+                                                ListTimes["constants"]
+                                            ]   
                                         ]
                                     ]
-                                ]
-                            ]][
-                                Filter["timesArgs'"][Fun[x, IsConstant[x]]]
-                            ][
-                                Filter["timesArgs'"][Fun[x, Not[IsConstant[x]]]]
-                            ]
+                                ]]
+                        ]][
+                            Filter["timesArgs'"][Fun[x, IsConstant[x]]]
                         ][
-                            DefaultValue[AsExpressionArgs[Times, expr]][EmptyList]
+                            Filter["timesArgs'"][Fun[x, Not[IsConstant[x]]]]
                         ]
+                    ][
+                        DefaultValue[AsExpressionArgs[Times, expr]][EmptyList]
                     ]
                 ]
             ];

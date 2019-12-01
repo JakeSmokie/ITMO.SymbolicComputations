@@ -33,27 +33,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
                 _out
             );
         }
-
-        [Fact]
-        public void HoldFormSuppressingWithEvaluateFunctionWorks() {
-            Test.EvaluateAndAssert(
-                HoldForm[Evaluate[Plus[2, 1]]],
-                3,
-                _out
-            );
-        }
-
-        [Fact]
-        public void HoldFormWorks() {
-            var source = Plus[2, 4];
-
-            Test.EvaluateAndAssert(
-                HoldForm[source],
-                source,
-                _out
-            );
-        }
-
+        
         [Fact]
         public void HoldIsNotSuppressedWhenItIsComplete() {
             var source = HoldComplete[Evaluate[Plus[2, 6]]];

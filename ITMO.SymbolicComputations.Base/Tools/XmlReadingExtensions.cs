@@ -8,19 +8,13 @@ namespace ITMO.SymbolicComputations.Base.Tools {
     public static class XmlReadingExtensions {
         public static ExpressionInfo AsExpressionInfo(this XmlDocument doc) {
             var root = doc.DocumentElement;
-
-            if (root.Name != "Expression") {
-                throw new ArgumentException("");
-            }
-
             return new ExpressionInfo(ParseExpression(root.FirstChild));
 
             Symbol ParseExpression(XmlNode xmlElement) =>
                 xmlElement.Name switch {
                     "Const" => ParseConstant(xmlElement),
                     "Symbol" => ParseSymbol(xmlElement),
-                    "ApplySymbol" => ParseFunction(xmlElement),
-                    _ => throw new NotImplementedException()
+                    _ => ParseFunction(xmlElement)
                 };
 
             Symbol ParseConstant(XmlNode xmlElement) =>

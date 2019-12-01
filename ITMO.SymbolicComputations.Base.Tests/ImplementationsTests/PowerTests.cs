@@ -12,38 +12,12 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
         }
 
         private readonly Action<Expression, Symbol> evaluateAndAssert;
-
+        
         [Fact]
-        public void NotPowerIsNotProcessed() {
+        public void PowerWorks() {
             evaluateAndAssert(
-                PowerImplementation[Plus["x", "y"]],
-                Plus["x", "y"]
-            );
-
-            evaluateAndAssert(
-                PowerImplementation[Times["x", "y"]],
-                Times["x", "y"]
-            );
-        }
-
-        [Fact]
-        public void PowerWithSymbolsIsNotProcessed() {
-            evaluateAndAssert(
-                PowerImplementation[Power["x", "y"]],
-                Power["x", "y"]
-            );
-
-            evaluateAndAssert(
-                PowerImplementation[Power["x", 2]],
-                Power["x", 2]
-            );
-        }
-
-        [Fact]
-        public void ConstantsPower() {
-            evaluateAndAssert(
-                PowerImplementation[Power[2, 8]],
-                256
+                Power["x"][2],
+                Power["x"][2]
             );
         }
     }

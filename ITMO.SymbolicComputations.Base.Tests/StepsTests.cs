@@ -15,22 +15,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
 
         private readonly ITestOutputHelper _out;
         private static readonly StringSymbol Orderless = new StringSymbol("Orderless", Attributes.Orderless);
-
-        [Fact]
-        public void HoldFormWorks() {
-            var source = Plus[2];
-            var steps = HoldForm[source].Visit(FullEvaluator.Default).Steps.WithoutDuplicates();
-
-            steps.ForEach(e => _out.WriteLine(e.Visit(new MathematicaPrinter())));
-
-            var expected = new[] {
-                HoldForm[Plus[2]],
-                Plus[2]
-            };
-
-            Assert.Equal(expected, steps);
-        }
-
+        
         [Fact]
         public void MoreComplexFlatWorks() {
             Symbol a = "a";
