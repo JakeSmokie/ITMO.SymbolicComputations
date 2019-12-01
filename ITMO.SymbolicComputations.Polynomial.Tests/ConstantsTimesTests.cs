@@ -10,17 +10,17 @@ using static ITMO.SymbolicComputations.Polynomial.TimesConstantsFunction;
 namespace ITMO.SymbolicComputations.Polynomial.Tests {
     public class ConstantsTimesTests {
         public ConstantsTimesTests(ITestOutputHelper output) {
-            _evaluateAndAssert = Test.CreateAsserter(output);
+            evaluateAndAssert = Test.CreateAsserter(output);
         }
 
-        private readonly Action<Expression, Symbol> _evaluateAndAssert;
+        private readonly Action<Expression, Symbol> evaluateAndAssert;
 
         [Fact]
         public void ConstantsMultipliedGeneral() {
             Symbol x = "x";
             Symbol y = "y";
             
-            _evaluateAndAssert(
+            evaluateAndAssert(
                 TimesConstants[
                     Times[3, x, y, 10, -1]
                 ],
@@ -33,7 +33,7 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
             Symbol x = "x";
             Symbol y = "y";
             
-            _evaluateAndAssert(
+            evaluateAndAssert(
                 TimesConstants[
                     Times[3, x, y, 0, -1]
                 ],
@@ -46,7 +46,7 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
             Symbol x = "x";
             Symbol y = "y";
             
-            _evaluateAndAssert(
+            evaluateAndAssert(
                 TimesConstants[
                     Times[1, x, y, 0.2m, 5]
                 ],
@@ -59,7 +59,7 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
             Symbol x = "x";
             Symbol y = "y";
             
-            _evaluateAndAssert(
+            evaluateAndAssert(
                 TimesConstants[
                     Plus[3, x, y, 10, -1]
                 ],

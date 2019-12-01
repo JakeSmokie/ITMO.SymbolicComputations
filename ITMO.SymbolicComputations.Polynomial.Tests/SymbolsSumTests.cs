@@ -10,10 +10,10 @@ using static ITMO.SymbolicComputations.Polynomial.SumSymbolsFunction;
 namespace ITMO.SymbolicComputations.Polynomial.Tests {
     public class SymbolsSumTests {
         public SymbolsSumTests(ITestOutputHelper output) {
-            _evaluateAndAssert = Test.CreateAsserter(output);
+            evaluateAndAssert = Test.CreateAsserter(output);
         }
 
-        private readonly Action<Expression, Symbol> _evaluateAndAssert;
+        private readonly Action<Expression, Symbol> evaluateAndAssert;
 
         [Fact]
         public void SymbolsSummed() {
@@ -21,7 +21,7 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
             Symbol y = "y";
             Symbol z = "z";
 
-            _evaluateAndAssert(
+            evaluateAndAssert(
                 SumSymbols[
                     Plus[3, x, y, 10, x, y, y, x, -1, z, y]
                 ],
@@ -33,7 +33,7 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
         public void EqualExpressionsSummed() {
             Symbol x = "x";
 
-            _evaluateAndAssert(
+            evaluateAndAssert(
                 SumSymbols[
                     Plus[Times[x, 3], Times[x, 3]]
                 ],

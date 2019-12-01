@@ -8,19 +8,19 @@ using static ITMO.SymbolicComputations.Base.StandardLibrary.ArithmeticFunctions;
 namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
     public class PowerTests {
         public PowerTests(ITestOutputHelper output) {
-            _evaluateAndAssert = Test.CreateAsserter(output);
+            evaluateAndAssert = Test.CreateAsserter(output);
         }
 
-        private readonly Action<Expression, Symbol> _evaluateAndAssert;
+        private readonly Action<Expression, Symbol> evaluateAndAssert;
 
         [Fact]
         public void NotPowerIsNotProcessed() {
-            _evaluateAndAssert(
+            evaluateAndAssert(
                 PowerImplementation[Plus["x", "y"]],
                 Plus["x", "y"]
             );
 
-            _evaluateAndAssert(
+            evaluateAndAssert(
                 PowerImplementation[Times["x", "y"]],
                 Times["x", "y"]
             );
@@ -28,12 +28,12 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
 
         [Fact]
         public void PowerWithSymbolsIsNotProcessed() {
-            _evaluateAndAssert(
+            evaluateAndAssert(
                 PowerImplementation[Power["x", "y"]],
                 Power["x", "y"]
             );
 
-            _evaluateAndAssert(
+            evaluateAndAssert(
                 PowerImplementation[Power["x", 2]],
                 Power["x", 2]
             );
@@ -41,7 +41,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
 
         [Fact]
         public void ConstantsPower() {
-            _evaluateAndAssert(
+            evaluateAndAssert(
                 PowerImplementation[Power[2, 8]],
                 256
             );

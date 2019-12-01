@@ -15,7 +15,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.ListFunctions 
             var list = expression.Arguments[0].Visit(AsExpressionVisitor.Instance);
 
             if (list == null || !Equals(list.Head, List)) {
-                throw new ArgumentException($"Invalid usage of {_name}: Argument is not a list: {expression.Arguments[0]}");
+                throw new ArgumentException($"Invalid usage of {Name}: Argument is not a list: {expression.Arguments[0]}");
             }
 
             return EvaluateList(expression, list.Arguments);

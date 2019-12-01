@@ -10,17 +10,17 @@ using static ITMO.SymbolicComputations.Polynomial.SumConstantsFunction;
 namespace ITMO.SymbolicComputations.Polynomial.Tests {
     public class ConstantsSumTests {
         public ConstantsSumTests(ITestOutputHelper output) {
-            _evaluateAndAssert = Test.CreateAsserter(output);
+            evaluateAndAssert = Test.CreateAsserter(output);
         }
 
-        private readonly Action<Expression, Symbol> _evaluateAndAssert;
+        private readonly Action<Expression, Symbol> evaluateAndAssert;
 
         [Fact]
         public void ConstantsSummed() {
             Symbol x = "x";
             Symbol y = "y";
             
-            _evaluateAndAssert(
+            evaluateAndAssert(
                 SumConstants[
                     Plus[3, x, y, 10, -1]
                 ],
@@ -33,7 +33,7 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
             Symbol x = "x";
             Symbol y = "y";
             
-            _evaluateAndAssert(
+            evaluateAndAssert(
                 SumConstants[
                     Times[3, x, y, 10, -1]
                 ],
@@ -46,7 +46,7 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
             Symbol x = "x";
             Symbol y = "y";
             
-            _evaluateAndAssert(
+            evaluateAndAssert(
                 SumConstants[
                     Plus[3, x, y, 10, -13]
                 ],

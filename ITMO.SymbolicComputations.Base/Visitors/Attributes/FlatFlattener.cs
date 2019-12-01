@@ -6,15 +6,15 @@ using ITMO.SymbolicComputations.Base.Models;
 namespace ITMO.SymbolicComputations.Base.Visitors.Attributes {
 
     public class ForExpressionApplicator : ISymbolVisitor<Symbol> {
-        private Func<Expression, Symbol> _action;
+        private Func<Expression, Symbol> action;
         private Func<Symbol, Symbol> _default;
 
         public ForExpressionApplicator(Func<Expression, Symbol> action, Func<Symbol, Symbol> @default = null) {
-            _action = action;
+            this.action = action;
             _default = @default ?? (s => s);
         }
 
-        public Symbol VisitExpression(Expression expression) => _action(expression);
+        public Symbol VisitExpression(Expression expression) => action(expression);
 
         public Symbol VisitSymbol(StringSymbol symbol) => _default(symbol);
 

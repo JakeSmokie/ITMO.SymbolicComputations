@@ -9,14 +9,14 @@ using static ITMO.SymbolicComputations.Base.StandardLibrary.ArithmeticFunctions;
 namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
     public sealed class OneIdentityTests {
         public OneIdentityTests(ITestOutputHelper output) =>
-            _evaluateAndAssert = Test.CreateAsserter(output);
+            evaluateAndAssert = Test.CreateAsserter(output);
 
-        private readonly Action<Expression, Symbol> _evaluateAndAssert;
+        private readonly Action<Expression, Symbol> evaluateAndAssert;
 
         [Fact]
         public void OneIdentityWorks() {
             var one = new StringSymbol("OneIdentity", Attributes.OneIdentity);
-            _evaluateAndAssert(
+            evaluateAndAssert(
                 one[one[one["x"]]],
                 "x"
             );
@@ -24,7 +24,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
 
         [Fact]
         public void TimesOneIdentityWorks() {
-            _evaluateAndAssert(
+            evaluateAndAssert(
                 Times[Times[Times[3]], 4],
                 12
             );

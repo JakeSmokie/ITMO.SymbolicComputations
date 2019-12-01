@@ -13,10 +13,6 @@ namespace ITMO.SymbolicComputations.Base.Tools {
                 throw new ArgumentException("");
             }
 
-            if (root.ChildNodes.Count > 1) {
-                throw new ArgumentException("");
-            }
-
             return new ExpressionInfo(ParseExpression(root.FirstChild));
 
             Symbol ParseExpression(XmlNode xmlElement) =>
@@ -35,7 +31,7 @@ namespace ITMO.SymbolicComputations.Base.Tools {
 
             Symbol ParseFunction(XmlNode xmlElement) =>
                 new Expression(
-                    new StringSymbol(xmlElement.Attributes["Name"].Value),
+                    new StringSymbol(xmlElement.Name),
                     xmlElement.ChildNodes
                         .OfType<XmlNode>()
                         .Select(ParseExpression)

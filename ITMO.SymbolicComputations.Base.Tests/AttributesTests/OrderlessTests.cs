@@ -10,16 +10,16 @@ using Xunit.Abstractions;
 namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
     public sealed class OrderlessTests {
         public OrderlessTests(ITestOutputHelper output) {
-            _evaluateAndAssert = Test.CreateAsserter(output);
+            evaluateAndAssert = Test.CreateAsserter(output);
         }
 
-        private readonly Action<Expression, Symbol> _evaluateAndAssert;
+        private readonly Action<Expression, Symbol> evaluateAndAssert;
 
         private static readonly StringSymbol Orderless = new StringSymbol("Orderless", Attributes.Orderless);
 
         [Fact]
         public void ConstantOrderingWorks() {
-            _evaluateAndAssert(
+            evaluateAndAssert(
                 Orderless["y", 30, "x", 10, "z", 60],
                 Orderless["x", "y", "z", 10, 30, 60]
             );
@@ -27,7 +27,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
 
         [Fact]
         public void NestedOrderingWorks() {
-            _evaluateAndAssert(
+            evaluateAndAssert(
                 Orderless["y", Orderless[1, "x", Orderless["y"]], "x", "z"],
                 Orderless[Orderless[Orderless["y"], "x", 1], "x", "y", "z"]
             );
@@ -35,7 +35,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.AttributesTests {
 
         [Fact]
         public void StringSymbolsOrderingWorks() {
-            _evaluateAndAssert(
+            evaluateAndAssert(
                 Orderless["y", "x", "z"],
                 Orderless["x", "y", "z"]
             );

@@ -9,6 +9,7 @@ using ITMO.SymbolicComputations.Base.Visitors.Implementations.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
     public sealed class FullEvaluator : ISymbolVisitor<(ImmutableList<Symbol> Steps, Symbol Symbol)> {
+        private readonly ImmutableList<ISymbolVisitor<Symbol>> processors;
         public static readonly FullEvaluator Default = new FullEvaluator();
         
         private static readonly OneIdentityShrinker OneIdentityShrinker = new OneIdentityShrinker();
@@ -32,21 +33,23 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         private static readonly GenerateListImplementation GenerateList = new GenerateListImplementation();
         private static readonly DivideImplementation DivideImplementation = new DivideImplementation();
 
-        private readonly ArgumentsEvaluator _argumentsEvaluator;
-        private readonly FunctionEvaluator _functionEvaluator;
-        private readonly ImmutableList<Expression> _preprocessors;
+        private readonly ArgumentsEvaluator argumentsEvaluator;
+        private readonly FunctionEvaluator functionEvaluator;
+        private readonly FoldImplementation foldImplementation;
 
-        public FullEvaluator(ImmutableList<Expression> preprocessors = null) {
-            _preprocessors = preprocessors ?? ImmutableList<Expression>.Empty;
-            _argumentsEvaluator = new ArgumentsEvaluator(this);
-            _functionEvaluator = new FunctionEvaluator(this);
+        public FullEvaluator(ImmutableList<ISymbolVisitor<Symbol>> processors = null) {
+            this.processors = processors ?? ImmutableList<ISymbolVisitor<Symbol>>.Empty;
+
+            argumentsEvaluator = new ArgumentsEvaluator(this);
+            functionEvaluator = new FunctionEvaluator(this);
+            foldImplementation = new FoldImplementation(this);
         }
 
         public (ImmutableList<Symbol>, Symbol) VisitExpression(Expression expression) {
             var visitors = GetFlow();
             
-            var (argSteps, argSymbol) = expression.Visit(_argumentsEvaluator);
-            var (funcSteps, funcSymbol) = argSymbol.Visit(_functionEvaluator);
+            var (argSteps, argSymbol) = expression.Visit(argumentsEvaluator);
+            var (funcSteps, funcSymbol) = argSymbol.Visit(functionEvaluator);
 
             var steps = ImmutableList<Symbol>.Empty
                 .AddRange(argSteps)
@@ -70,7 +73,6 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
             (ImmutableList<Symbol>.Empty, constant);
 
         private ImmutableList<ISymbolVisitor<Symbol>> GetFlow() {
-            var foldImplementation = new FoldImplementation(this);
             var flow = new ISymbolVisitor<Symbol>[] {
                 FlatFlattener,
                 ArgumentsSorter,
@@ -93,7 +95,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
                 GenerateList,
                 HoldFormImplementation
                 // Last
-            }.ToImmutableList();
+            }.ToImmutableList().AddRange(processors);
             
             return flow;
         }

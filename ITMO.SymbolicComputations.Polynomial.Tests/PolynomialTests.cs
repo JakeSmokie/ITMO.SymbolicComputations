@@ -14,10 +14,10 @@ using static ITMO.SymbolicComputations.Polynomial.TimesConstantsFunction;
 namespace ITMO.SymbolicComputations.Polynomial.Tests {
     public class PolynomialTests {
         public PolynomialTests(ITestOutputHelper output) {
-            _evaluateAndAssert = Test.CreateAsserter(output, new FullEvaluator());
+            evaluateAndAssert = Test.CreateAsserter(output, new FullEvaluator());
         }
 
-        private readonly Action<Expression, Symbol> _evaluateAndAssert;
+        private readonly Action<Expression, Symbol> evaluateAndAssert;
 
         [Fact]
         public void AllOkay() {
@@ -25,7 +25,7 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
             Symbol y = "y";
             Symbol z = "z";
 
-            _evaluateAndAssert(
+            evaluateAndAssert(
                 SumConstants[SumSymbols[
                     Plus[
                         TimesSymbols[TimesConstants[Times[x, y, x, 3, 6]]],

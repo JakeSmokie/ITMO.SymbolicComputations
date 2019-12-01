@@ -6,10 +6,10 @@ using static ITMO.SymbolicComputations.Base.StandardLibrary.Functions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
     public sealed class FunctionEvaluator : ISymbolVisitor<(ImmutableList<Symbol>, Symbol)> {
-        private readonly FullEvaluator _fullEvaluator;
+        private readonly FullEvaluator fullEvaluator;
 
         public FunctionEvaluator(FullEvaluator fullEvaluator) {
-            _fullEvaluator = fullEvaluator;
+            this.fullEvaluator = fullEvaluator;
         }
 
         public (ImmutableList<Symbol>, Symbol) VisitExpression(Expression expression) {
@@ -44,7 +44,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
 
             var substituted = functionBody.Visit(new VariableReplacer(variable, functionArgument));
 
-            return substituted.Visit(_fullEvaluator);
+            return substituted.Visit(fullEvaluator);
         }
 
         public (ImmutableList<Symbol>, Symbol) VisitSymbol(StringSymbol symbol) =>

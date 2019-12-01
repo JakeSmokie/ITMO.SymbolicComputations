@@ -19,15 +19,16 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
             Attributes.Orderless
         );
 
-        public static readonly StringSymbol Power = new StringSymbol(nameof(Power));
         public static readonly StringSymbol Divide = new StringSymbol(nameof(Divide));
 
         public static readonly StringSymbol Sin = new StringSymbol(nameof(Sin));
 
-        public static readonly Expression Minus =
+        public static readonly StringSymbol Minus = new StringSymbol(nameof(Minus));
+        public static readonly Expression MinusImplementation =
             Fun[x, Times[x, -1]];
 
-        public static readonly Expression ListPlus =
+        public static readonly StringSymbol ListPlus = new StringSymbol(nameof(ListPlus));
+        public static readonly Expression ListPlusImplementation =
             Fun[list,
                 Fold[list, 0, Fun[acc, Fun[x, Plus[acc, x]]]]
             ];
@@ -37,6 +38,7 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
                 Fold[list, 1, Fun[acc, Fun[x, Times[acc, x]]]]
             ];
 
+        public static readonly StringSymbol Power = new StringSymbol(nameof(Power));
         public static Expression PowerImplementation {
             get {
                 Symbol constants = "constants";

@@ -20,14 +20,14 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         private static readonly HasAttributeChecker HoldFirstChecker =
             new HasAttributeChecker(StandardLibrary.Attributes.HoldFirst);
 
-        private readonly FullEvaluator _fullEvaluator;
+        private readonly FullEvaluator fullEvaluator;
 
         public ArgumentsEvaluator(FullEvaluator fullEvaluator) {
-            _fullEvaluator = fullEvaluator;
+            this.fullEvaluator = fullEvaluator;
         }
 
         public (ImmutableList<Symbol>, Symbol) VisitExpression(Expression expression) {
-            var (headSteps, head) = expression.Head.Visit(_fullEvaluator);
+            var (headSteps, head) = expression.Head.Visit(fullEvaluator);
             var args = EvaluateArguments(head, expression.Arguments);
 
             var argSteps = args.SelectMany(a => a.Steps).ToImmutableList();
@@ -59,18 +59,18 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
 
             if (head.Visit(HoldRestChecker)) {
                 return ImmutableList<(ImmutableList<Symbol>, Symbol)>.Empty
-                    .Add(arguments.First().Visit(_fullEvaluator))
+                    .Add(arguments.First().Visit(fullEvaluator))
                     .AddRange(EvaluateEagerly(arguments.Skip(1)));
             }
 
             if (head.Visit(HoldFirstChecker)) {
                 return ImmutableList<(ImmutableList<Symbol>, Symbol)>.Empty
                     .AddRange(EvaluateEagerly(arguments.Take(1)))
-                    .AddRange(arguments.Skip(1).Select(a => a.Visit(_fullEvaluator)));
+                    .AddRange(arguments.Skip(1).Select(a => a.Visit(fullEvaluator)));
             }
 
             return arguments
-                .Select(a => a.Visit(_fullEvaluator))
+                .Select(a => a.Visit(fullEvaluator))
                 .ToImmutableList();
         }
 
@@ -79,7 +79,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
                 var e = s.Visit(AsExpressionVisitor.Instance);
                 
                 return e != null && Equals(e.Head, Functions.Evaluate)
-                    ? e.Arguments.Select(a => a.Visit(_fullEvaluator))
+                    ? e.Arguments.Select(a => a.Visit(fullEvaluator))
                     : new[] {(ImmutableList<Symbol>.Empty, s)};
             });
     }

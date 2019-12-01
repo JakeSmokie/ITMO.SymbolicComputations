@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using ITMO.SymbolicComputations.Base;
 using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using Xunit;
@@ -12,7 +14,7 @@ namespace Tests.Base.Tools {
             ITestOutputHelper output,
             FullEvaluator fullEvaluator = null
         ) {
-            var (steps, actual) = expression.Visit(fullEvaluator ?? FullEvaluator.Default);
+            var (steps, actual) = new SymbolicContext().Run(expression);
 
             steps.Print(output);
             output.WriteLine("");

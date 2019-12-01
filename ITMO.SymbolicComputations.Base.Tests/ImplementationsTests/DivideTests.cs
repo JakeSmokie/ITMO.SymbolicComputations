@@ -8,15 +8,15 @@ using static ITMO.SymbolicComputations.Base.StandardLibrary.ArithmeticFunctions;
 namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
     public class DivideTests {
         public DivideTests(ITestOutputHelper output) {
-            _evaluateAndAssert = Test.CreateAsserter(output);
+            evaluateAndAssert = Test.CreateAsserter(output);
         }
 
-        private readonly Action<Expression, Symbol> _evaluateAndAssert;
+        private readonly Action<Expression, Symbol> evaluateAndAssert;
 
 
         [Fact]
         public void DivideWorks() {
-            _evaluateAndAssert(
+            evaluateAndAssert(
                 Divide[1, 4],
                 0.25m
             );

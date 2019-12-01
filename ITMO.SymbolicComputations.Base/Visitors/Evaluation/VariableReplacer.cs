@@ -4,29 +4,30 @@ using static ITMO.SymbolicComputations.Base.StandardLibrary.Functions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
     public sealed class VariableReplacer : ISymbolVisitor<Symbol> {
-        private readonly Symbol _funcArgument;
-        private readonly StringSymbol _variable;
+        private readonly Symbol funcArgument;
+        private readonly Symbol variable;
 
-        public VariableReplacer(StringSymbol variable, Symbol funcArgument) {
-            _variable = variable;
-            _funcArgument = funcArgument;
+        public VariableReplacer(Symbol variable, Symbol funcArgument) {
+            this.variable = variable;
+            this.funcArgument = funcArgument;
         }
 
         public Symbol VisitExpression(Expression expression) {
             var head = expression.Head.Visit(this);
             var arguments = expression.Arguments.Select(x => x.Visit(this));
 
-            if (Equals(head, Fun) && Equals(expression.Arguments[0], _variable)) {
+            if (Equals(head, Fun) && Equals(expression.Arguments[0], variable)) {
                 return expression;
             }
-            
-            head = Equals(head, _variable)
-                ? _funcArgument
+
+            head = Equals(head, variable)
+                ? funcArgument
                 : head;
 
-            var newArguments = arguments.Select(x =>
-                Equals(x, _variable)
-                    ? _funcArgument
+            var newArguments = arguments.Select((x, i) =>
+                (!Equals(head, Set) || i != 0)
+                && Equals(x, variable)
+                    ? funcArgument
                     : x
             ).ToArray();
 

@@ -2,11 +2,11 @@ using ITMO.SymbolicComputations.Base.Models;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Implementations {
     public abstract class AbstractFunctionImplementation : ISymbolVisitor<Symbol> {
-        protected readonly StringSymbol _name;
-        protected AbstractFunctionImplementation(StringSymbol name) => _name = name;
+        protected readonly StringSymbol Name;
+        protected AbstractFunctionImplementation(StringSymbol name) => Name = name;
 
         public Symbol VisitExpression(Expression expression) {
-            if (!Equals(expression.Head, _name)) {
+            if (!Equals(expression.Head, Name)) {
                 return expression;
             }
 

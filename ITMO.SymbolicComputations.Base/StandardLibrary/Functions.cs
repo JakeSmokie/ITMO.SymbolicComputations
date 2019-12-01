@@ -20,6 +20,9 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
             Attributes.HoldAll
         );
         
+        public static readonly StringSymbol Seq = new StringSymbol(nameof(Seq), Attributes.Flat);
+        public static readonly StringSymbol Set = new StringSymbol(nameof(Set));
+
         public static readonly StringSymbol ApplyList = new StringSymbol(nameof(ApplyList));
     }
 }

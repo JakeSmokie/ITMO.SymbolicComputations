@@ -11,10 +11,10 @@ using static ITMO.SymbolicComputations.Polynomial.SymbolsTimesToPower;
 namespace ITMO.SymbolicComputations.Polynomial.Tests {
     public class SymbolsMultiplied {
         public SymbolsMultiplied(ITestOutputHelper output) {
-            _evaluateAndAssert = Test.CreateAsserter(output);
+            evaluateAndAssert = Test.CreateAsserter(output);
         }
 
-        private readonly Action<Expression, Symbol> _evaluateAndAssert;
+        private readonly Action<Expression, Symbol> evaluateAndAssert;
 
         [Fact]
         public void SymbolsSummed() {
@@ -22,7 +22,7 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
             Symbol y = "y";
             Symbol z = "z";
 
-            _evaluateAndAssert(
+            evaluateAndAssert(
                 TimesSymbols[
                     Times[3, x, y, 10, x, y, y, x, -1, z, y]
                 ],
