@@ -23,7 +23,8 @@ namespace ITMO.SymbolicComputations.Base.Tools {
                 xmlElement.Name switch {
                     "Const" => ParseConstant(xmlElement),
                     "Symbol" => ParseSymbol(xmlElement),
-                    _ => ParseFunction(xmlElement)
+                    "ApplySymbol" => ParseFunction(xmlElement),
+                    _ => throw new NotImplementedException()
                 };
 
             Symbol ParseConstant(XmlNode xmlElement) =>
@@ -34,7 +35,7 @@ namespace ITMO.SymbolicComputations.Base.Tools {
 
             Symbol ParseFunction(XmlNode xmlElement) =>
                 new Expression(
-                    new StringSymbol(xmlElement.Name),
+                    new StringSymbol(xmlElement.Attributes["Name"].Value),
                     xmlElement.ChildNodes
                         .OfType<XmlNode>()
                         .Select(ParseExpression)
