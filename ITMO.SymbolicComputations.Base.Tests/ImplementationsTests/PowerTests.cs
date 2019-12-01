@@ -12,12 +12,12 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
         }
 
         private readonly Action<Expression, Symbol> evaluateAndAssert;
-        
+
         [Fact]
         public void PowerWorks() {
             evaluateAndAssert(
-                Power["x"][2],
-                Power["x"][2]
+                Power["x", 2],
+                Power["x", 2]
             );
         }
     }

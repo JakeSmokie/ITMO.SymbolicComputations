@@ -8,7 +8,8 @@ using static ITMO.SymbolicComputations.Base.StandardLibrary.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Polynomial {
     public static class TimesConstantsFunction {
-        public static readonly Expression TimesConstants =
+        public static readonly StringSymbol TimesConstants = new StringSymbol(nameof(TimesConstants));
+        public static Expression TimesConstantsImplementation =>
             Fun[expr,
                 If[Not[IsExpressionWithName[Times][expr]],
                     expr,
@@ -19,21 +20,25 @@ namespace ITMO.SymbolicComputations.Polynomial {
                                 Eq[Length["constants"], 0],
                                 //
                                 list,
-                                ApplyList[
-                                    Times,
-                                    If[
-                                        Eq[ListTimes["constants"], 0],
-                                        List[0],
+                                Seq[
+                                    Eq[ListTimes["constants"], 1],
+                                    ApplyList[
+                                        Times,
                                         If[
-                                            Eq[ListTimes["constants"], 1],
-                                            "others",
-                                            Append[
+                                            Eq[ApplyList[Times, "constants"], 0],
+                                            0,
+                                            If[
+                                                Eq[ListTimes["constants"], 1],
                                                 "others",
-                                                ListTimes["constants"]
-                                            ]   
+                                                Append[
+                                                    "others",
+                                                    ListTimes["constants"]
+                                                ]   
+                                            ]
                                         ]
                                     ]
-                                ]]
+                                ]
+                            ]
                         ]][
                             Filter["timesArgs'"][Fun[x, IsConstant[x]]]
                         ][

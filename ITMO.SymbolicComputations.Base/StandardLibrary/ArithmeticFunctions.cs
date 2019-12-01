@@ -20,51 +20,50 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
         );
 
         public static readonly StringSymbol Divide = new StringSymbol(nameof(Divide));
-
         public static readonly StringSymbol Sin = new StringSymbol(nameof(Sin));
 
         public static readonly StringSymbol Minus = new StringSymbol(nameof(Minus));
+        public static readonly StringSymbol ListPlus = new StringSymbol(nameof(ListPlus));
+        public static readonly StringSymbol ListTimes = new StringSymbol(nameof(ListTimes));
+        public static readonly StringSymbol Power = new StringSymbol(nameof(Power));
+        public static readonly StringSymbol TaylorSin = new StringSymbol(nameof(TaylorSin));
+        public static readonly StringSymbol Factorial = new StringSymbol(nameof(Factorial));
 
-        public static readonly Expression MinusImplementation =
+        public static Expression MinusImplementation =>
             Fun[x, Times[x, -1]];
 
-        public static readonly StringSymbol ListPlus = new StringSymbol(nameof(ListPlus));
-        public static readonly Expression ListPlusImplementation =
+        public static Expression ListPlusImplementation =>
             Fun[list,
                 Fold[list, 0, Fun[acc, Fun[x, Plus[acc, x]]]]
             ];
 
-        public static readonly Expression ListTimes =
+        public static Expression ListTimesImplementation =>
             Fun[list,
                 Fold[list, 1, Fun[acc, Fun[x, Times[acc, x]]]]
             ];
 
-        public static readonly StringSymbol Power = new StringSymbol(nameof(Power));
-
-        public static Expression PowerImplementation =>
-            Fun[x, Fun[y, If[
-                IsConstant[x],
+        public static Expression FactorialImplementation =>
+            Fun["fac",
                 ApplyList[
                     Times,
-                    Map[GenerateList[y]][Fun["_", x]]
-                ],
-                Power[x][y]
-            ]]];
-
-        public static Expression Factorial =>
-            Fun[n,
-                ApplyList[
-                    Times,
-                    Map[GenerateList[n]][Fun[x, Plus[x, 1]]]
+                    Map[GenerateList["fac"]][Fun[x, Plus[x, 1]]]
                 ]
             ];
 
-        public static readonly StringSymbol TaylorSin = new StringSymbol(nameof(TaylorSin)); 
         public static Expression TaylorSinImplementation =>
-            Fun[x,
-                Map[GenerateList[5]][Fun[n,
-                    n
-                ]]
-            ];
+            Fun[x, Seq[
+                ApplyList[
+                    Plus,
+                    Map[GenerateList[10]][Fun[n,
+                        Times[
+                            Power[-1, n],
+                            Divide[
+                                Power[x, Plus[Times[2, n], 1]],
+                                Factorial[Plus[Times[2, n], 1]]
+                            ]
+                        ]
+                    ]]
+                ]
+            ]];
     }
 }

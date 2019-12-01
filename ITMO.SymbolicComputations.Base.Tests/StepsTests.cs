@@ -15,7 +15,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
 
         private readonly ITestOutputHelper _out;
         private static readonly StringSymbol Orderless = new StringSymbol("Orderless", Attributes.Orderless);
-        
+
         [Fact]
         public void MoreComplexFlatWorks() {
             Symbol a = "a";

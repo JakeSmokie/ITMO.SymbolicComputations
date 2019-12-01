@@ -4,6 +4,7 @@ using Tests.Base.Tools;
 using Xunit;
 using Xunit.Abstractions;
 using static ITMO.SymbolicComputations.Base.StandardLibrary.ArithmeticFunctions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.Functions;
 using static ITMO.SymbolicComputations.Base.StandardLibrary.ListFunctions;
 using static ITMO.SymbolicComputations.Polynomial.SumSymbolsFunction;
 using static ITMO.SymbolicComputations.Polynomial.SymbolsTimesToPower;
@@ -11,7 +12,9 @@ using static ITMO.SymbolicComputations.Polynomial.SymbolsTimesToPower;
 namespace ITMO.SymbolicComputations.Polynomial.Tests {
     public class SymbolsMultiplied {
         public SymbolsMultiplied(ITestOutputHelper output) {
-            evaluateAndAssert = Test.CreateAsserter(output);
+            evaluateAndAssert = Test.CreateAsserter(output, Seq[
+                Set[TimesSymbols, TimesSymbolsImplementation]
+            ]);
         }
 
         private readonly Action<Expression, Symbol> evaluateAndAssert;
@@ -26,7 +29,7 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
                 TimesSymbols[
                     Times[3, x, y, 10, x, y, y, x, -1, z, y]
                 ],
-                Times[Power[x][3], Power[y][4], z, -1, 3, 10]
+                Times[Power[x, 3], Power[y, 4], z, -1, 3, 10]
             );
         }
     }

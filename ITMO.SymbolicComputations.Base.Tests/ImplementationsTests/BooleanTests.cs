@@ -18,6 +18,14 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
         private readonly Action<Expression, Symbol> evaluateAndAssert;
 
         [Fact]
+        public void AndWorks() {
+            evaluateAndAssert(And[True][True], True);
+            evaluateAndAssert(And[True][False], False);
+            evaluateAndAssert(And[False][True], False);
+            evaluateAndAssert(And[False][False], False);
+        }
+
+        [Fact]
         public void CompareWorks() {
             evaluateAndAssert(Compare[1, 1], 0);
             evaluateAndAssert(Compare[1, 2], -1);
@@ -44,15 +52,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
 
         [Fact]
         public void NotWorks() {
-            evaluateAndAssert(Not[Eq[1, 1]], False);
-        }
-
-        [Fact]
-        public void AndWorks() {
-            evaluateAndAssert(And[True][True], True);
-            evaluateAndAssert(And[True][False], False);
-            evaluateAndAssert(And[False][True], False);
-            evaluateAndAssert(And[False][False], False);
+            evaluateAndAssert(Not[Not[Not[Eq[1, 1]]]], False);
         }
 
         [Fact]

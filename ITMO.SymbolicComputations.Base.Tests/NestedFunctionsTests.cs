@@ -11,7 +11,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
     public class NestedFunctionsTests {
         public NestedFunctionsTests(ITestOutputHelper output) =>
             _out = output;
-        
+
         private readonly ITestOutputHelper _out;
 
         [Fact]

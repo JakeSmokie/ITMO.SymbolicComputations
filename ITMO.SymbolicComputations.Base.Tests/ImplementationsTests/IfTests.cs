@@ -14,10 +14,10 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
         private readonly ITestOutputHelper _out;
 
         [Fact]
-        public void TrueIsTrue() {
+        public void BottomIsBottom() {
             Test.EvaluateAndAssert(
-                If[True, 2, 3],
-                2,
+                If[If, 2, 3, 4],
+                4,
                 _out
             );
         }
@@ -27,15 +27,6 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
             Test.EvaluateAndAssert(
                 If[False, 2, 3],
                 3,
-                _out
-            );
-        }
-
-        [Fact]
-        public void BottomIsBottom() {
-            Test.EvaluateAndAssert(
-                If[If, 2, 3, 4],
-                4,
                 _out
             );
         }
@@ -54,6 +45,15 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
             Test.EvaluateAndAssert(
                 If[False, 3, Evaluate[If[True, 1]]],
                 1,
+                _out
+            );
+        }
+
+        [Fact]
+        public void TrueIsTrue() {
+            Test.EvaluateAndAssert(
+                If[True, 2, 3],
+                2,
                 _out
             );
         }

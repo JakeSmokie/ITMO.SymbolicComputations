@@ -6,8 +6,10 @@ using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using Tests.Base.Tools;
 using Xunit;
 using Xunit.Abstractions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.Alphabet;
 using static ITMO.SymbolicComputations.Base.StandardLibrary.ArithmeticFunctions;
 using static ITMO.SymbolicComputations.Base.StandardLibrary.Functions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Tests {
     public sealed class CustomFunctionsTests {
@@ -32,13 +34,15 @@ namespace ITMO.SymbolicComputations.Base.Tests {
 
         [Fact]
         public void TaylorSinFunction() {
-            evaluateAndAssert(TaylorSin[2], 2);
+            evaluateAndAssert(Seq[
+                TaylorSin[2]
+            ], 2);
         }
 
         [Fact]
         public void TwoPowerX() {
             Symbol x = "x";
-            evaluateAndAssert(Fun[x, Power[2][x]][7], 128);
+            evaluateAndAssert(Fun[x, Power[2, x]][7], 128);
         }
 
 
@@ -81,7 +85,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
         [Fact]
         public void XPower2() {
             Symbol x = "x";
-            evaluateAndAssert(Fun[x, Power[x][2]][7], 49);
+            evaluateAndAssert(Fun[x, Power[x, 2]][7], 49);
         }
 
         [Fact]
@@ -103,7 +107,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
 
             var f = Fun;
 
-            var func = f[x, f[y, f[z, Power[z][Plus[x, y]]]]];
+            var func = f[x, f[y, f[z, Power[z, Plus[x, y]]]]];
             evaluateAndAssert(func[2][3][2], 32);
         }
     }

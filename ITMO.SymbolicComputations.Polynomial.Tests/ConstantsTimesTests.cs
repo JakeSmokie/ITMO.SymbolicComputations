@@ -4,13 +4,16 @@ using Tests.Base.Tools;
 using Xunit;
 using static ITMO.SymbolicComputations.Base.StandardLibrary.ArithmeticFunctions;
 using Xunit.Abstractions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.Functions;
 using static ITMO.SymbolicComputations.Base.StandardLibrary.ListFunctions;
 using static ITMO.SymbolicComputations.Polynomial.TimesConstantsFunction;
 
 namespace ITMO.SymbolicComputations.Polynomial.Tests {
     public class ConstantsTimesTests {
         public ConstantsTimesTests(ITestOutputHelper output) {
-            evaluateAndAssert = Test.CreateAsserter(output);
+            evaluateAndAssert = Test.CreateAsserter(output, Seq[
+                Set[TimesConstants, TimesConstantsImplementation]
+            ]);
         }
 
         private readonly Action<Expression, Symbol> evaluateAndAssert;
@@ -19,7 +22,7 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
         public void ConstantsMultipliedGeneral() {
             Symbol x = "x";
             Symbol y = "y";
-            
+
             evaluateAndAssert(
                 TimesConstants[
                     Times[3, x, y, 10, -1]
@@ -32,7 +35,7 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
         public void ConstantsMultipliedWithZero() {
             Symbol x = "x";
             Symbol y = "y";
-            
+
             evaluateAndAssert(
                 TimesConstants[
                     Times[3, x, y, 0, -1]
@@ -40,25 +43,12 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
                 0
             );
         }
-        
-        [Fact]
-        public void ConstantsMultipliedWithOne() {
-            Symbol x = "x";
-            Symbol y = "y";
-            
-            evaluateAndAssert(
-                TimesConstants[
-                    Times[1, x, y, 0.2m, 5]
-                ],
-                Times[x, y]
-            );
-        }
-        
+
         [Fact]
         public void NotPlusIsOkay() {
             Symbol x = "x";
             Symbol y = "y";
-            
+
             evaluateAndAssert(
                 TimesConstants[
                     Plus[3, x, y, 10, -1]

@@ -15,11 +15,12 @@ namespace Tests.Base.Tools {
             Symbol expectedResult,
             ITestOutputHelper output,
             Expression context = null,
-            ImmutableList<Symbol> topLevelProcessors = null
+            ImmutableList<Symbol> topLevelProcessors = null,
+            int? maxIterations = null
         ) {
             Logger.Log = output.WriteLine;
 
-            var (steps, actual) = new SymbolicContext(context, topLevelProcessors).Run(expression);
+            var (steps, actual) = new SymbolicContext(context, topLevelProcessors, maxIterations).Run(expression);
 
             steps.Print(output);
             output.WriteLine("");
@@ -34,7 +35,8 @@ namespace Tests.Base.Tools {
         public static Action<Expression, Symbol> CreateAsserter(
             ITestOutputHelper output,
             Expression context = null,
-            ImmutableList<Symbol> topLevelProcessors = null
-        ) => (expression, expected) => EvaluateAndAssert(expression, expected, output, context, topLevelProcessors);
+            ImmutableList<Symbol> topLevelProcessors = null,
+            int? maxIterations = null
+        ) => (expression, expected) => EvaluateAndAssert(expression, expected, output, context, topLevelProcessors, maxIterations);
     }
 }

@@ -15,11 +15,11 @@ namespace ITMO.SymbolicComputations.Base.Tests.MathTests {
 
         [Fact]
         public void PowerWorks() {
-            evaluateAndAssert(Power[2][1], 2);
-            evaluateAndAssert(Power[2][0], 1);
-            evaluateAndAssert(Power[2][2], 4);
+            evaluateAndAssert(Power[2, 1], 2);
+            evaluateAndAssert(Power[2, 0], 1);
+            evaluateAndAssert(Power[2, 2], 4);
         }
-        
+
 //        [Fact]
 //        public void XPowerOneEqualsX() {
 //            var source = Power[Plus["x", "y"], 1];

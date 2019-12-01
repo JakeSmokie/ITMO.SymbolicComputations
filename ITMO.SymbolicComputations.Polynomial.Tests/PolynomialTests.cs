@@ -17,7 +17,8 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
         public PolynomialTests(ITestOutputHelper output) {
             evaluateAndAssert = Test.CreateAsserter(output, Seq[
                 Set[SumSymbols, SumSymbolsImplementation],
-                Set[SumConstants, SumConstantsImplementation]
+                Set[SumConstants, SumConstantsImplementation],
+                Set[TimesSymbols, TimesSymbolsImplementation]
             ]);
         }
 

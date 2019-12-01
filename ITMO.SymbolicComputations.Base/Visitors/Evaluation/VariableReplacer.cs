@@ -14,7 +14,8 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
 
         public Symbol VisitExpression(Expression expression) {
             var head = expression.Head.Visit(this);
-            var arguments = expression.Arguments.Select(x => x.Visit(this));
+            var arguments = expression.Arguments
+                .Select((x, i) => !Equals(head, Set) || i != 0 ? x.Visit(this) : x);
 
             if (Equals(head, Fun) && Equals(expression.Arguments[0], variable)) {
                 return expression;
@@ -34,7 +35,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
             return head[newArguments];
         }
 
-        public Symbol VisitSymbol(StringSymbol symbol) => symbol;
+        public Symbol VisitSymbol(StringSymbol symbol) => Equals(symbol, variable) ? funcArgument : symbol;
         public Symbol VisitConstant(Constant constant) => constant;
     }
 }

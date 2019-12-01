@@ -16,7 +16,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors {
             
             do {
                 prev = @new;
-                @new = variableAssigner.Variables.Aggregate(
+                return variableAssigner.Variables.Aggregate(
                     @new,
                     (acc, x) => acc.Visit(new VariableReplacer(x.Key, x.Value))
                 );

@@ -6,8 +6,8 @@ using ITMO.SymbolicComputations.Base.Models;
 namespace ITMO.SymbolicComputations.Base.Visitors.Attributes {
 
     public class ForExpressionApplicator : ISymbolVisitor<Symbol> {
-        private Func<Expression, Symbol> action;
         private Func<Symbol, Symbol> _default;
+        private Func<Expression, Symbol> action;
 
         public ForExpressionApplicator(Func<Expression, Symbol> action, Func<Symbol, Symbol> @default = null) {
             this.action = action;

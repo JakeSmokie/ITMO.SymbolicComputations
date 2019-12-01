@@ -23,7 +23,7 @@ namespace ITMO.SymbolicComputations.Polynomial {
             ];
 
         public static readonly StringSymbol SumSymbols = new StringSymbol(nameof(SumSymbols));
-        
+
         public static readonly Expression SumSymbolsImplementation =
             Fun[expr,
                 If[Not[IsExpressionWithName[Plus][expr]],

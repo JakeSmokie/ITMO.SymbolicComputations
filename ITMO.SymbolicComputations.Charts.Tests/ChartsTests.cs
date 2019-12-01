@@ -15,7 +15,7 @@ namespace ITMO.SymbolicComputations.Charts.Tests {
             _out = output;
 
         private readonly ITestOutputHelper _out;
-        
+
 
         [Fact]
         public void SinFunctionIsOkay() {
@@ -32,7 +32,7 @@ namespace ITMO.SymbolicComputations.Charts.Tests {
             _out.WriteLine(actual + "\n\n");
             points.ForEach(x => _out.WriteLine($"{x.Item1}, {x.Item2}"));
         }
-        
+
         [Fact]
         public void TaylorSinIsOkay() {
             Symbol x = "x";

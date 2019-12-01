@@ -9,8 +9,6 @@ using ITMO.SymbolicComputations.Base.Visitors.Implementations.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
     public sealed class FullEvaluator : ISymbolVisitor<(ImmutableList<Symbol> Steps, Symbol Symbol)> {
-        private readonly ImmutableList<Expression> preProcessors;
-        private readonly ImmutableList<ISymbolVisitor<Symbol>> visitors;
         public static readonly FullEvaluator Default = new FullEvaluator();
 
         private static readonly OneIdentityShrinker OneIdentityShrinker = new OneIdentityShrinker();
@@ -25,6 +23,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         private static readonly AppendImplementation AppendImplementation = new AppendImplementation();
         private static readonly EqImplementation EqImplementation = new EqImplementation();
         private static readonly CompareImplementation CompareImplementation = new CompareImplementation();
+        private static readonly PowerImplementation PowerImplementation = new PowerImplementation();
 
         private static readonly AsConstantImplementation AsConstant = new AsConstantImplementation();
         private static readonly AsStringSymbolImplementation AsStringSymbol = new AsStringSymbolImplementation();
@@ -34,14 +33,14 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         private static readonly DivideImplementation DivideImplementation = new DivideImplementation();
 
         private readonly ArgumentsEvaluator argumentsEvaluator;
-        private readonly FunctionEvaluator functionEvaluator;
         private readonly FoldImplementation foldImplementation;
+        private readonly FunctionEvaluator functionEvaluator;
+        private readonly ImmutableList<ISymbolVisitor<Symbol>> visitors;
+        private ImmutableList<ISymbolVisitor<Symbol>> flow;
 
         public FullEvaluator(
-            ImmutableList<ISymbolVisitor<Symbol>> visitors = null,
-            ImmutableList<Expression> preProcessors = null
+            ImmutableList<ISymbolVisitor<Symbol>> visitors = null
         ) {
-            this.preProcessors = preProcessors ?? ImmutableList<Expression>.Empty;
             this.visitors = visitors ?? ImmutableList<ISymbolVisitor<Symbol>>.Empty;
 
             argumentsEvaluator = new ArgumentsEvaluator(this);
@@ -77,7 +76,11 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
             (ImmutableList<Symbol>.Empty, constant);
 
         private ImmutableList<ISymbolVisitor<Symbol>> GetFlow() {
-            var flow = visitors.AddRange(new ISymbolVisitor<Symbol>[] {
+            if (flow != null) {
+                return flow;
+            }
+            
+            flow = visitors.AddRange(new ISymbolVisitor<Symbol>[] {
                 FlatFlattener,
                 ArgumentsSorter,
                 OneIdentityShrinker,
@@ -96,6 +99,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
                 AsStringSymbol,
                 AsExpressionArgs,
                 ApplyListImplementation,
+                PowerImplementation,
                 GenerateList
                 // Last
             });

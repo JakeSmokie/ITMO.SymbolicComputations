@@ -11,22 +11,27 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
 
         public static readonly StringSymbol Null = new StringSymbol(nameof(Null));
 
-        public static readonly Expression IsConstant =
+        public static readonly StringSymbol IsConstant = new StringSymbol(nameof(IsConstant));
+        public static readonly StringSymbol IsStringSymbol = new StringSymbol(nameof(IsStringSymbol));
+        public static readonly StringSymbol IsExpressionWithName = new StringSymbol(nameof(IsExpressionWithName));
+        public static readonly StringSymbol DefaultValue = new StringSymbol(nameof(DefaultValue));
+
+        public static Expression IsConstantImplementation =>
             Fun[x,
                 Not[Eq[AsConstant[x], Null]]
             ];
 
-        public static readonly Expression IsStringSymbol =
+        public static Expression IsStringSymbolImplementation =>
             Fun[x,
                 Not[Eq[AsStringSymbol[x], Null]]
             ];
 
-        public static readonly Expression IsExpressionWithName =
+        public static Expression IsExpressionWithNameImplementation =>
             Fun["name'", Fun["expression'", 
                 Not[Eq[AsExpressionArgs["name'", "expression'"], Null]]
             ]];
-        
-        public static readonly Expression DefaultValue =
+
+        public static Expression DefaultValueImplementation =>
             Fun[x, Fun[y, 
                 If[Eq[x, Null], y, x]
             ]];

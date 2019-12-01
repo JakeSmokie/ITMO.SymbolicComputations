@@ -16,7 +16,6 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.ListFunctions 
             var f = expression.Arguments[2];
             return items.Aggregate(expression.Arguments[1],
                 (acc, x) => f[acc][x]
-                    .Visit(fullEvaluator).Symbol
             );
         }
     }

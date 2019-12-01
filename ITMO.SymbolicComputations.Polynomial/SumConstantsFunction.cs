@@ -10,7 +10,7 @@ namespace ITMO.SymbolicComputations.Polynomial {
     public static class SumConstantsFunction {
         public static readonly StringSymbol SumConstants = new StringSymbol(nameof(SumConstants));
 
-        public static readonly Expression SumConstantsImplementation =
+        public static Expression SumConstantsImplementation =>
             Fun[expr,
                 If[Not[IsExpressionWithName[Plus][expr]],
                     expr,

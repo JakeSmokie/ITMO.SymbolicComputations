@@ -8,21 +8,23 @@ using static ITMO.SymbolicComputations.Base.StandardLibrary.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Polynomial {
     public static class SymbolsTimesToPower {
-        private static readonly Expression GroupAndMultiply =
+        public static readonly StringSymbol TimesSymbols = new StringSymbol(nameof(TimesSymbols));
+
+        private static Expression GroupAndMultiply =>
             Fun[list,
                 Map[Group[list]][Fun[tuple,
                     If[
                         Eq[Part[tuple, 1], 1],
                         //
                         Part[tuple, 0],
-                        Power[Part[tuple, 0]][Part[tuple, 1]],
+                        Power[Part[tuple, 0], Part[tuple, 1]],
                         //
                         "Error"
                     ]
                 ]]
             ];
 
-        public static readonly Expression TimesSymbols =
+        public static Expression TimesSymbolsImplementation =>
             Fun[expr,
                 If[Not[IsExpressionWithName[Times][expr]],
                     expr,

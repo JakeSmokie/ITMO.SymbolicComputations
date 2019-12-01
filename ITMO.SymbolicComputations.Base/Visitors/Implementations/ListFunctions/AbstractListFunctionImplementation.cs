@@ -9,13 +9,14 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.ListFunctions 
         protected AbstractListFunctionImplementation(StringSymbol name) : base(name) {
         }
 
-        protected abstract Symbol EvaluateList(Expression expression, ImmutableList<Symbol> items); 
+        protected abstract Symbol EvaluateList(Expression expression, ImmutableList<Symbol> items);
 
         protected override Symbol Evaluate(Expression expression) {
             var list = expression.Arguments[0].Visit(AsExpressionVisitor.Instance);
 
             if (list == null || !Equals(list.Head, List)) {
-                throw new ArgumentException($"Invalid usage of {Name}: Argument is not a list: {expression.Arguments[0]}");
+//                throw new ArgumentException($"Invalid usage of {Name}: Argument is not a list: {expression.Arguments[0]}");
+                return expression;
             }
 
             return EvaluateList(expression, list.Arguments);

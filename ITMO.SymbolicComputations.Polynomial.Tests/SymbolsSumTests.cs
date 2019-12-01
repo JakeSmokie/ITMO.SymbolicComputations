@@ -19,6 +19,18 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
         private readonly Action<Expression, Symbol> evaluateAndAssert;
 
         [Fact]
+        public void EqualExpressionsSummed() {
+            Symbol x = "x";
+
+            evaluateAndAssert(
+                SumSymbols[
+                    Plus[Times[x, 3], Times[x, 3]]
+                ],
+                Times[x, 2, 3]
+            );
+        }
+
+        [Fact]
         public void SymbolsSummed() {
             Symbol x = "x";
             Symbol y = "y";
@@ -36,18 +48,6 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
                     Plus[3, 5, 6]
                 ],
                 14
-            );
-        }
-
-        [Fact]
-        public void EqualExpressionsSummed() {
-            Symbol x = "x";
-
-            evaluateAndAssert(
-                SumSymbols[
-                    Plus[Times[x, 3], Times[x, 3]]
-                ],
-                Times[x, 2, 3]
             );
         }
     }

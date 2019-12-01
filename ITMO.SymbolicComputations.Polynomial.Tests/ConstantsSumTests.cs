@@ -19,8 +19,8 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
 
         private static Expression Context => Seq[
             Set[SumConstants, SumConstantsImplementation]
-        ]; 
-        
+        ];
+
         [Fact]
         public void ConstantsSummed() {
             Symbol x = "x";
