@@ -41,7 +41,7 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
             get {
                 Symbol constants = "constants";
                 Symbol others = "others";
-                
+
                 return Fun[expr,
                     If[Not[IsExpressionWithName[Power][expr]],
                         expr,
@@ -75,6 +75,25 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
         public static Expression SubstitutePower =>
             Fun[f,
                 Fun[Power, f][PowerImplementation]
+            ];
+        
+        
+        public static Expression Factorial =>
+            Fun[n,
+                ApplyList[
+                    Times,
+                    Map[GenerateList[n]][Fun[x, Plus[x, 1]]]
+                ]
+            ];
+
+        public static Expression TaylorSin =>
+            Fun[x,
+                Map[GenerateList[4]][Fun[n,
+                    Divide[
+                        PowerImplementation[Power[x, Plus[Times[2, n], -1]]],
+                        Factorial[Plus[Times[2, n], -1]]
+                    ]
+                ]]
             ];
     }
 }

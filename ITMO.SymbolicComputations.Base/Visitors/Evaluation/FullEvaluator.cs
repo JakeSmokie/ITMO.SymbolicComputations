@@ -73,6 +73,8 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
             var foldImplementation = new FoldImplementation(this);
             var flow = new ISymbolVisitor<Symbol>[] {
                 FlatFlattener,
+                ArgumentsSorter,
+                OneIdentityShrinker,
                 // Implementations
                 PlusImplementation,
                 TimesImplementation,
@@ -89,10 +91,8 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
                 AsExpressionArgs,
                 ApplyListImplementation,
                 GenerateList,
-                // Last
-                ArgumentsSorter,
-                OneIdentityShrinker,
                 HoldFormImplementation
+                // Last
             }.ToImmutableList();
             
             return flow;

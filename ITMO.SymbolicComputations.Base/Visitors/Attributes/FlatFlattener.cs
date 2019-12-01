@@ -1,8 +1,26 @@
-﻿using System.Collections.Immutable;
+﻿using System;
+using System.Collections.Immutable;
 using System.Linq;
 using ITMO.SymbolicComputations.Base.Models;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Attributes {
+
+    public class ForExpressionApplicator : ISymbolVisitor<Symbol> {
+        private Func<Expression, Symbol> _action;
+        private Func<Symbol, Symbol> _default;
+
+        public ForExpressionApplicator(Func<Expression, Symbol> action, Func<Symbol, Symbol> @default = null) {
+            _action = action;
+            _default = @default ?? (s => s);
+        }
+
+        public Symbol VisitExpression(Expression expression) => _action(expression);
+
+        public Symbol VisitSymbol(StringSymbol symbol) => _default(symbol);
+
+        public Symbol VisitConstant(Constant constant) => _default(constant);
+    }
+    
     public sealed class FlatFlattener : ISymbolVisitor<Symbol> {
         private static readonly HasAttributeChecker FlatChecker =
             new HasAttributeChecker(StandardLibrary.Attributes.Flat);

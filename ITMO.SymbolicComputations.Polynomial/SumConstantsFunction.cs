@@ -16,33 +16,32 @@ namespace ITMO.SymbolicComputations.Polynomial {
                     Evaluate[
                         Fun["plusArgs'",
                             Fun["constants", Fun["others",
-                                    If[
-                                        Eq[Length["constants"], 0],
-                                        //
-                                        list,
-                                        Evaluate[
-                                            ApplyList[
-                                                Plus,
-                                                If[
-                                                    And[
-                                                        Eq[ListPlus["constants"], 0]
-                                                    ][
-                                                        Not[Eq[Length["others"], 0]]
-                                                    ],
-                                                    //
-                                                    "others",
-                                                    Evaluate[
-                                                        Append[
-                                                            "others",
-                                                            ListPlus["constants"]
-                                                        ]
+                                If[
+                                    Eq[Length["constants"], 0],
+                                    //
+                                    list,
+                                    Evaluate[
+                                        ApplyList[
+                                            Plus,
+                                            If[
+                                                And[
+                                                    Eq[ListPlus["constants"], 0]
+                                                ][
+                                                    Not[Eq[Length["others"], 0]]
+                                                ],
+                                                //
+                                                "others",
+                                                Evaluate[
+                                                    Append[
+                                                        "others",
+                                                        ListPlus["constants"]
                                                     ]
                                                 ]
                                             ]
                                         ]
                                     ]
                                 ]
-                            ][
+                            ]][
                                 Filter["plusArgs'"][Fun[x, IsConstant[x]]]
                             ][
                                 Filter["plusArgs'"][Fun[x, Not[IsConstant[x]]]]

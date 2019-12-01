@@ -9,7 +9,7 @@ namespace ITMO.SymbolicComputations.Base.Tools {
         public static ExpressionInfo AsExpressionInfo(this XmlDocument doc) {
             var root = doc.DocumentElement;
 
-            if (root.Name != nameof(ExpressionInfo)) {
+            if (root.Name != "Expression") {
                 throw new ArgumentException("");
             }
 

@@ -4,6 +4,7 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
     public static class Alphabet {
         public static readonly StringSymbol x = new StringSymbol("x'");
         public static readonly StringSymbol y = new StringSymbol("y'");
+        public static readonly StringSymbol n = new StringSymbol("n'");
 
         public static readonly StringSymbol pred = new StringSymbol("pred'");
         public static readonly StringSymbol body = new StringSymbol("body'");
