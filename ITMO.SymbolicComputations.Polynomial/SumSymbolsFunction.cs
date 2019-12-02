@@ -15,9 +15,7 @@ namespace ITMO.SymbolicComputations.Polynomial {
                         Eq[Part[tuple, 1], 1],
                         //
                         Part[tuple, 0],
-                        Times[Part[tuple, 1], Part[tuple, 0]],
-                        //
-                        "Error"
+                        Times[Part[tuple, 1], Part[tuple, 0]]
                     ]
                 ]]
             ];
@@ -31,19 +29,16 @@ namespace ITMO.SymbolicComputations.Polynomial {
                     Fun["plusArgs'",
                         Fun["symbols", Fun["others",
                             Seq[
-//                                    "symbols", "others",
-//                                    GroupAndSum["symbols"],
-//                                    If[
-//                                        Eq[Length["symbols"], 0],
-//                                        //
-//                                        expr,
-//                                        Evaluate[
-                                ApplyList[
-                                    Plus,
-                                    Concat[GroupAndSum["symbols"]]["others"]
+                                If[
+                                    Eq[Length["symbols"], 0],
+                                    expr,
+                                    Seq[
+                                        ApplyList[
+                                            Plus,
+                                            Concat[GroupAndSum["symbols"]]["others"]
+                                        ]
+                                    ]
                                 ]
-//                                        ]
-//                                    ]
                             ]
                         ]][
                             Filter["plusArgs'"][Fun[x, Not[IsConstant[x]]]]

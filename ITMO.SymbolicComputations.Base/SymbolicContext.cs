@@ -35,14 +35,12 @@ namespace ITMO.SymbolicComputations.Base {
             SetDelayed[DefaultValue, DefaultValueImplementation],
             //
             SetDelayed[Range, RangeImplementation],
-            SetDelayed[Group, GroupImplementation],
-            SetDelayed[Distinct, DistinctImplementation],
             SetDelayed[Contains, ContainsImplementation],
             SetDelayed[Concat, ConcatImplementation],
             SetDelayed[CountItem, CountItemImplementation],
-            SetDelayed[Length, LengthImplementation],
             SetDelayed[Filter, FilterImplementation],
             SetDelayed[Map, MapImplementation],
+            SetDelayed[Fold, FoldImplementation],
             //
             SetDelayed[Factorial, FactorialImplementation],
             SetDelayed[TaylorSin, TaylorSinImplementation],
@@ -82,15 +80,20 @@ namespace ITMO.SymbolicComputations.Base {
                     .Visit(globalVariablesReplacer)
                     .Visit(fullEvaluator);
 
-                if (Equals(newResult, symbol) && i > 5) {
+                if (Equals(newResult, symbol) && i > 0) {
                     return (steps, symbol);
                 }
                 
                 steps = steps.AddRange(newSteps).WithoutDuplicates();
                 symbol = newResult;
 
-                Logger.Log($"Iteration: {symbol}");
-                
+                try {
+                    Logger.Log($"Iteration: {symbol}");
+                }
+                catch {
+                    // ignored
+                }
+
                 if (i++ > maxIterations) {
                     return (steps, Seq["Max iterations count reached", symbol]);
                 }

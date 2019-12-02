@@ -10,49 +10,40 @@ namespace ITMO.SymbolicComputations.Polynomial {
     public static class SumConstantsFunction {
         public static readonly StringSymbol SumConstants = new StringSymbol(nameof(SumConstants));
 
-        public static Expression SumConstantsImplementation =>
+        public static Expression SumConstantsImplementation => Seq[
             Fun[expr,
                 If[Not[IsExpressionWithName[Plus][expr]],
                     expr,
                     //
-                    Fun["plusArgs'",
-                        Fun["constants", Fun["others",
-                            Seq[
-//                                "constants",
-//                                "others",
-                                If[
-                                    Eq[Length["constants"], 0],
-                                    //
-                                    list,
-                                    ApplyList[
-                                        Plus,
-                                        If[
-                                            Or[
-                                                And[
-                                                    Eq[ListPlus["constants"], 0]
-                                                ][
-                                                    Not[Eq[Length["others"], 0]]
+                    Evaluate[
+                        Fun["plusArgs'",
+                            Fun["constants", Fun["others",
+                                Part[List[
+                                    Set["sum", ListPlus["constants"]],
+                                    If[
+                                        Eq[Length["constants"], 0],
+                                        //
+                                        List[list],
+                                        Evaluate[
+                                            ApplyList[
+                                                Plus,
+                                                Append[
+                                                    "others",
+                                                    "sum"
                                                 ]
-                                            ][
-                                                Eq[Length["constants"], 0]
-                                            ],
-                                            //
-                                            "others",
-                                            Append[
-                                                "others",
-                                                ListPlus["constants"]
                                             ]
                                         ]
                                     ]
-                                ]
+                                ], 1]
+                            ]][
+                                Filter["plusArgs'"][Fun[x, IsConstant[x]]]
+                            ][
+                                Filter["plusArgs'"][Fun[x, Not[IsConstant[x]]]]
                             ]
-                        ]][
-                            Filter["plusArgs'"][Fun[x, IsConstant[x]]]
-                        ][
-                            Filter["plusArgs'"][Fun[x, Not[IsConstant[x]]]]
-                        ]
-                    ][DefaultValue[AsExpressionArgs[Plus, expr]][EmptyList]]
+                        ][DefaultValue[AsExpressionArgs[Plus, expr]][EmptyList]]
+                    ]
                 ]
-            ];
+            ]
+        ];
     }
 }

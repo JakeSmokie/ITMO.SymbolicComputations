@@ -12,7 +12,8 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations {
             var variable = expression.Arguments[0].Visit(AsConstantVisitor.Instance);
 
             if (variable == null) {
-                throw new ArgumentException("Syntax only constant as argument");
+//                throw new ArgumentException("Syntax only constant as argument");
+                return expression;
             }
 
             return (decimal) Math.Sin((double) variable.Value);

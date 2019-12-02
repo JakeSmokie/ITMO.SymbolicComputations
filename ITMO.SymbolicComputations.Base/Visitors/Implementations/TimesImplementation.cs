@@ -5,7 +5,7 @@ using static ITMO.SymbolicComputations.Base.StandardLibrary.ArithmeticFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Implementations {
     public class TimesImplementation : AbstractFunctionImplementation {
-        public TimesImplementation() : base(Times) {
+        public TimesImplementation() : base(Times, BinaryTimes) {
         }
 
         protected override Symbol Evaluate(Expression expression) {

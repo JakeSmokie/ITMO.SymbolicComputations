@@ -20,7 +20,7 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
         private readonly Action<Expression, Symbol> evaluateAndAssert;
 
         [Fact]
-        public void SymbolsSummed() {
+        public void SymbolsMultipliedInPower() {
             Symbol x = "x";
             Symbol y = "y";
             Symbol z = "z";

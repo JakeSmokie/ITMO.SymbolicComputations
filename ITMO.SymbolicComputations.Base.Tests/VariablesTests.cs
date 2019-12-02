@@ -28,7 +28,12 @@ namespace ITMO.SymbolicComputations.Base.Tests {
                 Plus[x, y]
             ];
 
-            evaluateAndAssert(expression, Seq[SetDelayed[x, 9], SetDelayed[y, 7], 9, 16]);
+            evaluateAndAssert(expression, Seq[
+                SetDelayed[x, Plus[y, 2]],
+                SetDelayed[y, 7], 
+                9, 
+                16
+            ]);
         }
 
         [Fact]

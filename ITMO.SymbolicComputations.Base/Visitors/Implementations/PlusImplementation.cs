@@ -6,7 +6,7 @@ using static ITMO.SymbolicComputations.Base.StandardLibrary.ArithmeticFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Implementations {
     public class PlusImplementation : AbstractFunctionImplementation {
-        public PlusImplementation() : base(Plus) {
+        public PlusImplementation() : base(Plus, BinaryPlus) {
         }
 
         protected override Symbol Evaluate(Expression expression) {

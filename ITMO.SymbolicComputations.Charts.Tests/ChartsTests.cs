@@ -20,16 +20,15 @@ namespace ITMO.SymbolicComputations.Charts.Tests {
         [Fact]
         public void SinFunctionIsOkay() {
             Symbol x = "x";
-
-            var xs = Range[0][7][100]; 
+            Symbol xs = "xs";
+            
             var func = Fun[x, List[x, Sin[x]]];
+            var expr = FastMap[xs][func];
             
-            var expr = Map[xs][func];
-            
-            var (steps, actual) = new SymbolicContext().Run(expr);
-            var points = actual.Visit(new ListOfListToDecimalTuples()).ToList();
-            
+            var (steps, actual) = new SymbolicContext(Set[xs, Range[0][7][100]]).Run(expr);
             _out.WriteLine(actual + "\n\n");
+
+            var points = actual.Visit(new ListOfListToDecimalTuples()).ToList();
             points.ForEach(x => _out.WriteLine($"{x.Item1}, {x.Item2}"));
         }
 

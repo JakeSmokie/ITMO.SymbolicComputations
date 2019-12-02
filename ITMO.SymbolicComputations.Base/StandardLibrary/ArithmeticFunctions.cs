@@ -13,6 +13,9 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
             Attributes.Orderless
         );
 
+        public static readonly StringSymbol BinaryPlus = new StringSymbol(nameof(BinaryPlus));
+        public static readonly StringSymbol BinaryTimes = new StringSymbol(nameof(BinaryTimes));
+
         public static readonly StringSymbol Times = new StringSymbol(nameof(Times),
             Attributes.Flat,
             Attributes.OneIdentity,
@@ -33,15 +36,15 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
             Fun[x, Times[x, -1]];
 
         public static Expression Abs => Fun[x, If[Less[x][0], Minus[x], x]];
-        
+
         public static Expression ListPlusImplementation =>
             Fun[list,
-                Fold[list, 0, Fun[acc, Fun[x, Plus[acc, x]]]]
+                Fold[list][0][Fun[acc, Fun[x, BinaryPlus[acc, x]]]]
             ];
 
         public static Expression ListTimesImplementation =>
             Fun[list,
-                Fold[list, 1, Fun[acc, Fun[x, Times[acc, x]]]]
+                Fold[list][1][Fun[acc, Fun[x, BinaryTimes[acc, x]]]]
             ];
 
         public static Expression FactorialImplementation =>

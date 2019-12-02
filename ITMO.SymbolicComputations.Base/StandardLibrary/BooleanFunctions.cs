@@ -35,8 +35,7 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
             Fun[x, Fun[y,
                 If[x,
                     y,
-                    False,
-                    "Error"
+                    False
                 ]
             ]];
 

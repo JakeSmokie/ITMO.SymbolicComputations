@@ -18,7 +18,7 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
         private readonly Action<Expression, Symbol> evaluateAndAssert;
 
         private static Expression Context => Seq[
-            SetDelayed[SumConstants, SumConstantsImplementation]
+            Set[SumConstants, SumConstantsImplementation]
         ];
 
         [Fact]

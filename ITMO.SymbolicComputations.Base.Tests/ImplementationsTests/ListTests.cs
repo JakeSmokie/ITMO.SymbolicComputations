@@ -64,7 +64,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
         [Fact]
         public void ContainsWorks() {
             Test.EvaluateAndAssert(
-                Contains[List[1, 2, 3, 4]][4],
+                Contains[List[1, 2, 3, 4]][3],
                 True,
                 _out
             );
@@ -77,6 +77,12 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
                 3,
                 _out
             );
+
+            Test.EvaluateAndAssert(
+                CountItem[List["x", "x"]]["x"],
+                2,
+                _out
+            );
         }
 
         [Fact]
@@ -84,6 +90,12 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
             Test.EvaluateAndAssert(
                 Distinct[List[1, 2, 3, 4, 2, 3, 4, 4, 4, 1]],
                 List[1, 2, 3, 4],
+                _out
+            );
+
+            Test.EvaluateAndAssert(
+                Distinct[List["x", "a", "x", 1]],
+                List["x", "a", 1],
                 _out
             );
         }
@@ -100,7 +112,9 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
         [Fact]
         public void FoldWorks() {
             Test.EvaluateAndAssert(
-                Fold[List[1, 2, 3, 4], 0, Fun[acc, Fun[x, Plus[acc, x]]]],
+                Fold[List[1, 2, 3, 4]][0][
+                    Fun[acc, Fun[x, Plus[acc, x]]]
+                ],
                 10,
                 _out
             );

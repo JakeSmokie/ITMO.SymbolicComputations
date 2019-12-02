@@ -31,9 +31,11 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         private static readonly ApplyListImplementation ApplyListImplementation = new ApplyListImplementation();
         private static readonly GenerateListImplementation GenerateList = new GenerateListImplementation();
         private static readonly DivideImplementation DivideImplementation = new DivideImplementation();
+        private static readonly LengthImplementation LengthImplementation = new LengthImplementation();
+        private static readonly DistinctImplementation DistinctImplementation = new DistinctImplementation();
+        private static readonly GroupImplementation GroupImplementation = new GroupImplementation();
 
         private readonly ArgumentsEvaluator argumentsEvaluator;
-        private readonly FoldImplementation foldImplementation;
         private readonly FunctionEvaluator functionEvaluator;
         private readonly ImmutableList<ISymbolVisitor<Symbol>> visitors;
         private ImmutableList<ISymbolVisitor<Symbol>> flow;
@@ -45,7 +47,6 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
 
             argumentsEvaluator = new ArgumentsEvaluator(this);
             functionEvaluator = new FunctionEvaluator(this);
-            foldImplementation = new FoldImplementation(this);
         }
 
         public (ImmutableList<Symbol>, Symbol) VisitExpression(Expression expression) {
@@ -93,13 +94,15 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
                 EqImplementation,
                 CompareImplementation,
                 PartImplementation,
-                foldImplementation,
                 AppendImplementation,
                 AsConstant,
                 AsStringSymbol,
                 AsExpressionArgs,
                 ApplyListImplementation,
                 PowerImplementation,
+                LengthImplementation,
+                DistinctImplementation,
+                GroupImplementation,
                 GenerateList
                 // Last
             });
