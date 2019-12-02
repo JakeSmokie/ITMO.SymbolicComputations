@@ -56,7 +56,7 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
             Fun[x, Seq[
                 ApplyList[
                     Plus,
-                    Map[GenerateList[10]][Fun[n,
+                    FastMap[GenerateList[10], Fun[n,
                         Times[
                             Power[-1, n],
                             Divide[

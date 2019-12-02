@@ -25,23 +25,7 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
         public static readonly StringSymbol Distinct = new StringSymbol(nameof(Distinct));
         public static readonly StringSymbol Group = new StringSymbol(nameof(Group));
 
-
         public static readonly StringSymbol Range = new StringSymbol(nameof(Range));
-
-        public static Expression RangeImplementation {
-            get {
-                var a = new StringSymbol("a'");
-                var b = new StringSymbol("b'");
-                var stepsCount = new StringSymbol("stepsCount'");
-                var stepInterval = Divide[Plus[b, Minus[a]], stepsCount];
-
-                return Fun[a, Fun[b, Fun[stepsCount,
-                    Map[GenerateList[stepsCount]][
-                        Fun[x, Plus[a, Times[stepInterval, x]]]
-                    ]
-                ]]];
-            }
-        }
 
         public static Expression MapImplementation =>
             Fun[list, Fun[f,

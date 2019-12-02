@@ -23,9 +23,9 @@ namespace ITMO.SymbolicComputations.Charts.Tests {
             Symbol xs = "xs";
             
             var func = Fun[x, List[x, Sin[x]]];
-            var expr = FastMap[xs][func];
+            var expr = FastMap[xs, func];
             
-            var (steps, actual) = new SymbolicContext(Set[xs, Range[0][7][100]]).Run(expr);
+            var (steps, actual) = new SymbolicContext(Set[xs, Range[0, 7, 100]]).Run(expr);
             _out.WriteLine(actual + "\n\n");
 
             var points = actual.Visit(new ListOfListToDecimalTuples()).ToList();
@@ -36,10 +36,10 @@ namespace ITMO.SymbolicComputations.Charts.Tests {
         public void TaylorSinIsOkay() {
             Symbol x = "x";
 
-            var xs = Range[0][7][100]; 
+            var xs = Range[0, 7, 20];
             var func = Fun[x, List[x, TaylorSin[x]]];
             
-            var expr = Map[xs][func];
+            var expr = FastMap[xs, func];
             
             var (steps, actual) = new SymbolicContext().Run(expr);
             var points = actual.Visit(new ListOfListToDecimalTuples()).ToList();

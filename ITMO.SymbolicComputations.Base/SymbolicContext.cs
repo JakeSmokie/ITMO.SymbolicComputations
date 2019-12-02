@@ -34,7 +34,6 @@ namespace ITMO.SymbolicComputations.Base {
             SetDelayed[IsExpressionWithName, IsExpressionWithNameImplementation],
             SetDelayed[DefaultValue, DefaultValueImplementation],
             //
-            SetDelayed[Range, RangeImplementation],
             SetDelayed[Contains, ContainsImplementation],
             SetDelayed[Concat, ConcatImplementation],
             SetDelayed[CountItem, CountItemImplementation],

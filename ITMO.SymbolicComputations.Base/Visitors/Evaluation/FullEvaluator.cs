@@ -34,6 +34,8 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         private static readonly LengthImplementation LengthImplementation = new LengthImplementation();
         private static readonly DistinctImplementation DistinctImplementation = new DistinctImplementation();
         private static readonly GroupImplementation GroupImplementation = new GroupImplementation();
+        private static readonly RangeImplementation RangeImplementation = new RangeImplementation();
+        private static readonly FastMapImplementation FastMapImplementation = new FastMapImplementation();
 
         private readonly ArgumentsEvaluator argumentsEvaluator;
         private readonly FunctionEvaluator functionEvaluator;
@@ -102,7 +104,9 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
                 PowerImplementation,
                 LengthImplementation,
                 DistinctImplementation,
+                RangeImplementation,
                 GroupImplementation,
+                FastMapImplementation,
                 GenerateList
                 // Last
             });
