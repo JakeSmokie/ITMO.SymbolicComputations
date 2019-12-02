@@ -9,7 +9,15 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.BooleanFunctio
         public CompareImplementation() : base(Compare) {
         }
 
-        protected override Symbol Evaluate(Expression expression) =>
-            SymbolComparer.Compare(expression.Arguments[0], expression.Arguments[1]);
+        protected override Symbol Evaluate(Expression expression) {
+            var x = expression.Arguments[0];
+            var y = expression.Arguments[1];
+            
+            if (x.GetType() != y.GetType()) {
+                return expression;
+            } 
+            
+            return SymbolComparer.Compare(x, y);
+        }
     }
 }

@@ -22,20 +22,20 @@ namespace ITMO.SymbolicComputations.Base.Tests {
             Symbol y = "y";
             
             var expression = Seq[
-                Set[x, Plus[y, 2]],
-                Set[y, 7],
+                SetDelayed[x, Plus[y, 2]],
+                SetDelayed[y, 7],
                 x,
                 Plus[x, y]
             ];
 
-            evaluateAndAssert(expression, Seq[Set[x, 9], Set[y, 7], 9, 16]);
+            evaluateAndAssert(expression, Seq[SetDelayed[x, 9], SetDelayed[y, 7], 9, 16]);
         }
 
         [Fact]
         public void MapInsideFunction() {
             var expression = Part[List[
-                Set[f, Fun[x, Map[GenerateList[x]][Fun[y, Plus[y, 1]]]]],
-                Set[y, 7],
+                SetDelayed[f, Fun[x, Map[GenerateList[x]][Fun[y, Plus[y, 1]]]]],
+                SetDelayed[y, 7],
                 f[y]
             ], 2];
 

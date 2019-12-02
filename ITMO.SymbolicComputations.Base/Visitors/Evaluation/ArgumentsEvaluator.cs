@@ -5,20 +5,14 @@ using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.StandardLibrary;
 using ITMO.SymbolicComputations.Base.Visitors.Attributes;
 using ITMO.SymbolicComputations.Base.Visitors.Casting;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.Attributes;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
     public sealed class ArgumentsEvaluator : ISymbolVisitor<(ImmutableList<Symbol> Steps, Symbol Symbol)> {
-        private static readonly HasAttributeChecker HoldAllCompleteChecker =
-            new HasAttributeChecker(StandardLibrary.Attributes.HoldAllComplete);
-
-        private static readonly HasAttributeChecker HoldAllChecker =
-            new HasAttributeChecker(StandardLibrary.Attributes.HoldAll);
-
-        private static readonly HasAttributeChecker HoldRestChecker =
-            new HasAttributeChecker(StandardLibrary.Attributes.HoldRest);
-
-        private static readonly HasAttributeChecker HoldFirstChecker =
-            new HasAttributeChecker(StandardLibrary.Attributes.HoldFirst);
+        private static readonly HasAttributeChecker HoldAllCompleteChecker = new HasAttributeChecker(HoldAllComplete);
+        private static readonly HasAttributeChecker HoldAllChecker = new HasAttributeChecker(HoldAll);
+        private static readonly HasAttributeChecker HoldRestChecker = new HasAttributeChecker(HoldRest);
+        private static readonly HasAttributeChecker HoldFirstChecker = new HasAttributeChecker(HoldFirst);
 
         private readonly FullEvaluator fullEvaluator;
 

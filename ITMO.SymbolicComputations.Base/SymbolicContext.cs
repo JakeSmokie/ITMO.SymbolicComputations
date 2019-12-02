@@ -11,7 +11,7 @@ using static ITMO.SymbolicComputations.Base.StandardLibrary.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Base {
     public class SymbolicContext {
-        private const int MaxIterations = 10;
+        private const int MaxIterations = 1000;
 
         private readonly Symbol additionalContext;
         private readonly ImmutableList<Symbol> topLevelProcessors;
@@ -29,32 +29,33 @@ namespace ITMO.SymbolicComputations.Base {
         }
 
         private static Expression DefaultContext => Seq[
-            Set[IsConstant, IsConstantImplementation],
-            Set[IsStringSymbol, IsStringSymbolImplementation],
-            Set[IsExpressionWithName, IsExpressionWithNameImplementation],
-            Set[DefaultValue, DefaultValueImplementation],
+            SetDelayed[IsConstant, IsConstantImplementation],
+            SetDelayed[IsStringSymbol, IsStringSymbolImplementation],
+            SetDelayed[IsExpressionWithName, IsExpressionWithNameImplementation],
+            SetDelayed[DefaultValue, DefaultValueImplementation],
             //
-            Set[Range, RangeImplementation],
-            Set[Group, GroupImplementation],
-            Set[Distinct, DistinctImplementation],
-            Set[Contains, ContainsImplementation],
-            Set[Concat, ConcatImplementation],
-            Set[CountItem, CountItemImplementation],
-            Set[Length, LengthImplementation],
-            Set[Filter, FilterImplementation],
-            Set[Map, MapImplementation],
+            SetDelayed[Range, RangeImplementation],
+            SetDelayed[Group, GroupImplementation],
+            SetDelayed[Distinct, DistinctImplementation],
+            SetDelayed[Contains, ContainsImplementation],
+            SetDelayed[Concat, ConcatImplementation],
+            SetDelayed[CountItem, CountItemImplementation],
+            SetDelayed[Length, LengthImplementation],
+            SetDelayed[Filter, FilterImplementation],
+            SetDelayed[Map, MapImplementation],
             //
-            Set[Factorial, FactorialImplementation],
-            Set[TaylorSin, TaylorSinImplementation],
-            Set[ListTimes, ListTimesImplementation],
-            Set[ListPlus, ListPlusImplementation],
+            SetDelayed[Factorial, FactorialImplementation],
+            SetDelayed[TaylorSin, TaylorSinImplementation],
+            SetDelayed[ListTimes, ListTimesImplementation],
+            SetDelayed[ListPlus, ListPlusImplementation],
             //
-            Set[Minus, MinusImplementation],
-            Set[Or, OrImplementation],
-            Set[And, AndImplementation],
-            Set[More, MoreImplementation],
-            Set[Less, LessImplementation],
-            Set[Not, NotImplementation]
+            SetDelayed[Minus, MinusImplementation],
+            SetDelayed[Or, OrImplementation],
+            SetDelayed[And, AndImplementation],
+            SetDelayed[More, MoreImplementation],
+            SetDelayed[Less, LessImplementation],
+            SetDelayed[Not, NotImplementation],
+            SetDelayed[While, WhileImplementation]
         ];
 
         public (ImmutableList<Symbol>, Symbol) Run(Symbol symbol) {
@@ -81,14 +82,15 @@ namespace ITMO.SymbolicComputations.Base {
                     .Visit(globalVariablesReplacer)
                     .Visit(fullEvaluator);
 
-                if (Equals(newResult, symbol) && i > 0) {
+                if (Equals(newResult, symbol) && i > 5) {
                     return (steps, symbol);
                 }
                 
                 steps = steps.AddRange(newSteps).WithoutDuplicates();
                 symbol = newResult;
 
-
+                Logger.Log($"Iteration: {symbol}");
+                
                 if (i++ > maxIterations) {
                     return (steps, Seq["Max iterations count reached", symbol]);
                 }

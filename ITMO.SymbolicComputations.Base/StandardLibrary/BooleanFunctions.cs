@@ -17,6 +17,7 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
         public static readonly StringSymbol More = new StringSymbol(nameof(More));
         public static readonly StringSymbol And = new StringSymbol(nameof(And));
         public static readonly StringSymbol Or = new StringSymbol(nameof(Or));
+        public static readonly StringSymbol While = new StringSymbol(nameof(While));
 
         public static Expression NotImplementation => Fun[x, If[x, False, True]];
 
@@ -47,5 +48,13 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
                     "Error"
                 ]
             ]];
+
+        public static Expression WhileImplementation =>
+            Fun[x, Fun[pred, Fun[body,
+                If[pred[x],
+                    While[body[x]][pred][body],
+                    x
+                ]
+            ]]];
     }
 }

@@ -42,7 +42,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
             var functionBody = funcHead.Arguments[1];
             var functionArgument = expression.Arguments[0];
 
-            var substituted = functionBody.Visit(new VariableReplacer(variable, functionArgument));
+            var substituted = functionBody.Visit(new VariableReplacer(variable, functionArgument, true));
 
             return substituted.Visit(fullEvaluator);
         }

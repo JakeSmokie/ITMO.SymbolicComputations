@@ -22,12 +22,12 @@ namespace Tests.Base.Tools {
 
             var (steps, actual) = new SymbolicContext(context, topLevelProcessors, maxIterations).Run(expression);
 
-            steps.Print(output);
-            output.WriteLine("");
+//            steps.Print(output);
+//            output.WriteLine("");
 
-            output.WriteLine(expression.ToString());
-            output.WriteLine(actual.ToString());
-            output.WriteLine(expectedResult.ToString());
+//            output.WriteLine(expression.ToString());
+//            output.WriteLine(actual.ToString());
+//            output.WriteLine(expectedResult.ToString());
 
             Assert.Equal(expectedResult, actual);
         }

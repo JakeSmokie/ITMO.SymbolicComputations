@@ -17,7 +17,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
         public void BottomIsBottom() {
             Test.EvaluateAndAssert(
                 If[If, 2, 3, 4],
-                4,
+                If[If, 2, 3, 4],
                 _out
             );
         }

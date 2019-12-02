@@ -12,7 +12,7 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
     public class ConstantsTimesTests {
         public ConstantsTimesTests(ITestOutputHelper output) {
             evaluateAndAssert = Test.CreateAsserter(output, Seq[
-                Set[TimesConstants, TimesConstantsImplementation]
+                SetDelayed[TimesConstants, TimesConstantsImplementation]
             ]);
         }
 

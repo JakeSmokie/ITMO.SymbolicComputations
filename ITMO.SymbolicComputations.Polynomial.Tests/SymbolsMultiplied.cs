@@ -13,7 +13,7 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
     public class SymbolsMultiplied {
         public SymbolsMultiplied(ITestOutputHelper output) {
             evaluateAndAssert = Test.CreateAsserter(output, Seq[
-                Set[TimesSymbols, TimesSymbolsImplementation]
+                SetDelayed[TimesSymbols, TimesSymbolsImplementation]
             ]);
         }
 

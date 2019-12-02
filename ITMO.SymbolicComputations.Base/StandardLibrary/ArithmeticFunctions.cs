@@ -45,11 +45,8 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
             ];
 
         public static Expression FactorialImplementation =>
-            Fun["fac",
-                ApplyList[
-                    Times,
-                    Map[GenerateList["fac"]][Fun[x, Plus[x, 1]]]
-                ]
+            Fun[x,
+                If[More[x][1], Times[x, Factorial[Plus[x, -1]]], 1]
             ];
 
         public static Expression TaylorSinImplementation =>

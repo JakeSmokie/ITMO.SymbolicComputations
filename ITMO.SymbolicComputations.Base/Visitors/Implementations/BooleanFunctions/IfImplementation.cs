@@ -15,7 +15,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.BooleanFunctio
                 return expression.Arguments[2];
             }
 
-            return expression.Arguments[3];
+            return expression;
         }
     }
 }

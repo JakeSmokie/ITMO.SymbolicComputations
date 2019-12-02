@@ -16,7 +16,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
     public sealed class CustomFunctionsTests {
         public CustomFunctionsTests(ITestOutputHelper output) {
             @out = output;
-            evaluateAndAssert = Test.CreateAsserter(output, Seq[Set[TaylorSin, TaylorSinImplementation]]);
+            evaluateAndAssert = Test.CreateAsserter(output, Seq[SetDelayed[TaylorSin, TaylorSinImplementation]]);
         }
 
         private readonly Action<Expression, Symbol> evaluateAndAssert;

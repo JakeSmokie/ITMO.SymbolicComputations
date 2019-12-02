@@ -1,5 +1,6 @@
 using ITMO.SymbolicComputations.Base.Models;
 using static ITMO.SymbolicComputations.Base.StandardLibrary.BooleanFunctions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.CastingFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.BooleanFunctions {
     public class EqImplementation : AbstractFunctionImplementation {
@@ -7,9 +8,14 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.BooleanFunctio
         }
 
         protected override Symbol Evaluate(Expression expression) {
-            return Equals(expression.Arguments[0], expression.Arguments[1])
-                ? True
-                : False;
+            var x = expression.Arguments[0];
+            var y = expression.Arguments[1];
+            
+            if (x.GetType() != y.GetType() && !Equals(x, Null) && !Equals(y, Null)) {
+                return expression;
+            }
+
+            return Equals(x, y) ? True : False;
         }
     }
 }

@@ -6,7 +6,7 @@ using static ITMO.SymbolicComputations.Base.StandardLibrary.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.ListFunctions {
     public abstract class AbstractListFunctionImplementation : AbstractFunctionImplementation {
-        protected AbstractListFunctionImplementation(StringSymbol name) : base(name) {
+        protected AbstractListFunctionImplementation(StringSymbol names) : base(names) {
         }
 
         protected abstract Symbol EvaluateList(Expression expression, ImmutableList<Symbol> items);

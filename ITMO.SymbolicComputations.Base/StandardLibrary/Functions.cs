@@ -21,7 +21,13 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
             Attributes.OneIdentity
         );
 
-        public static readonly StringSymbol Set = new StringSymbol(nameof(Set));
+        public static readonly StringSymbol SetDelayed = new StringSymbol(nameof(SetDelayed),
+            Attributes.HoldAll
+        );
+
+        public static readonly StringSymbol Set = new StringSymbol(nameof(Set),
+            Attributes.HoldFirst
+        );
 
         public static readonly StringSymbol ApplyList = new StringSymbol(nameof(ApplyList));
     }
