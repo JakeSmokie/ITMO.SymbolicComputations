@@ -18,7 +18,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
         private readonly Action<Expression, Symbol> evaluateAndAssert;
 
         [Fact]
-        public void FacWorks() {
+        public void RecursiveFacWorks() {
             Symbol fac = "fac";
 
             evaluateAndAssert(Part[List[
@@ -27,6 +27,23 @@ namespace ITMO.SymbolicComputations.Base.Tests {
                 ]],
                 fac[5]
             ], 1], 120);
+        }
+
+        [Fact]
+        public void WhileFacWorks() {
+            evaluateAndAssert(Seq[
+                Part[
+                    While[List[5, 1]][Fun[list,
+                        More[Part[list, 0]][1]
+                    ]][Fun[list,
+                        List[
+                            Plus[Part[list, 0], -1],
+                            Times[Part[list, 0], Part[list, 1]]
+                        ]
+                    ]],
+                    1
+                ]
+            ], 120);
         }
 
         [Fact]
