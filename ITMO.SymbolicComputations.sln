@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITMO.SymbolicComputations.P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Base", "Tests.Base\Tests.Base.csproj", "{C3554F13-08B0-4FE8-A0A4-885A06E489C8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITMO.SymbolicComputations.Web", "ITMO.SymbolicComputations.Web\ITMO.SymbolicComputations.Web.csproj", "{08AFBAD3-1F26-44DA-B795-234961CD49FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,5 +49,9 @@ Global
 		{C3554F13-08B0-4FE8-A0A4-885A06E489C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3554F13-08B0-4FE8-A0A4-885A06E489C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3554F13-08B0-4FE8-A0A4-885A06E489C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08AFBAD3-1F26-44DA-B795-234961CD49FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08AFBAD3-1F26-44DA-B795-234961CD49FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08AFBAD3-1F26-44DA-B795-234961CD49FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08AFBAD3-1F26-44DA-B795-234961CD49FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

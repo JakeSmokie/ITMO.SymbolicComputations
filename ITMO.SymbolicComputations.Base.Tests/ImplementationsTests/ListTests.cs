@@ -168,7 +168,7 @@ namespace ITMO.SymbolicComputations.Base.Tests.ImplementationsTests {
         [Fact]
         public void RangeWorks() {
             Test.EvaluateAndAssert(
-                Range[0][10][40],
+                Range[0, 10, 40],
                 List[
                     0.00m,
                     0.25m,

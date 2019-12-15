@@ -5,6 +5,8 @@ using ITMO.SymbolicComputations.Base.StandardLibrary;
 
 namespace ITMO.SymbolicComputations.Base.Visitors {
     public sealed class MathematicaPrinter : ISymbolVisitor<string> {
+        public static readonly MathematicaPrinter Default = new MathematicaPrinter();
+        
         public string VisitExpression(Expression expression) {
             var isSeq = Equals(expression.Head, Functions.Seq);
             
