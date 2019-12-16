@@ -22,7 +22,7 @@ namespace ITMO.SymbolicComputations.Charts.Tests {
             Symbol x = "x";
             Symbol xs = "xs";
             
-            var func = Fun[x, List[x, Sin[x]]];
+            var func = Fun[x, List[x, Plus[Sin[x], 1]]];
             var expr = FastMap[xs, func];
             
             var (steps, actual) = new SymbolicContext(Set[xs, Range[0, 7, 100]]).Run(expr);

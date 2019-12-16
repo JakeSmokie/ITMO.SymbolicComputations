@@ -15,7 +15,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors {
             
             var args = string.Join(", " + sep, expression.Arguments.Select(a => tab + a.Visit(this)));
 
-            return sep + expression.Head.Visit(this) +
+            return expression.Head.Visit(this) +
                 $"[{sep}{args}{sep}]";
         }
 

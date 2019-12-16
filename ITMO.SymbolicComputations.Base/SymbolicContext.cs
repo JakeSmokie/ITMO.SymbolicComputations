@@ -6,6 +6,7 @@ using ITMO.SymbolicComputations.Base.Visitors.Evaluation;
 using static ITMO.SymbolicComputations.Base.StandardLibrary.ArithmeticFunctions;
 using static ITMO.SymbolicComputations.Base.StandardLibrary.BooleanFunctions;
 using static ITMO.SymbolicComputations.Base.StandardLibrary.CastingFunctions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.ChartFunctions;
 using static ITMO.SymbolicComputations.Base.StandardLibrary.Functions;
 using static ITMO.SymbolicComputations.Base.StandardLibrary.ListFunctions;
 
@@ -29,6 +30,7 @@ namespace ITMO.SymbolicComputations.Base {
         }
 
         private static Expression DefaultContext => Seq[
+            SetDelayed[Plot, PlotImplementation],
             SetDelayed[IsConstant, IsConstantImplementation],
             SetDelayed[IsStringSymbol, IsStringSymbolImplementation],
             SetDelayed[IsExpressionWithName, IsExpressionWithNameImplementation],
@@ -66,7 +68,7 @@ namespace ITMO.SymbolicComputations.Base {
 
             var context = Seq[DefaultContext, additionalContext].Visit(fullEvaluator).Symbol;
 //            symbol = Seq[context, symbol];
-            
+
             var steps = ImmutableList<Symbol>.Empty.Add(symbol);
             var i = 0;
 
@@ -82,7 +84,7 @@ namespace ITMO.SymbolicComputations.Base {
                 if (Equals(newResult, symbol) && i > 0) {
                     return (steps, symbol);
                 }
-                
+
                 steps = steps.AddRange(newSteps).WithoutDuplicates();
                 symbol = newResult;
 

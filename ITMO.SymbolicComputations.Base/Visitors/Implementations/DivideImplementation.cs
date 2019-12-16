@@ -15,6 +15,10 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations {
                 return expression;
             }
 
+            if (second.Value == 0m) {
+                return first.Value / 0.0000001m;
+            }
+
             return first.Value / second.Value;
         }
     }

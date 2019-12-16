@@ -15,7 +15,12 @@ namespace ITMO.SymbolicComputations.Base.Visitors {
             var variable = expression.Arguments[0];
             var body = expression.Arguments[1];
 
-            Variables = Variables.SetItem(variable, body);
+            if (variable is StringSymbol) {
+                if (!Variables.ContainsKey(variable)) {
+                    Variables = Variables.SetItem(variable, body);
+                }
+            }
+
             return expression;
         }
     }

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Immutable;
+using System.Linq;
 using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Visitors.Casting;
 using static ITMO.SymbolicComputations.Base.StandardLibrary.Functions;
+using static ITMO.SymbolicComputations.Base.StandardLibrary.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
     public sealed class FunctionEvaluator : ISymbolVisitor<(ImmutableList<Symbol>, Symbol)> {
@@ -23,26 +25,32 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
                 return (ImmutableList<Symbol>.Empty, expression);
             }
 
-            if (expression.Arguments.Count != 1) {
-                throw new ArgumentException($"You cannot apply not 1 argument. \nFunc: {funcHead}\n" +
-                                            $"Args: \n * {string.Join("\n * ", expression.Arguments)}");
-            }
-
             if (funcHead.Arguments.Count != 2) {
                 throw new ArgumentException("Function declaration should contain only 2 arguments");
             }
 
-            var variableSymbol = funcHead.Arguments[0];
-            var variable = variableSymbol.Visit(AsStringSymbolVisitor.Instance);
+            var funParameter = funcHead.Arguments[0];
+            var funBody = funcHead.Arguments[1];
 
-            if (variable == null) {
-                throw new ArgumentException("Fun parameter can be only StringSymbol. Something gone wrong");
+            var listParameters = funParameter.Visit(AsExpressionVisitor.Instance);
+            if (listParameters != null && Equals(listParameters.Head, List)) {
+                // Replace list
+                return listParameters.Arguments
+                    .Zip(expression.Arguments)
+                    .Aggregate(
+                        funBody,
+                        (acc, x) => acc.Visit(new VariableReplacer(x.First, x.Second, true))
+                    ).Visit(fullEvaluator);
             }
 
-            var functionBody = funcHead.Arguments[1];
-            var functionArgument = expression.Arguments[0];
+            var variable = funParameter.Visit(AsStringSymbolVisitor.Instance);
 
-            var substituted = functionBody.Visit(new VariableReplacer(variable, functionArgument, true));
+            if (variable == null) {
+                throw new ArgumentException("Fun parameter can be only StringSymbol or List. Something gone wrong");
+            }
+
+            var functionArgument = expression.Arguments[0];
+            var substituted = funBody.Visit(new VariableReplacer(variable, functionArgument, true));
 
             return substituted.Visit(fullEvaluator);
         }

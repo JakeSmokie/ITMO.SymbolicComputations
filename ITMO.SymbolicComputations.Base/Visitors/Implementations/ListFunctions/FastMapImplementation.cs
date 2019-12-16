@@ -11,7 +11,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.ListFunctions 
         protected override Symbol EvaluateList(Expression expression, ImmutableList<Symbol> items) {
             var f = expression.Arguments[1];
 
-            return List[
+            return KindaList[
                 items
                     .Select(x => (Symbol) f[x])
                     .ToArray()

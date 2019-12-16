@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Visitors.Casting;
@@ -5,7 +6,7 @@ using static ITMO.SymbolicComputations.Base.StandardLibrary.ListFunctions;
 
 namespace ITMO.SymbolicComputations.Base.Visitors.Implementations {
     public class RangeImplementation : AbstractFunctionImplementation {
-        public RangeImplementation() : base(Range) {
+        public RangeImplementation() : base(StandardLibrary.ListFunctions.Range) {
         }
 
         protected override Symbol Evaluate(Expression expression) {
@@ -20,7 +21,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations {
             var step = (to.Value - @from.Value) / amount.Value;
 
             return List[
-                Enumerable.Range(0, (int) amount.Value)
+                Enumerable.Range(0, Math.Abs((int) amount.Value))
                     .Select(i => from.Value + i * step)
                     .Select(x => new Constant(x))
                     .OfType<Symbol>()

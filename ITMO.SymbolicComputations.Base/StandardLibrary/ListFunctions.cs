@@ -7,6 +7,7 @@ using static ITMO.SymbolicComputations.Base.StandardLibrary.Functions;
 namespace ITMO.SymbolicComputations.Base.StandardLibrary {
     public static class ListFunctions {
         public static readonly StringSymbol List = new StringSymbol(nameof(List));
+        public static readonly StringSymbol KindaList = new StringSymbol("");
         public static readonly StringSymbol GenerateList = new StringSymbol(nameof(GenerateList));
 
         public static readonly StringSymbol Part = new StringSymbol(nameof(Part));
