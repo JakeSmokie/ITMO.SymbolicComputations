@@ -5,7 +5,8 @@
     <Nullable>enable</Nullable>
     <RunAOTCompilation>false</RunAOTCompilation>
     <WasmBuildNative>false</WasmBuildNative>
-    <PublishTrimmed>false</PublishTrimmed>
+    <PublishTrimmed>true</PublishTrimmed>
+    <TrimMode>partial</TrimMode>
     <JsonSerializerIsReflectionEnabledByDefault>true</JsonSerializerIsReflectionEnabledByDefault>
     <BlazorEnableCompression>false</BlazorEnableCompression>
   </PropertyGroup>
