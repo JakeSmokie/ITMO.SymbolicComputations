@@ -1,0 +1,81 @@
+name: Verify Symbolic
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Run engine and workbench tests
+        run: dotnet test ITMO.SymbolicComputations.sln -c Release --disable-build-servers -m:1 --logger trx --results-directory artifacts/test-results
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results-${{ matrix.os }}
+          path: artifacts/test-results/*.trx
+          if-no-files-found: warn
+          retention-days: 14
+
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Build portable browser application
+        shell: pwsh
+        run: ./Build-Browser.ps1 -BasePath /ITMO.SymbolicComputations/lab/
+      - name: Check browser JavaScript
+        run: |
+          node --check ITMO.SymbolicComputations.Web/wwwroot/app.js
+          node --check ITMO.SymbolicComputations.Web/wwwroot/fractal.js
+          node --check ITMO.SymbolicComputations.Browser/wwwroot/symbolic-transport.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: symbolic-browser-site
+          path: artifacts/browser-site
+          include-hidden-files: true
+          retention-days: 14
+
+      - uses: actions/upload-pages-artifact@v3
+        if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+        with:
+          path: artifacts/browser-site
+
+  deploy:
+    needs: [test, browser]
+    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: github-pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@v5
+      - name: Publish verified demo
+        id: deployment
+        uses: actions/deploy-pages@v4

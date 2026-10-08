@@ -1,14 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\ITMO.SymbolicComputations.Base\ITMO.SymbolicComputations.Base.csproj" />
+      <ProjectReference Include="..\ITMO.SymbolicComputations.Workbench\ITMO.SymbolicComputations.Workbench.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0" />
+
     </ItemGroup>
 </Project>

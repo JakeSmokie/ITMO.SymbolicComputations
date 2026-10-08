@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
+using System;
 using System.Linq;
 using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.StandardLibrary;
@@ -52,6 +53,9 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
             }
 
             if (head.Visit(HoldRestChecker)) {
+                if (arguments.Count == 0) {
+                    throw new ArgumentException("This function requires at least one argument.");
+                }
                 return ImmutableList<(ImmutableList<Symbol>, Symbol)>.Empty
                     .Add(arguments.First().Visit(fullEvaluator))
                     .AddRange(EvaluateEagerly(arguments.Skip(1)));

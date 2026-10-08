@@ -1,3 +1,4 @@
+using System;
 using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Visitors.Casting;
 using static ITMO.SymbolicComputations.Base.StandardLibrary.ArithmeticFunctions;
@@ -16,7 +17,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations {
             }
 
             if (second.Value == 0m) {
-                return first.Value / 0.0000001m;
+                throw new DivideByZeroException("Division by zero is undefined.");
             }
 
             return first.Value / second.Value;

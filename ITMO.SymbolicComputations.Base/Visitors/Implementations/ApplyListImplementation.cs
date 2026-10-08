@@ -15,11 +15,11 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations {
             var func = expression.Arguments[0];
             var list = expression.Arguments[1].Visit(AsExpressionVisitor.Instance);
 
-            if (!Equals(list?.Head, List)) {
+            if (!Equals(list?.Head, List) && !Equals(list?.Head, KindaList)) {
                 return expression;
             }
 
-            return func[list?.Arguments?.ToArray()];
+            return func[list.Arguments.ToArray()];
         }
     }
 }

@@ -16,7 +16,18 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations {
                 return expression;
             }
 
-            return (decimal) Math.Pow((double) x.Value, (double) y.Value);
+            if (x.Value == 0 && y.Value < 0) {
+                throw new DivideByZeroException("Zero cannot be raised to a negative power.");
+            }
+            if (x.Value < 0 && decimal.Truncate(y.Value) != y.Value) {
+                throw new ArgumentOutOfRangeException(nameof(expression), "A negative base with a fractional exponent is outside the supported real-number domain.");
+            }
+
+            var result = Math.Pow((double) x.Value, (double) y.Value);
+            if (double.IsNaN(result) || double.IsInfinity(result)) {
+                throw new ArithmeticException("Power is outside the supported finite real-number range.");
+            }
+            return (decimal) result;
         }
     }
 }

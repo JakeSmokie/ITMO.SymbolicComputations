@@ -6,6 +6,7 @@ using ITMO.SymbolicComputations.Base.Visitors;
 namespace ITMO.SymbolicComputations.Base.Models {
     public sealed class Expression : Symbol, IEquatable<Expression> {
         public Expression(Symbol head, ImmutableList<Symbol> arguments) {
+            EvaluationBudget.Current?.CheckCollectionSize(arguments.Count);
             Head = head;
             Arguments = arguments;
         }
@@ -33,8 +34,11 @@ namespace ITMO.SymbolicComputations.Base.Models {
 
         public override int GetHashCode() {
             unchecked {
-                return ((Head != null ? Head.GetHashCode() : 0) * 397) ^
-                       (Arguments != null ? Arguments.GetHashCode() : 0);
+                var hash = Head != null ? Head.GetHashCode() : 0;
+                foreach (var argument in Arguments) {
+                    hash = (hash * 397) ^ (argument?.GetHashCode() ?? 0);
+                }
+                return hash;
             }
         }
 

@@ -34,6 +34,9 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
 
             var listParameters = funParameter.Visit(AsExpressionVisitor.Instance);
             if (listParameters != null && Equals(listParameters.Head, List)) {
+                if (expression.Arguments.Count != listParameters.Arguments.Count) {
+                    throw new ArgumentException($"Function expects {listParameters.Arguments.Count} arguments, but received {expression.Arguments.Count}.");
+                }
                 // Replace list
                 return listParameters.Arguments
                     .Zip(expression.Arguments)
@@ -49,6 +52,9 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
                 throw new ArgumentException("Fun parameter can be only StringSymbol or List. Something gone wrong");
             }
 
+            if (expression.Arguments.Count != 1) {
+                throw new ArgumentException($"Function expects one argument, but received {expression.Arguments.Count}.");
+            }
             var functionArgument = expression.Arguments[0];
             var substituted = funBody.Visit(new VariableReplacer(variable, functionArgument, true));
 

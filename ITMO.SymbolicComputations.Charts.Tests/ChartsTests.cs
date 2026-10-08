@@ -41,8 +41,12 @@ namespace ITMO.SymbolicComputations.Charts.Tests {
             
             var expr = FastMap[xs, func];
             
-            var (steps, actual) = new SymbolicContext().Run(expr);
+            var (steps, actual) = new SymbolicContext().Run(expr, Test.ResearchLimits());
             var points = actual.Visit(new ListOfListToDecimalTuples()).ToList();
+
+            Assert.Equal(20, points.Count);
+            Assert.All(points, point => Assert.InRange(
+                System.Math.Abs((double) point.Item2 - System.Math.Sin((double) point.Item1)), 0d, 0.01d));
             
             _out.WriteLine(actual + "\n\n");
             points.ForEach(x => _out.WriteLine($"{x.Item1}, {x.Item2}"));

@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Immutable;
+using System.Threading;
 using ITMO.SymbolicComputations.Base.Models;
 using ITMO.SymbolicComputations.Base.Tools;
 using ITMO.SymbolicComputations.Base.Visitors;
@@ -57,7 +59,17 @@ namespace ITMO.SymbolicComputations.Base {
             SetDelayed[While, WhileImplementation]
         ];
 
-        public (ImmutableList<Symbol>, Symbol) Run(Symbol symbol) {
+        public (ImmutableList<Symbol>, Symbol) Run(Symbol symbol) =>
+            Run(symbol, new EvaluationOptions());
+
+        public (ImmutableList<Symbol>, Symbol) Run(
+            Symbol symbol,
+            EvaluationOptions options,
+            CancellationToken cancellationToken = default
+        ) {
+            using var budget = EvaluationBudget.Begin(options, cancellationToken);
+            budget.ValidateInput(symbol);
+            budget.ValidateInput(additionalContext);
             var variableAssigner = new VariableAssigner();
             var globalVariablesReplacer = new GlobalVariablesReplacer(variableAssigner);
 
@@ -69,10 +81,15 @@ namespace ITMO.SymbolicComputations.Base {
             var context = Seq[DefaultContext, additionalContext].Visit(fullEvaluator).Symbol;
 //            symbol = Seq[context, symbol];
 
+            budget.RecordStep();
             var steps = ImmutableList<Symbol>.Empty.Add(symbol);
             var i = 0;
 
             while (true) {
+                budget.Checkpoint();
+                if (i >= maxIterations) {
+                    throw new EvaluationLimitException("iterations", "Evaluation exceeded its iteration limit.", maxIterations);
+                }
                 var (newSteps, newResult) = symbol
                     .Visit(globalVariablesReplacer)
                     .Visit(globalVariablesReplacer)
@@ -89,15 +106,15 @@ namespace ITMO.SymbolicComputations.Base {
                 symbol = newResult;
 
                 try {
-                    Logger.Log($"Iteration: {symbol}");
+                    if (Logger.Log != null) {
+                        Logger.Log($"Iteration: {symbol}");
+                    }
                 }
-                catch {
+                catch (Exception error) when (!(error is EvaluationLimitException) && !(error is OperationCanceledException)) {
                     // ignored
                 }
 
-                if (i++ > maxIterations) {
-                    return (steps, Seq["Max iterations count reached", symbol]);
-                }
+                i++;
             }
         }
     }

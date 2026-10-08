@@ -14,7 +14,7 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
         public SymbolsMultiplied(ITestOutputHelper output) {
             evaluateAndAssert = Test.CreateAsserter(output, Seq[
                 SetDelayed[TimesSymbols, TimesSymbolsImplementation]
-            ]);
+            ], options: Test.ResearchLimits());
         }
 
         private readonly Action<Expression, Symbol> evaluateAndAssert;

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101019">
+  <meta name="description" content="Учебный движок на C#: введите формулу и увидьте результат, LaTeX и ход вычисления. Работает прямо в браузере.">
+  <title>Symbolic — формулы и ход вычислений · C# / ИТМО</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='14' fill='%23bcf77d'/%3E%3Ctext x='11' y='35' font-size='35' font-family='serif' fill='%23101019'%3EΣ%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./vendor/katex/katex.min.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#expression">Перейти к редактору</a>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Примеры и история">
+      <a class="brand" href="./" aria-label="Symbolic — главная"><span class="brand-mark" aria-hidden="true">Σ</span><span>symbolic<span class="brand-caption">WORKBENCH</span></span></a>
+      <div class="sidebar-intro"><span class="eyebrow">ЛАБОРАТОРИЯ ВЫРАЖЕНИЙ</span></div>
+      <div class="sidebar-section-title"><h2>Попробовать</h2><span id="example-count" class="count">…</span></div>
+      <div id="examples" class="example-list" aria-live="polite"><p class="muted sidebar-message">Загружаем примеры…</p></div>
+      <div class="sidebar-section-title history-title"><h2>Недавние</h2><button type="button" id="clear-history" class="text-button" hidden>Очистить</button></div>
+      <div id="history" class="history-list"></div>
+      <div class="sidebar-bottom"><span class="sidebar-bottom-icon" aria-hidden="true">{ }</span><p><strong>ITMO.SymbolicComputations</strong><span>Учебный проект ИТМО · C#</span></p></div>
+    </aside>
+    <main class="main" id="main">
+      <header class="topbar"><div class="breadcrumb"><a class="atlas-back" href="https://github.com/JakeSmokie/ITMO.SymbolicComputations">Исходный код ↗</a> <span aria-hidden="true">/</span> <strong>Символьные вычисления</strong></div><button type="button" class="button button-quiet reference-open" id="open-reference"><span aria-hidden="true">⌘</span> Справочник</button></header>
+      <section class="heading-section" aria-labelledby="page-title">
+        <div class="heading-copy"><p class="eyebrow accent">C# · СИМВОЛЬНЫЕ ВЫЧИСЛЕНИЯ · ИТМО</p>
+          <h1 id="page-title">Формулы с понятным<br>ходом вычислений.</h1>
+          <p class="heading-description">Введите выражение — движок вычислит результат, покажет преобразования и сохранит неизвестные переменные. Всё работает в браузере, без установки.</p>
+        </div>
+        <span class="engine-pill" id="health-status" role="status"><span class="status-dot" aria-hidden="true"></span><span>Загружаем движок…</span></span>
+      </section>
+      <div class="quick-start" aria-label="Вычислить готовый пример">
+        <span>Попробуйте в один клик</span>
+        <button type="button" data-quick="(2 + 3)^2 / 5"><strong>Арифметика</strong><span>(2 + 3)² / 5</span><span aria-hidden="true">↗</span></button>
+        <button type="button" data-quick="(x + 2)^2 / (x - 1)"><strong>Формула с x</strong><span>Переменные и дроби</span><span aria-hidden="true">↗</span></button>
+        <button type="button" data-quick="Map({1, 2, 3})(Fun(x, x^2))"><strong>Своя функция</strong><span>Квадраты списка</span><span aria-hidden="true">↗</span></button>
+      </div>
+      <div class="workbench">
+        <section class="panel editor-panel" aria-labelledby="editor-title">
+          <div class="panel-header"><h2 id="editor-title"><span class="section-number">01</span> Выражение</h2><span class="file-label">input.expr</span></div>
+          <div class="editor-help"><span>Текстовая запись формулы</span><kbd>Ctrl ↵</kbd></div>
+          <div class="editor-wrap"><div class="line-numbers" id="line-numbers" aria-hidden="true">1</div><label class="visually-hidden" for="expression">Выражение для вычисления</label><textarea id="expression" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" aria-describedby="editor-hint" placeholder="Например: (2 + 3)^2 / 5">(2 + 3)^2 / 5</textarea></div>
+          <div class="editor-shortcuts" aria-label="Вставить в выражение"><button type="button" data-insert="()" data-caret="1" title="Скобки">( )</button><button type="button" data-insert="{}" data-caret="1" title="Список">{ }</button><button type="button" data-insert="^" title="Степень">xⁿ</button><button type="button" data-insert=" + " title="Сложение">+</button><button type="button" data-insert=" * " title="Умножение">×</button><span id="char-count">0 символов</span></div>
+          <p class="editor-hint" id="editor-hint">Операторы <code>+ − * / ^</code>, переменные и функции <code>Name(x)</code>. Оба вида скобок поддерживаются.</p>
+          <details class="engine-limits"><summary>Возможности и ограничения</summary><p>Числа, функции, списки и символьные выражения. Скобки автоматически не раскрываются; решения уравнений и производных нет. Синус и степень вычисляются приближённо. Ввод — текст формулы, LaTeX доступен для результата.</p></details>
+          <div id="error-box" class="error-box" role="alert" hidden></div>
+          <div class="editor-footer"><span id="run-status" class="muted" role="status">Готов к вычислению</span><button type="button" id="evaluate" class="button button-primary"><span id="evaluate-label">Вычислить</span></button></div>
+        </section>
+        <section class="panel result-panel" aria-labelledby="output-title" aria-busy="false" id="output-panel">
+          <div class="panel-header"><h2 id="output-title"><span class="section-number">02</span> Результат и объяснение</h2><span class="output-live"><span aria-hidden="true"></span> Ответ движка</span></div>
+          <div class="tabs" role="tablist" aria-label="Представление результата"><button type="button" role="tab" id="tab-result" aria-controls="view-result" aria-selected="true" data-tab="result">Результат</button><button type="button" role="tab" id="tab-steps" aria-controls="view-steps" aria-selected="false" tabindex="-1" data-tab="steps">Шаги <span id="steps-badge" class="tab-badge">—</span></button><button type="button" role="tab" id="tab-tree" aria-controls="view-tree" aria-selected="false" tabindex="-1" data-tab="tree">Дерево <span id="tree-badge" class="tab-badge">—</span></button></div>
+          <div id="view-result" class="tab-view" role="tabpanel" aria-labelledby="tab-result"><div class="empty-state"><div class="empty-glyph" aria-hidden="true">ƒ<span>(x)</span></div><h3>Готовим первый пример</h3><p>После загрузки движка здесь появится настоящий результат и математическая запись формулы.</p><span class="empty-hint">При первом открытии загрузка может занять несколько секунд.</span></div></div>
+          <div id="view-steps" class="tab-view" role="tabpanel" aria-labelledby="tab-steps" hidden></div>
+          <div id="view-tree" class="tab-view tree-view" role="tabpanel" aria-labelledby="tab-tree" hidden></div>
+          <div class="result-footer"><div id="result-meta" class="result-meta"><span class="muted">Всё начинается с выражения</span></div><div class="result-actions"><button type="button" class="button button-small" id="copy-latex" disabled title="Скопировать результат в формате LaTeX">Копировать LaTeX</button><button type="button" class="icon-button" id="copy-result" aria-label="Скопировать результат" title="Скопировать результат" disabled><svg width="17" height="17" viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M12 4V3H3v9h1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button type="button" class="button button-small" id="export-result" disabled><span aria-hidden="true">↓</span> JSON</button></div></div>
+        </section>
+      </div>
+      <section class="about-project" aria-labelledby="about-title">
+        <div><p class="eyebrow accent">ЗАЧЕМ ЭТОТ ПРОЕКТ</p><h2 id="about-title">Заглянуть внутрь вычислений.</h2><p>Обычный калькулятор показывает ответ. Здесь можно проследить, как текст превращается в дерево операций, а затем — в результат. Такой подход применяется в языках программирования и системах обработки правил.</p></div>
+        <div class="project-links"><a href="https://github.com/JakeSmokie/ITMO.SymbolicComputations/blob/master/docs/REVIEW_GUIDE.md"><strong>Для тех, кто смотрит код ↗</strong><span>Архитектура, тесты и маршрут по исходникам на 5 минут.</span></a><a href="fractal.html"><strong>Ещё одна демонстрация: Мандельброт ↗</strong><span>Посмотрите, как повторение одной формулы создаёт фрактал.</span></a></div>
+      </section>
+      <section class="syntax-strip" aria-labelledby="syntax-title"><div class="syntax-strip-heading"><span class="syntax-icon" aria-hidden="true">⌁</span><div><h2 id="syntax-title">Краткая справка</h2><button type="button" class="text-button" id="open-reference-bottom">Весь справочник <span aria-hidden="true">↗</span></button></div></div><div class="syntax-item"><span>АРИФМЕТИКА</span><code>(2 + 3)^2 / 5</code><p>Числа и порядок действий</p></div><div class="syntax-item"><span>ФУНКЦИИ</span><code>Fun(x, x^2)</code><p>Собственные преобразования</p></div><div class="syntax-item"><span>СПИСКИ</span><code>Map({1, 2})(Fun(x, x^2))</code><p>Одна функция для элементов</p></div></section>
+      <footer class="page-footer"><span>ИТМО · учебный проект 2019 · веб-демо 2026</span><span><kbd>Ctrl</kbd> + <kbd>Enter</kbd> вычислить <span class="footer-separator">·</span> <kbd>Esc</kbd> закрыть справочник</span></footer>
+    </main>
+  </div>
+  <dialog id="reference-dialog" class="reference-dialog" aria-labelledby="reference-title"><div class="reference-header"><div><span class="eyebrow accent">ЯЗЫК ВЫРАЖЕНИЙ</span><h2 id="reference-title">Справочник функций</h2></div><button type="button" class="icon-button close-button" id="close-reference" aria-label="Закрыть справочник">×</button></div><p class="reference-intro">Выбери функцию, чтобы вставить её синтаксис в редактор. Имена чувствительны к регистру.</p><label class="search-label"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="5.5" stroke="currentColor" stroke-width="1.5"/><path d="m12.2 12.2 4.3 4.3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><input type="search" id="function-search" placeholder="Найти функцию, действие или категорию" aria-label="Поиск по справочнику"></label><div id="function-categories" class="category-filters" aria-label="Фильтр по категориям"></div><div id="function-list" class="function-list"></div><div class="reference-footnote">Функции и примеры загружаются из работающего движка.</div></dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+</body>
+</html>

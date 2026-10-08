@@ -16,6 +16,9 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations.ListFunctions 
                 throw new ArgumentException("Syntax only constant as argument");
             }
 
+            if (decimal.Truncate(index.Value) != index.Value || index.Value < 0 || index.Value >= items.Count) {
+                throw new ArgumentOutOfRangeException(nameof(expression), "Part requires a whole-number index between zero and the last list index.");
+            }
             var indexValue = (int) index.Value;
             return items[indexValue];
         }

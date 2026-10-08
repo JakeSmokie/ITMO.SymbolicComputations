@@ -31,7 +31,7 @@ namespace ITMO.SymbolicComputations.Base.Tests {
             var json = document.AsExpressionInfo().AsJson();
             _out.WriteLine(json);
 
-            Assert.Equal(File.ReadAllText("Samples/First.json"), json);
+            Assert.Equal(File.ReadAllText("Samples/First.json").Replace("\r\n", "\n"), json.Replace("\r\n", "\n"));
         }
     }
 }

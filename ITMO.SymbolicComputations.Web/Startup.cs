@@ -10,7 +10,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace ITMO.SymbolicComputations.Web {
     public class Startup {
@@ -21,26 +20,15 @@ namespace ITMO.SymbolicComputations.Web {
         }
 
         public void ConfigureServices(IServiceCollection services) {
-            services.AddControllers()
-                .AddNewtonsoftJson(options =>
-                {
-                    options.SerializerSettings.DateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'";
-                    options.SerializerSettings.DateFormatHandling = DateFormatHandling.IsoDateFormat;
-                    options.SerializerSettings.DateParseHandling = DateParseHandling.DateTime;
-                    options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
-                });
-
-            services.AddCors(options => 
-                options.AddDefaultPolicy(policy => 
-                    policy.AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowAnyOrigin()
-                )
-            );
+            services.AddControllers().AddJsonOptions(options => {
+                options.JsonSerializerOptions.IncludeFields = true;
+                options.JsonSerializerOptions.MaxDepth = 128;
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
-            app.UseCors();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
             
             app.UseRouting();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });

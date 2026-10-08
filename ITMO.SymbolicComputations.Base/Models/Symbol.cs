@@ -8,8 +8,20 @@ namespace ITMO.SymbolicComputations.Base.Models {
 
         protected abstract T VisitImplementation<T>(ISymbolVisitor<T> visitor);
 
-        public T Visit<T>(ISymbolVisitor<T> visitor) =>
-            VisitImplementation(visitor);
+        public T Visit<T>(ISymbolVisitor<T> visitor) {
+            var budget = EvaluationBudget.Current;
+            if (budget == null) {
+                return VisitImplementation(visitor);
+            }
+
+            budget.EnterVisit();
+            try {
+                return VisitImplementation(visitor);
+            }
+            finally {
+                budget.ExitVisit();
+            }
+        }
 
         public static implicit operator Symbol(decimal value) =>
             new Constant(value);

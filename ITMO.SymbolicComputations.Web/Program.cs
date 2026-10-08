@@ -15,6 +15,7 @@ namespace ITMO.SymbolicComputations.Web {
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureWebHost(webBuilder => webBuilder.UseUrls("http://127.0.0.1:5187"))
                 .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
     }
 }

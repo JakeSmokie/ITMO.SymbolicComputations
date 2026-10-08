@@ -18,15 +18,31 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Implementations {
                 return expression;
             }
 
-            var step = (to.Value - @from.Value) / amount.Value;
+            var count = EvaluationBudget.Current != null
+                ? EvaluationBudget.Current.ValidateGeneratedCount(amount.Value, "Range")
+                : ValidateCount(amount.Value);
+            if (count == 0) {
+                return List[Array.Empty<Symbol>()];
+            }
+            var step = (to.Value - from.Value) / count;
 
             return List[
-                Enumerable.Range(0, Math.Abs((int) amount.Value))
-                    .Select(i => from.Value + i * step)
+                Enumerable.Range(0, count)
+                    .Select(i => {
+                        EvaluationBudget.Current?.Checkpoint();
+                        return from.Value + i * step;
+                    })
                     .Select(x => new Constant(x))
                     .OfType<Symbol>()
                     .ToArray()
             ];
+        }
+
+        private static int ValidateCount(decimal count) {
+            if (count < 0 || decimal.Truncate(count) != count || count > int.MaxValue) {
+                throw new ArgumentOutOfRangeException(nameof(count), "Range requires a non-negative integer item count.");
+            }
+            return (int) count;
         }
     }
 }

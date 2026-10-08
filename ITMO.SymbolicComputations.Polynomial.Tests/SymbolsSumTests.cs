@@ -13,7 +13,7 @@ namespace ITMO.SymbolicComputations.Polynomial.Tests {
         public SymbolsSumTests(ITestOutputHelper output) {
             evaluateAndAssert = Test.CreateAsserter(output, Seq[
                 SetDelayed[SumSymbols, SumSymbolsImplementation]
-            ]);
+            ], options: Test.ResearchLimits());
         }
 
         private readonly Action<Expression, Symbol> evaluateAndAssert;

@@ -31,6 +31,7 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
         public static readonly StringSymbol Power = new StringSymbol(nameof(Power));
         public static readonly StringSymbol TaylorSin = new StringSymbol(nameof(TaylorSin));
         public static readonly StringSymbol Factorial = new StringSymbol(nameof(Factorial));
+        internal static readonly StringSymbol FactorialInput = new StringSymbol(nameof(FactorialInput));
 
         public static Expression MinusImplementation =>
             Fun[x, Times[x, -1]];
@@ -49,7 +50,7 @@ namespace ITMO.SymbolicComputations.Base.StandardLibrary {
 
         public static Expression FactorialImplementation =>
             Fun[x,
-                If[More[x][1], Times[x, Factorial[Plus[x, -1]]], 1]
+                If[More[FactorialInput[x]][1], Times[x, Factorial[Plus[x, -1]]], 1]
             ];
 
         public static Expression TaylorSinImplementation =>

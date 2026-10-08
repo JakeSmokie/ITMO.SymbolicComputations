@@ -24,6 +24,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
         private static readonly EqImplementation EqImplementation = new EqImplementation();
         private static readonly CompareImplementation CompareImplementation = new CompareImplementation();
         private static readonly PowerImplementation PowerImplementation = new PowerImplementation();
+        private static readonly FactorialInputImplementation FactorialInputImplementation = new FactorialInputImplementation();
 
         private static readonly AsConstantImplementation AsConstant = new AsConstantImplementation();
         private static readonly AsStringSymbolImplementation AsStringSymbol = new AsStringSymbolImplementation();
@@ -57,6 +58,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
             var (argSteps, argSymbol) = expression.Visit(argumentsEvaluator);
             var (funcSteps, funcSymbol) = argSymbol.Visit(functionEvaluator);
 
+            EvaluationBudget.Current?.RecordStep();
             var steps = ImmutableList<Symbol>.Empty
                 .AddRange(argSteps)
                 .Add(argSymbol)
@@ -68,6 +70,12 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
                     var (steps, symbol) = state;
                     var visited = symbol.Visit(visitor);
 
+                    // Most visitors do not handle this expression. Do not allocate trace entries
+                    // for their unchanged outputs only to remove them later as duplicates.
+                    if (Equals(symbol, visited)) {
+                        return (steps, visited);
+                    }
+                    EvaluationBudget.Current?.RecordStep();
                     return (steps.Add(visited), visited);
                 });
         }
@@ -102,6 +110,7 @@ namespace ITMO.SymbolicComputations.Base.Visitors.Evaluation {
                 AsExpressionArgs,
                 ApplyListImplementation,
                 PowerImplementation,
+                FactorialInputImplementation,
                 LengthImplementation,
                 DistinctImplementation,
                 RangeImplementation,
